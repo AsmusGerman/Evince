@@ -1,0 +1,26 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.icon {
+    padding: 0 .5rem;
+}
+
+.controls {
+    padding: 0;
+    list-style: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+    .control {
+        display: flex;
+        align-items: center;
+        padding: 0 1rem;
+    }
+}
+
+.sidenav-container {
+    height: 100vh;
+}
