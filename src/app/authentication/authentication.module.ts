@@ -7,6 +7,7 @@ import { NgxsModule } from "@ngxs/store";
 import { AuthState } from "./store/authentication.state";
 import { SigninComponent } from "./components/signin/signin.component";
 import { AuthenticationService } from "./services/authentication.service";
+import { ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   declarations: [LoginComponent, SigninComponent],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     MaterialModule,
     NgxsModule.forFeature([AuthState])
