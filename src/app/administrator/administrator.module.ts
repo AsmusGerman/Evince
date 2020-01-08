@@ -7,6 +7,7 @@ import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { OverviewComponent } from "./overview/overview.component";
 import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   {
@@ -26,7 +27,8 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
-    ResponsiveModule
+    ResponsiveModule,
+    FormsModule
   ]
 })
 export class AdministratorModule {}
