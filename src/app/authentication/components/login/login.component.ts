@@ -1,6 +1,8 @@
-import { Component, OnInit, Injector } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
+import { Store } from "@ngxs/store";
+import { Login } from "../../store/authentication.model";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "evince-login",
@@ -10,7 +12,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 export class LoginComponent implements OnInit {
   public form: FormGroup;
 
-  constructor(private injector: Injector) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -21,17 +23,15 @@ export class LoginComponent implements OnInit {
 
   public submit() {
     if (this.form.valid) {
-      //do submit
+      this.store.dispatch(new Login(this.form.value)).subscribe(response => {});
     }
   }
 
-  /* loginAsAdministrator() {
-    this.injector
-      .get(Router)
-      .navigate(["/administrator"], { replaceUrl: true });
+  private loginAsAdministrator() {
+    this.router.navigate(["/administrator"], { replaceUrl: true });
   }
 
-  loginAsDriver() {
-    this.injector.get(Router).navigate(["/driver"], { replaceUrl: true });
-  } */
+  private loginAsDriver() {
+    this.router.navigate(["/driver"], { replaceUrl: true });
+  }
 }
