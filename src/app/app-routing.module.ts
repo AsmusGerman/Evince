@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { OverviewComponent } from './administrator/overview/overview.component';
+import { OverviewComponent } from "./administrator/overview/overview.component";
+import { AuthGuard } from "./authentication/guards/authentication.guard";
 
 const routes: Routes = [
   {
@@ -14,21 +15,22 @@ const routes: Routes = [
   },
   {
     path: "login",
-    loadChildren: () => import("./login/login.module").then(m => m.LoginModule)
+    loadChildren: () => import("./authentication/authentication.module").then(m => m.AuthenticationModule)
   },
   {
     path: "driver",
     loadChildren: () =>
-      import("./driver/driver.module").then(m => m.DriverModule)
+      import("./driver/driver.module").then(m => m.DriverModule),
+    canActivate: [AuthGuard]
   },
   {
     path: "administrator",
     loadChildren: () =>
       import("./administrator/administrator.module").then(
         m => m.AdministratorModule
-      )
-  },
-  
+      ),
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({
