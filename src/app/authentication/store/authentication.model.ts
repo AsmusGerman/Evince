@@ -11,4 +11,5 @@ export class Login {
 
 export class Logout {
   static readonly type = "[Auth] Logout";
+  constructor(public payload: { token: string }) {}
 }

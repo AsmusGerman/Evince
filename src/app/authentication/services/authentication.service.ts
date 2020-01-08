@@ -1,13 +1,9 @@
 import { Injectable } from "@angular/core";
-import { AuthenticationModule } from "../authentication.module";
 import { Observable, of, EMPTY } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { LoginResponseModel } from "../model/login.response";
-import { map } from "rxjs/operators";
 
-@Injectable({
-  providedIn: AuthenticationModule
-})
+@Injectable()
 export class AuthenticationService {
   constructor(private http: HttpClient) {}
 
