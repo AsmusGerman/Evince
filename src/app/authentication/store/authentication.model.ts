@@ -1,6 +1,8 @@
-import { LoginResponseModel } from "../model/login.response";
-
-export interface AuthStateModel extends LoginResponseModel {}
+export interface AuthStateModel {
+  token: string | null;
+  refreshToken: string | null;
+  username: string | null;
+}
 
 export class Login {
   static readonly type = "[Auth] Login";
@@ -12,4 +14,8 @@ export class Login {
 export class Logout {
   static readonly type = "[Auth] Logout";
   constructor(public payload: { token: string }) {}
+}
+
+export class RefreshToken {
+ static readonly type = "[Auth] Refresh Token";
 }

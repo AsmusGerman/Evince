@@ -7,8 +7,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgxsModule } from "@ngxs/store";
 import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
 import { environment } from "src/environments/environment";
-import { HttpClientModule } from "@angular/common/http";
-import { JwtModule } from "@auth0/angular-jwt";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { TokenInterceptor } from "./authentication/interceptors/token.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,17 +19,12 @@ import { JwtModule } from "@auth0/angular-jwt";
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
-      key: "auth.token"
-    }),
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: () => {
-          return localStorage.getItem("access_token");
-        }
-      }
+      key: ["auth.token", "auth.tokenRefresh"]
     })
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
