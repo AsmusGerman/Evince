@@ -1,0 +1,29 @@
+<mat-toolbar>
+  <mat-form-field>
+    <mat-icon matPrefix>search</mat-icon>
+    <input type="text" matInput placeholder="Search" />
+  </mat-form-field>
+  <h4>From</h4>
+  <mat-form-field>
+    <mat-label>Terminal</mat-label>
+    <mat-select>
+      <mat-option>None</mat-option>
+      <!-- <mat-option *ngFor="let state of states" [value]="state">{{
+        state
+      }}</mat-option> -->
+    </mat-select>
+  </mat-form-field>
+
+  <h4>To</h4>
+  <mat-form-field>
+    <mat-label>Terminal</mat-label>
+    <mat-select>
+      <mat-option>None</mat-option>
+      <!-- <mat-option *ngFor="let state of states" [value]="state">{{
+        state
+      }}</mat-option> -->
+    </mat-select>
+  </mat-form-field>
+  
+  <mat-slide-toggle color="primary">My subscriptions</mat-slide-toggle>
+</mat-toolbar>
