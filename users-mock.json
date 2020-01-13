@@ -3,12 +3,11 @@
       "id": 1,
       "nombre" : "Peter",
       "email" : "peter@gmail.com",
-      "animales" : [
+      "animales" :
         {
           "catto":"mittens",
           "doggo":"firulais"
         }
-      ]
     },
     {
       "id": 2,

@@ -9,7 +9,6 @@ import { UserService } from 'src/app/core/services/user.service';
   styleUrls: ['./settings.component.scss']
 })
 export class SettingsComponent implements OnInit {
-  texto: string = "hola";
   private users : User[] = [];
   private user;
   
@@ -19,7 +18,6 @@ export class SettingsComponent implements OnInit {
     this.userService.get_user().subscribe((res : User[])=>{
       this.users = res.filter((fUser)=> {
         if(fUser.id==2){
-          console.log(fUser.animales["catto"]);
           this.user=fUser;
           return fUser
         }
