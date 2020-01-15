@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   public submit() {
+    debugger;
     if (this.form.valid) {
       this.store
         .dispatch(new Login(this.form.value))
@@ -31,13 +32,18 @@ export class LoginComponent implements OnInit {
           switchMap(() => this.store.select(store => store.authentication.profile))
         )
         .subscribe((profile: string) => {
-          if(profile == "driver") {
+          alert(profile);
+          /* if(profile == "driver") {
             this.loginAsDriver();
           } else {
             this.loginAsAdministrator();
-          }
+          } */
         });
     }
+  }
+
+  public register() {
+    this.router.navigate(["/register"], { replaceUrl: true });
   }
 
   private loginAsAdministrator() {

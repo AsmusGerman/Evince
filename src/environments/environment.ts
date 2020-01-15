@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  settings: "assets/settings.json"
+  settings: "assets/settings.dev.json"
 };
 
 /*

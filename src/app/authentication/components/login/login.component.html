@@ -31,8 +31,9 @@
           </mat-checkbox>
         </p>
 
-        <div class="button">
-          <button type="submit" mat-button>Login</button>
+        <div class="button-group">
+          <button type="button" mat-flat-button (click)="register()">Register</button>
+          <button type="submit" mat-raised-button color="primary">Login</button>
         </div>
       </form>
     </mat-card-content>

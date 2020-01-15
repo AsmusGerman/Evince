@@ -1,7 +1,21 @@
 export interface AuthStateModel {
-  token: string | null;
-  refreshToken: string | null;
-  username: string | null;
+  token: string | undefined;
+  refreshToken: string | undefined;
+  username: string | undefined;
+  registered: boolean | undefined;
+}
+
+export class Register {
+  static readonly type = "[Auth] Register";
+  constructor(
+    public payload: {
+      username: string;
+      password: string;
+      name: string;
+      lastname: string;
+      role: number;
+    }
+  ) {}
 }
 
 export class Login {
@@ -17,5 +31,5 @@ export class Logout {
 }
 
 export class RefreshToken {
- static readonly type = "[Auth] Refresh Token";
+  static readonly type = "[Auth] Refresh Token";
 }

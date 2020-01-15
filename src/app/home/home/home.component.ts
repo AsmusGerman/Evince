@@ -12,6 +12,6 @@ export class HomeComponent implements OnInit {
   ngOnInit() {}
 
   goToLogin() {
-    this.injector.get(Router).navigate(["/login"], { replaceUrl: true });
+    this.injector.get(Router).navigate(["/authentication/login"], { replaceUrl: true });
   }
 }

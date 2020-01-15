@@ -17,12 +17,12 @@ export class UserState {
 
   @Action(Identify)
   login(ctx: StateContext<any>, action: Identify) {
-    return this.userService.getCurrentUserProfile().pipe(
+    /* return this.userService.getCurrentUserProfile().pipe(
       tap(result => {
         ctx.patchState({
           //TODO: agregar al estado, la info del usuario actual
         });
       })
-    );
+    ); */
   }
 }

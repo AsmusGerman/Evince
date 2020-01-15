@@ -5,7 +5,6 @@ import { Store } from "@ngxs/store";
 
 @Injectable()
 export class AuthenticationService {
- 
   private entrypoint: string;
 
   constructor(private http: HttpClient, private store: Store) {
@@ -15,10 +14,19 @@ export class AuthenticationService {
       .subscribe(url => (this.entrypoint = url));
   }
 
-  public signin(username: string, password: string) {
+  public register(
+    username: string,
+    password: string,
+    name: string,
+    lastname: string,
+    role: number
+  ) {
     return this.http.post(this.entrypoint, {
       username,
-      password
+      password,
+      name,
+      lastname,
+      role
     });
   }
 

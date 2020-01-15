@@ -11,8 +11,16 @@ import { ReactiveFormsModule } from "@angular/forms";
 
 const routes: Routes = [
   {
-    path: "",
+    path: "login",
     component: LoginComponent
+  },
+  {
+    path: "register",
+    component: SigninComponent
+  },
+  {
+    path: "**",
+    redirectTo: "login"
   }
 ];
 
