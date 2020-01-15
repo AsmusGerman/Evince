@@ -1,0 +1,23 @@
+{
+  "users" : [ {
+      "id": 1,
+      "nombre" : "Peter",
+      "email" : "peter@gmail.com",
+      "animales" :
+        {
+          "catto":"mittens",
+          "doggo":"firulais"
+        }
+    },
+    {
+      "id": 2,
+      "nombre" : "Maria",
+      "email" : "maria@gmail.com",
+      "animales" :
+        {
+          "catto":"mittens2",
+          "doggo":"firulais2"
+        }
+    }
+  ]
+}

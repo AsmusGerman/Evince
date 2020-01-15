@@ -1,0 +1,27 @@
+<div fxLayout fxLayoutAlign="center center">
+  <mat-form-field fxFlex="50">
+    <mat-icon matPrefix>search</mat-icon>
+    <input type="text" matInput placeholder="Search" fxFill />
+  </mat-form-field>
+</div>
+<div fxLayout fxLayoutAlign="center center">
+  <div fxFlex="50" fxLayout.xs="column wrap" fxLayoutGap="1rem" fxLayoutAlign="space-between center" >
+    <mat-form-field>
+      <mat-label>From</mat-label>
+      <mat-select>
+        <mat-option>None</mat-option>
+        <!-- <mat-option *ngFor="let state of states" [value]="state">{{
+              state
+            }}</mat-option> -->
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>To</mat-label>
+      <mat-select>
+        <mat-option>None</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle color="primary">My subscriptions</mat-slide-toggle>
+  </div>
+</div>

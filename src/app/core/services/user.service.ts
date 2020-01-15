@@ -1,15 +1,13 @@
-import { Injectable } from "@angular/core";
-import { of } from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class UserService {
-  constructor() {}
+    constructor(private http:HttpClient) {}
 
-  getCurrentUserProfile() {
-    return of({
-      name: "",
-      role: "",
-      email: ""
-    });
-  }
+    get_user(){
+        return this.http.get('http://localhost:3000/users');
+    }
 }
