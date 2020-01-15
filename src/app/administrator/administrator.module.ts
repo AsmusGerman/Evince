@@ -1,12 +1,13 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { AdministratorComponent } from "./administrator/administrator.component";
+import { AdministratorComponent } from "./administrator.component";
 import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "../shared/material/material.module";
 import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { OverviewComponent } from "./overview/overview.component";
 import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
+import { SubscriptionsComponent } from './overview/components/subscriptions/subscriptions.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,8 @@ const routes: Routes = [
     AdministratorComponent,
     OverviewComponent,
     SecurityComponent,
-    SettingsComponent
+    SettingsComponent,
+    SubscriptionsComponent
   ],
   imports: [
     CommonModule,

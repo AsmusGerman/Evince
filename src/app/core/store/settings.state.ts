@@ -1,13 +1,5 @@
-import {
-  Selector,
-  State,
-  Action,
-  StateContext,
-  NgxsAfterBootstrap
-} from "@ngxs/store";
-import { tap } from "rxjs/operators";
+import { Selector, State, StateContext, NgxsAfterBootstrap } from "@ngxs/store";
 import { SettingsService } from "../services/settings.service";
-import { LoadSettings } from "./settings.model";
 
 @State<any | null>({
   name: "settings",

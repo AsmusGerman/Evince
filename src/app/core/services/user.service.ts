@@ -1,7 +1,15 @@
-export class UserService {
-    constructor() {}
+import { Injectable } from "@angular/core";
+import { of } from "rxjs";
 
-    public getUsers() {
-        
-    }
+@Injectable()
+export class UserService {
+  constructor() {}
+
+  getCurrentUserProfile() {
+    return of({
+      name: "",
+      role: "",
+      email: ""
+    });
+  }
 }
