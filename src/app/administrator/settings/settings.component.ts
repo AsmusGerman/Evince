@@ -1,5 +1,4 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { User } from '../../models/user';
 import { UserService } from 'src/app/core/services/user.service';
 
@@ -15,7 +14,7 @@ export class SettingsComponent implements OnInit {
   constructor(private userService: UserService) {}
   
   ngOnInit() {
-    this.userService.get_user().subscribe((res : User[])=>{
+    this.userService.get_users().subscribe((res : User[])=>{
       this.users = res.filter((fUser)=> {
         if(fUser.id==2){
           this.user=fUser;

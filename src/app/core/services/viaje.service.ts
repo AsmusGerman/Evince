@@ -4,10 +4,10 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
   })
-export class UserService {
+export class ViajeService {
     constructor(private http:HttpClient) {}
 
-    get_users(){
-        return this.http.get('http://localhost:3000/users');
+    get_viajes(){
+        return this.http.get('http://localhost:3000/viajes');
     }
 }
