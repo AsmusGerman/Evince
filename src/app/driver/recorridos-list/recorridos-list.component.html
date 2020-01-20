@@ -1,0 +1,25 @@
+<mat-card>
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let recorrido of iDataSource">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Recorrido: {{recorrido.id}}
+                </mat-panel-title>
+                <mat-panel-description>
+                    
+<!--                 <ng-template matExpansionPanelContent>
+                    
+                    <mat-form-field *ngFor="let viaje of recorrido.viajes">
+                        {{viaje}}
+                    </mat-form-field>
+                </ng-template> -->
+            </mat-panel-description>
+            </mat-expansion-panel-header>
+            <ul>
+                <li *ngFor="let viaje of recorrido.viajes">
+                    Viaje: {{viaje}}
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
