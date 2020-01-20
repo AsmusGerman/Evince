@@ -1,4 +1,5 @@
-<mat-card [(ngModel)]='viajeActual'>
+<mat-card [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl>
+    
     Viaje actual: {{viajeActual.id}}
     <br>
     Cantidad de pasajeros: {{viajeActual.cantPasajeros}}
@@ -14,17 +15,22 @@
             <ul>
                 <li *ngFor="let viaje of recorrido.viajes">
                     {{viaje.id}}
-                    <div *ngIf="viaje.actual; then thenBlock else elseBlock"></div>
-                        <ng-template #thenBlock>
-                            <button mat-raised-button color="warn">
-                            Detener
-                            </button>
-                        </ng-template>
-                        <ng-template #elseBlock>
-                            <button mat-raised-button disabled color="primary">
-                            Comenzar
-                            </button>
-                        </ng-template>
+                    <div *ngIf="viajeActual!=null && viaje.actual; then detenerBlock else comenzarBlock"></div>
+                    <ng-template #detenerBlock>
+                        <button mat-raised-button color="warn" (click)="detenerViajeActual()">
+                        Detener
+                        </button>
+                    </ng-template>
+                    <ng-template #comenzarBlockDisabled>
+                        <button mat-raised-button disabled color="primary">
+                        Comenzar
+                        </button>
+                    </ng-template>
+                    <ng-template #comenzarBlock>
+                        <button mat-raised-button color="primary">
+                        Comenzar
+                        </button>
+                    </ng-template>
                 </li>
             </ul>
         </mat-expansion-panel>

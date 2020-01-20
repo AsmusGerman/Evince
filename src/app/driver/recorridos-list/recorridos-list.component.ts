@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {MatInputModule} from '@angular/material';
 import { Viaje } from 'src/app/core/model/viaje';
 
-const RECORRIDOS = [
+var RECORRIDOS = [
   {
     "id" : "A-C",
     "viajes": [
@@ -16,7 +16,7 @@ const RECORRIDOS = [
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "A-C",
-        "actual" : false,
+        "actual" : true,
         "trayecto" : 
         {
           "trayectoId" : "AB",
@@ -34,7 +34,7 @@ const RECORRIDOS = [
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "A-C",
-        "actual" : true,
+        "actual" : false,
         "trayecto" : 
         {
           "trayectoId" : "BC",
@@ -112,20 +112,34 @@ const RECORRIDOS = [
 })
 
 export class RecorridosListComponent implements OnInit {
-  //public iDisplayedColumns: string[] = ["code", "last", "state","subscription", "analyze"];
     public iDataSource = RECORRIDOS;
     public viajeActual:Viaje;
 
    getViajeActual() {
-     //let viajeActual:Viaje;
      this.iDataSource.filter(e=>{
        e.viajes.filter(ee=> {
         if(ee.actual==true)
           this.viajeActual=ee;
        });
       });
-      //return viajeActual;
-}
+  }
+
+  detenerViajeActual() {
+    console.log("viaje detenido");
+    this.iDataSource.filter(e=>{
+      e.viajes.filter(ee=> {
+       if(ee.actual==true) {
+        console.log(this.viajeActual);
+        console.log(ee.actual);
+         this.viajeActual=new Viaje();
+         ee.actual=false;
+         console.log(this.viajeActual);
+         console.log(ee.actual);
+        }
+      });
+     });
+     console.log(this.iDataSource);
+ }
 
   constructor() {}
 
