@@ -1,4 +1,7 @@
-<mat-card>
+<mat-card [(ngModel)]='viajeActual'>
+    Viaje actual: {{viajeActual.id}}
+    <br>
+    Cantidad de pasajeros: {{viajeActual.cantPasajeros}}
     <mat-accordion>
         <mat-expansion-panel *ngFor="let recorrido of iDataSource">
             <mat-expansion-panel-header>
@@ -6,18 +9,22 @@
                     Recorrido: {{recorrido.id}}
                 </mat-panel-title>
                 <mat-panel-description>
-                    
-<!--                 <ng-template matExpansionPanelContent>
-                    
-                    <mat-form-field *ngFor="let viaje of recorrido.viajes">
-                        {{viaje}}
-                    </mat-form-field>
-                </ng-template> -->
             </mat-panel-description>
             </mat-expansion-panel-header>
             <ul>
                 <li *ngFor="let viaje of recorrido.viajes">
-                    Viaje: {{viaje}}
+                    {{viaje.id}}
+                    <div *ngIf="viaje.actual; then thenBlock else elseBlock"></div>
+                        <ng-template #thenBlock>
+                            <button mat-raised-button color="warn">
+                            Detener
+                            </button>
+                        </ng-template>
+                        <ng-template #elseBlock>
+                            <button mat-raised-button disabled color="primary">
+                            Comenzar
+                            </button>
+                        </ng-template>
                 </li>
             </ul>
         </mat-expansion-panel>
