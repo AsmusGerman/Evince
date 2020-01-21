@@ -1,8 +1,22 @@
-<mat-card [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl>
-    
-    Viaje actual: {{viajeActual.id}}
-    <br>
-    Cantidad de pasajeros: {{viajeActual.cantPasajeros}}
+<div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
+<div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
+<mat-card>
+    <div *ngIf="viajeActual.id==null; then dataUltimoViaje"></div>
+    <ng-template #dataUltimoViaje>
+        Tiempo último viaje: {{tiempoUltimoViaje}}
+    </ng-template>
+    <div *ngIf="viajeActual.id!=null; then dataViajeActual"></div>
+    <ng-template #dataViajeActual>
+        Viaje actual: {{viajeActual.id}}
+        <br>
+        Cantidad de pasajeros: {{viajeActual.cantPasajeros}}
+        <br>
+        Horario estipulado de salida: {{viajeActual.horaEstipuladaSalida}}
+        <br>
+        Horario estipulado de llegada: {{viajeActual.horaEstipuladaLlegada}}
+        <br>
+        Tiempo de viaje actual: {{tiempo}}
+    </ng-template>
     <mat-accordion>
         <mat-expansion-panel *ngFor="let recorrido of iDataSource">
             <mat-expansion-panel-header>
@@ -15,19 +29,21 @@
             <ul>
                 <li *ngFor="let viaje of recorrido.viajes">
                     {{viaje.id}}
-                    <div *ngIf="viajeActual!=null && viaje.actual; then detenerBlock else comenzarBlock"></div>
-                    <ng-template #detenerBlock>
+                    <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
+                    <ng-template #actualBlock>
                         <button mat-raised-button color="warn" (click)="detenerViajeActual()">
                         Detener
                         </button>
                     </ng-template>
-                    <ng-template #comenzarBlockDisabled>
-                        <button mat-raised-button disabled color="primary">
+                    <ng-container #siguienteBlock *ngIf="viaje.siguiente && viajeActual.id==null; then existeActualBlock; else deshabBlock"></ng-container>
+                    <ng-template #existeActualBlock>
+                        <button mat-raised-button color="primary" (click)="comenzarViaje(viaje)">
                         Comenzar
                         </button>
                     </ng-template>
-                    <ng-template #comenzarBlock>
-                        <button mat-raised-button color="primary">
+                    <ng-container #deshabBlock *ngIf="(!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual.id!=null); then deshabBlock2"></ng-container>
+                    <ng-template #deshabBlock2>
+                        <button mat-raised-button disabled color="primary">
                         Comenzar
                         </button>
                     </ng-template>
@@ -36,3 +52,9 @@
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>
+
+<!-- 
+     <input type="button" value="Empezar" (click)="init()" />
+     <input type="button" value="Reiniciar" (click)="reset()" />
+     <input type="button" value="Parar" (click)="stop()" />-->
+<!-- <input style="" id="time" name="time" value="0" /> -->
