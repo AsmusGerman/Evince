@@ -140,25 +140,22 @@ export class RecorridosListComponent implements OnInit {
     public cronos;
     public tiempo=0;
     public tiempoUltimoViaje;
-
-/*     timer() {
-      this.tiempo = parseInt((<HTMLInputElement>document.getElementById('time')).value);
-      (<HTMLInputElement>document.getElementById('time')).value = eval(this.tiempo + 1);
-    } */
+    public tiempoCrono;
 
     timer() {
+
       this.tiempo=this.tiempo+1;
+      var hours = Math.floor((this.tiempo*1000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((this.tiempo*1000 % (1000 * 60 * 60)) / (1000 *60));
+      var seconds = Math.floor(this.tiempo*1000 % (1000 * 60) / 1000);
       console.log(this.tiempo);
+      console.log(hours+"h"+minutes+"m"+seconds+"s");
+      this.tiempoCrono=hours+"h"+minutes+"m"+seconds+"s";
     }
 
     init() {
       this.cronos = setInterval((e)=>{this.timer()}, 1000);
     }
-
-    /* reset() {
-      this.tiempo = parseInt((<HTMLInputElement>document.getElementById('time')).value);
-      (<HTMLInputElement>document.getElementById('time')).value = "0";
-    } */
 
     reset() {
       this.tiempo = 0;
@@ -167,6 +164,8 @@ export class RecorridosListComponent implements OnInit {
     stop() {
       clearInterval(this.cronos);
     }
+
+
 
    getViajeActual() {
      this.iDataSource.filter(e=>{
@@ -192,18 +191,20 @@ export class RecorridosListComponent implements OnInit {
      });
   }
 
-  detenerViajeActual() {
-    this.tiempoUltimoViaje=this.tiempo;
+  detenerViajeActual(viaje) {
+    this.tiempoUltimoViaje=this.tiempoCrono;
     this.stop();
     this.reset();
-    this.iDataSource.filter(e=>{
+    viaje.actual=false;
+    this.viajeActual=new Viaje();
+/*     this.iDataSource.filter(e=>{
       e.viajes.filter(ee=> {
        if(ee.actual==true) {
          this.viajeActual=new Viaje();
          ee.actual=false;
         }
       });
-     });
+     }); */
   }
 
   getViajeSiguiente() {

@@ -1,7 +1,7 @@
 <div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
 <mat-card>
-    <div *ngIf="viajeActual.id==null; then dataUltimoViaje"></div>
+    <div *ngIf="((viajeActual.id==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
     <ng-template #dataUltimoViaje>
         Tiempo último viaje: {{tiempoUltimoViaje}}
     </ng-template>
@@ -15,7 +15,7 @@
         <br>
         Horario estipulado de llegada: {{viajeActual.horaEstipuladaLlegada}}
         <br>
-        Tiempo de viaje actual: {{tiempo}}
+        Tiempo de viaje actual: {{tiempoCrono}}
     </ng-template>
     <mat-accordion>
         <mat-expansion-panel *ngFor="let recorrido of iDataSource">
@@ -31,8 +31,11 @@
                     {{viaje.id}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
-                        <button mat-raised-button color="warn" (click)="detenerViajeActual()">
+                        <button mat-raised-button color="warn" (click)="detenerViajeActual(viaje)">
                         Detener
+                        </button>
+                        <button mat-raised-button routerLink="/retraso">
+                        Registrar retraso
                         </button>
                     </ng-template>
                     <ng-container #siguienteBlock *ngIf="viaje.siguiente && viajeActual.id==null; then existeActualBlock; else deshabBlock"></ng-container>
