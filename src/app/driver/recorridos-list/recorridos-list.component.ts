@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {MatInputModule} from '@angular/material';
 import { Viaje } from 'src/app/core/model/viaje';
+import { DataService } from 'src/app/core/services/data.service';
 
 var RECORRIDOS = [
   {
@@ -142,6 +143,8 @@ export class RecorridosListComponent implements OnInit {
     public tiempoUltimoViaje;
     public tiempoCrono;
 
+    public message:string;
+
     timer() {
 
       this.tiempo=this.tiempo+1;
@@ -164,8 +167,6 @@ export class RecorridosListComponent implements OnInit {
     stop() {
       clearInterval(this.cronos);
     }
-
-
 
    getViajeActual() {
      this.iDataSource.filter(e=>{
@@ -197,14 +198,6 @@ export class RecorridosListComponent implements OnInit {
     this.reset();
     viaje.actual=false;
     this.viajeActual=new Viaje();
-/*     this.iDataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-       if(ee.actual==true) {
-         this.viajeActual=new Viaje();
-         ee.actual=false;
-        }
-      });
-     }); */
   }
 
   getViajeSiguiente() {
@@ -216,10 +209,12 @@ export class RecorridosListComponent implements OnInit {
      });
  }
 
-  constructor() {}
+  constructor(private data: DataService) {}
 
   ngOnInit() {
     this.getViajeActual();
+    this.data.currentMessage.subscribe(message => this.tiempoCrono = message);
+    console.log("RECORRIDOSLIST ONINIT");
   }
 
 }

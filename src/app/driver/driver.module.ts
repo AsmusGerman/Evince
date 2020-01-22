@@ -12,18 +12,26 @@ import { MaterialModule } from "../shared/material/material.module";
 import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { FormsModule } from '@angular/forms';
 import { RecorridosListComponent } from './recorridos-list/recorridos-list.component';
+import { RetrasoComponent } from './retraso/retraso.component';
+import { ReactiveFormsModule } from "@angular/forms";
+import { DataService } from '../core/services/data.service';
 
 const routes: Routes = [
   {
     path: "",
     component: DriverComponent
+  },
+  {
+    path: "retraso/:id",
+    component: RetrasoComponent
   }
 ];
 
 @NgModule({
   declarations: [
     DriverComponent,
-    RecorridosListComponent
+    RecorridosListComponent,
+    RetrasoComponent
   ],
   imports: [
     CommonModule,
@@ -32,10 +40,13 @@ const routes: Routes = [
     ResponsiveModule,
     MatInputModule,
     FormsModule,
-     MatExpansionModule,
+    MatExpansionModule,
     MatFormFieldModule,
-    MatInputModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule
+  ],
+  providers:[
+    DataService
   ]
 })
 export class DriverModule {}
