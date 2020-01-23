@@ -28,7 +28,8 @@ var RECORRIDOS = [
           "trayectoId" : "AB",
           "terminalOrigen" : "A",
           "terminalDestino" : "B"
-        }
+        },
+        "retrasos" : []
         },
         {
         "id" : "Viaje2Rec1",
@@ -50,7 +51,8 @@ var RECORRIDOS = [
           "trayectoId" : "BC",
           "terminalOrigen" : "B",
           "terminalDestino" : "C"
-        }
+        },
+        "retrasos" : []
         }
     ]
   },
@@ -77,7 +79,8 @@ var RECORRIDOS = [
           "trayectoId" : "FG",
           "terminalOrigen" : "F",
           "terminalDestino" : "G"
-        }
+        },
+        "retrasos" : []
       },
       {
         "id" : "Viaje2Rec2",
@@ -99,7 +102,8 @@ var RECORRIDOS = [
           "trayectoId" : "GH",
           "terminalOrigen" : "G",
           "terminalDestino" : "H"
-        }
+        },
+        "retrasos" : []
       },
       {
         "id" : "Viaje3Rec2",
@@ -121,7 +125,8 @@ var RECORRIDOS = [
           "trayectoId" : "HI",
           "terminalOrigen" : "H",
           "terminalDestino" : "I"
-        }
+        },
+        "retrasos" : []
       }
     ]
 }
@@ -144,31 +149,6 @@ export class RecorridosListComponent implements OnInit {
     public tiempoUltimoViaje;
     public tiempoCrono;
 
-    message:string="DEFAULT TEXT";
-
-/*     timer(tiempoInicialEnSegs:number) {
-      this.tiempo=tiempoInicialEnSegs;
-      this.tiempo=this.tiempo+1;
-      var hours = Math.floor((this.tiempo*1000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((this.tiempo*1000 % (1000 * 60 * 60)) / (1000 *60));
-      var seconds = Math.floor(this.tiempo*1000 % (1000 * 60) / 1000);
-      console.log(this.tiempo);
-      console.log(hours+"h"+minutes+"m"+seconds+"s");
-      this.tiempoCrono=hours+"h"+minutes+"m"+seconds+"s";
-    }
-
-    init() {
-      this.cronos = setInterval((e)=>{this.timer(0)}, 1000);
-    }
-
-    reset() {
-      this.tiempo = 0;
-    }
-
-    stop() {
-      clearInterval(this.cronos);
-    } */
-
    getViajeActual() {
      this.iDataSource.filter(e=>{
        e.viajes.filter(ee=> {
@@ -189,6 +169,7 @@ export class RecorridosListComponent implements OnInit {
     viaje.siguiente=false;
     viaje.actual=true;
     this.viajeActual=viaje;
+    localStorage.setItem(viaje.id, JSON.stringify(viaje));
     this.iDataSource.filter(e=>{
       e.viajes.filter(ee=> {
        if(ee.orden==viaje.orden+1){
@@ -197,7 +178,6 @@ export class RecorridosListComponent implements OnInit {
         }
       });
      });
-     console.log(this.tiempoCrono);
   }
 
   detenerViajeActual(viaje) {
@@ -206,6 +186,8 @@ export class RecorridosListComponent implements OnInit {
     this.dataService.reset();
     viaje.actual=false;
     this.viajeActual=new Viaje();
+    console.log(JSON.parse(localStorage.getItem('Viaje1Rec1')));
+
   }
 
   getViajeSiguiente() {

@@ -1,3 +1,7 @@
 export class Retraso {
-    constructor(public name: string) {}
+    constructor() {}
+    id: string;
+    tipo: string;
+    descripcion: string;
+    tiempo: string;
 }

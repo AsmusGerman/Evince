@@ -6,6 +6,7 @@ import { Store } from '@ngxs/store';
 import { switchMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
 import { DataService } from 'src/app/core/services/data.service';
+import { Viaje } from 'src/app/core/model/viaje';
 
 @Component({
     selector: "evince-retraso",
@@ -14,13 +15,18 @@ import { DataService } from 'src/app/core/services/data.service';
   })
 
   export class RetrasoComponent implements OnInit {
-    message:string;
+    public tipo;
+    public descripcion;
+    public tiempo;
+    public retraso:Retraso=new Retraso();
     public form: FormGroup;
-    public viajeId = '';
+    //public viajeId = '';
+    public viajeParaRetraso;
     constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private dataService: DataService) {
-      this.viajeId = activateRoute.snapshot.params['id'];
+    //this.viajeId = activateRoute.snapshot.params['id'];
     }
     ngOnInit() {
+      this.viajeParaRetraso = JSON.parse(localStorage.getItem('Viaje1Rec1'));
       this.form = new FormGroup({
         tipo: new FormControl(""),
         descripcion: new FormControl(""),
@@ -29,8 +35,7 @@ import { DataService } from 'src/app/core/services/data.service';
     }
 
     public submit() {
-      debugger;
-      if (this.form.valid) {
+/*       if (this.form.valid) {
         this.store
           .dispatch(new Retraso(this.form.value))
           .pipe(
@@ -40,7 +45,14 @@ import { DataService } from 'src/app/core/services/data.service';
           .subscribe((profile: string) => {
             alert(profile);
           });
-      }
+      } */
+      var retraso:Retraso=new Retraso();
+      retraso.id="Retraso1";
+      retraso.tipo=this.form.get("tipo").value;
+      retraso.descripcion=this.form.get("descripcion").value;
+      retraso.tiempo=this.form.get("tiempo").value;
+      this.viajeParaRetraso.retrasos.push(retraso);
+      localStorage.setItem(this.viajeParaRetraso.id, JSON.stringify(this.viajeParaRetraso));
     }
 
     cancelar() {
