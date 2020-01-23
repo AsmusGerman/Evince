@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import {MatInputModule} from '@angular/material';
 import { Viaje } from 'src/app/core/model/viaje';
 import { DataService } from 'src/app/core/services/data.service';
+import { Router } from '@angular/router';
 
 var RECORRIDOS = [
   {
@@ -143,10 +144,10 @@ export class RecorridosListComponent implements OnInit {
     public tiempoUltimoViaje;
     public tiempoCrono;
 
-    public message:string;
+    message:string="DEFAULT TEXT";
 
-    timer() {
-
+/*     timer(tiempoInicialEnSegs:number) {
+      this.tiempo=tiempoInicialEnSegs;
       this.tiempo=this.tiempo+1;
       var hours = Math.floor((this.tiempo*1000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((this.tiempo*1000 % (1000 * 60 * 60)) / (1000 *60));
@@ -157,7 +158,7 @@ export class RecorridosListComponent implements OnInit {
     }
 
     init() {
-      this.cronos = setInterval((e)=>{this.timer()}, 1000);
+      this.cronos = setInterval((e)=>{this.timer(0)}, 1000);
     }
 
     reset() {
@@ -166,7 +167,7 @@ export class RecorridosListComponent implements OnInit {
 
     stop() {
       clearInterval(this.cronos);
-    }
+    } */
 
    getViajeActual() {
      this.iDataSource.filter(e=>{
@@ -177,8 +178,14 @@ export class RecorridosListComponent implements OnInit {
       });
   }
 
+  actualizarTiempo(){
+    setInterval(()=>{this.tiempoCrono=this.dataService.getTiempoCrono()},1000);
+  }
+
   comenzarViaje(viaje) {
-    this.init();
+    this.dataService.init();
+    //this.tiempoCrono=this.dataService.getTiempoCrono();
+    this.actualizarTiempo();
     viaje.siguiente=false;
     viaje.actual=true;
     this.viajeActual=viaje;
@@ -190,12 +197,13 @@ export class RecorridosListComponent implements OnInit {
         }
       });
      });
+     console.log(this.tiempoCrono);
   }
 
   detenerViajeActual(viaje) {
     this.tiempoUltimoViaje=this.tiempoCrono;
-    this.stop();
-    this.reset();
+    this.dataService.stop();
+    this.dataService.reset();
     viaje.actual=false;
     this.viajeActual=new Viaje();
   }
@@ -209,12 +217,14 @@ export class RecorridosListComponent implements OnInit {
      });
  }
 
-  constructor(private data: DataService) {}
+  nuevoRetraso(viajeParam:string) {
+    this.router.navigate(['driver/retraso/'+viajeParam]);
+  }
+
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
     this.getViajeActual();
-    this.data.currentMessage.subscribe(message => this.tiempoCrono = message);
-    console.log("RECORRIDOSLIST ONINIT");
+    this.actualizarTiempo();
+    }
   }
-
-}

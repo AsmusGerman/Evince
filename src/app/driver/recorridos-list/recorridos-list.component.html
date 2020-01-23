@@ -1,5 +1,6 @@
 <div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
+<div [(ngModel)]='tiempoCrono' name="tiempoCrono" ngDefaultControl></div>
 <mat-card>
     <div *ngIf="((viajeActual.id==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
     <ng-template #dataUltimoViaje>
@@ -34,7 +35,7 @@
                         <button mat-raised-button color="warn" (click)="detenerViajeActual(viaje)">
                         Detener
                         </button>
-                        <button mat-raised-button routerLink="retraso/{{viaje.id}}">
+                        <button mat-raised-button (click)="nuevoRetraso(viajeActual.id)">
                         Registrar retraso
                         </button>
                     </ng-template>
@@ -55,9 +56,3 @@
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>
-
-<!-- 
-     <input type="button" value="Empezar" (click)="init()" />
-     <input type="button" value="Reiniciar" (click)="reset()" />
-     <input type="button" value="Parar" (click)="stop()" />-->
-<!-- <input style="" id="time" name="time" value="0" /> -->

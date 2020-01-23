@@ -14,11 +14,11 @@ import { DataService } from 'src/app/core/services/data.service';
   })
 
   export class RetrasoComponent implements OnInit {
-    private tiempoCrono;
+    message:string;
     public form: FormGroup;
-    public authorId = '';
-    constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private data: DataService) {
-      this.authorId = activateRoute.snapshot.params['id'];
+    public viajeId = '';
+    constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private dataService: DataService) {
+      this.viajeId = activateRoute.snapshot.params['id'];
     }
     ngOnInit() {
       this.form = new FormGroup({
@@ -26,14 +26,6 @@ import { DataService } from 'src/app/core/services/data.service';
         descripcion: new FormControl(""),
         tiempo: new FormControl("")
       })
-      this.data.currentMessage.subscribe(message => this.tiempoCrono = message);
-    }
-
-    newMessage() {
-      console.log("PASANDO DE RETRASO A RECORRIDOLIST");
-      //this.data.changeMessage("Hello from Sibling");
-      /* this.data.changeMessage(this.tiempoCrono); */
-
     }
 
     public submit() {
@@ -47,18 +39,11 @@ import { DataService } from 'src/app/core/services/data.service';
           )
           .subscribe((profile: string) => {
             alert(profile);
-            /* if(profile == "driver") {
-              this.loginAsDriver();
-            } else {
-              this.loginAsAdministrator();
-            } */
           });
       }
     }
 
     cancelar() {
       this._location.back();
-      console.log("SALIENDO DE RETRASO")
-      this.data.changeMessage(this.tiempoCrono);
     }
 }
