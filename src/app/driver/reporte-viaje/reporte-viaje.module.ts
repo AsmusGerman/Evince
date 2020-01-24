@@ -11,8 +11,7 @@ import { DataService } from 'src/app/core/services/data.service';
 
 const routes: Routes = [
   {
-/*     path: "driver/retraso/:id",
-    component: RetrasoComponent */
+    
   }
 ];
 

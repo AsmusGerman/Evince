@@ -13,6 +13,7 @@ import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { FormsModule } from '@angular/forms';
 import { RecorridosListComponent } from './recorridos-list/recorridos-list.component';
 import { RetrasoComponent } from './retraso/retraso.component';
+import { ReporteViajeComponent } from './reporte-viaje/reporte-viaje.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { DataService } from '../core/services/data.service';
 
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: "retraso/:id",
     component: RetrasoComponent
+  },
+  {
+    path: "reporte-viaje/:id",
+    component: ReporteViajeComponent
   }
 ];
 
@@ -31,7 +36,8 @@ const routes: Routes = [
   declarations: [
     DriverComponent,
     RecorridosListComponent,
-    RetrasoComponent
+    RetrasoComponent,
+    ReporteViajeComponent
   ],
   imports: [
     CommonModule,

@@ -215,8 +215,9 @@ export class RecorridosListComponent implements OnInit {
      });
  }
 
-  mostrarReporte(viajeParam:string) {
-    this.router.navigate(['driver/reporte-viaje/'+viajeParam]);
+  mostrarReporte(viajeParam) {
+    localStorage.setItem('ViajeReporte', JSON.stringify(viajeParam));
+    this.router.navigate(['driver/reporte-viaje/'+viajeParam.id]);
   }
 
   nuevoRetraso(viajeParam:string) {
