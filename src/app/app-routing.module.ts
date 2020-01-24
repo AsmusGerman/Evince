@@ -44,6 +44,14 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
+    path: "driver/reporte-viaje/:id",
+    loadChildren: () =>
+      import("./driver/reporte-viaje/reporte-viaje.module").then(
+        m => m.ReporteViajeModule
+      )
+    //canActivate: [AuthGuard]
+  },
+  {
     path: "**",
     redirectTo: "home"
   }

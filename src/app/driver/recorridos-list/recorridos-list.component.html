@@ -32,7 +32,7 @@
                     {{viaje.id}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
-                        <button mat-raised-button color="warn" (click)="detenerViajeActual(viaje)">
+                        <button mat-raised-button color="warn" (click)="detenerViajeActual()">
                         Detener
                         </button>
                         <button mat-raised-button (click)="nuevoRetraso(viajeActual.id)">
@@ -45,10 +45,16 @@
                         Comenzar
                         </button>
                     </ng-template>
-                    <ng-container #deshabBlock *ngIf="(!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual.id!=null); then deshabBlock2"></ng-container>
+                    <ng-container #deshabBlock *ngIf="((!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual.id!=null)) && viaje.horaRealLlegada==''; then deshabBlock2; else viajeTerminadoBlock"></ng-container>
                     <ng-template #deshabBlock2>
                         <button mat-raised-button disabled color="primary">
                         Comenzar
+                        </button>
+                    </ng-template>
+                    <ng-container #viajeTerminadoBlock *ngIf="viaje.horaRealLlegada!=''; then viajeTerminadoBlock2"></ng-container>
+                    <ng-template #viajeTerminadoBlock2>
+                        <button mat-fab color="accent" (click)="mostrarReporte(viaje)">
+                        Reporte
                         </button>
                     </ng-template>
                 </li>

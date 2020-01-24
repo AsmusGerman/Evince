@@ -168,8 +168,10 @@ export class RecorridosListComponent implements OnInit {
     this.actualizarTiempo();
     viaje.siguiente=false;
     viaje.actual=true;
+    viaje.horaRealSalida="0h0m0s";
     this.viajeActual=viaje;
-    localStorage.setItem(viaje.id, JSON.stringify(viaje));
+    localStorage.setItem('ViajeActual', JSON.stringify(this.viajeActual));
+    //localStorage.setItem(viaje.id, JSON.stringify(viaje));
     this.iDataSource.filter(e=>{
       e.viajes.filter(ee=> {
        if(ee.orden==viaje.orden+1){
@@ -180,14 +182,28 @@ export class RecorridosListComponent implements OnInit {
      });
   }
 
-  detenerViajeActual(viaje) {
+  detenerViajeActual() {
     this.tiempoUltimoViaje=this.tiempoCrono;
     this.dataService.stop();
     this.dataService.reset();
+    var viaje;
+    viaje=JSON.parse(localStorage.getItem("ViajeActual"));
     viaje.actual=false;
-    this.viajeActual=new Viaje();
-    console.log(JSON.parse(localStorage.getItem('Viaje1Rec1')));
+    viaje.horaRealLlegada=this.tiempoUltimoViaje;
+    this.iDataSource.filter(recorrido=>{
+      recorrido.viajes.filter(viajeFiltro=> {
+        if(viajeFiltro.id==viaje.id){
+          viajeFiltro.actual=viaje.actual;
+          viajeFiltro.horaRealLlegada=viaje.horaRealLlegada;
+          viajeFiltro.retrasos=viaje.retrasos;
+        }
+      });
+     });
 
+    this.viajeActual=new Viaje();
+    localStorage.setItem(viaje.id,JSON.stringify(viaje));
+    console.log(this.iDataSource);
+    console.log(localStorage);
   }
 
   getViajeSiguiente() {
@@ -198,6 +214,10 @@ export class RecorridosListComponent implements OnInit {
       });
      });
  }
+
+  mostrarReporte(viajeParam:string) {
+    this.router.navigate(['driver/reporte-viaje/'+viajeParam]);
+  }
 
   nuevoRetraso(viajeParam:string) {
     this.router.navigate(['driver/retraso/'+viajeParam]);

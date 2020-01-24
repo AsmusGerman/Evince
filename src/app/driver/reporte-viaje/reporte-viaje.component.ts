@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { Retraso } from 'src/app/core/model/retraso';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngxs/store';
@@ -14,11 +13,8 @@ import { Viaje } from 'src/app/core/model/viaje';
     styleUrls:["./retraso.component.scss"]
   })
 
-  export class RetrasoComponent implements OnInit {
-    public tipo;
-    public descripcion;
-    public tiempo;
-    public retraso:Retraso=new Retraso();
+  export class ReporteViajeComponent implements OnInit {
+    public viajeParaReporte;
     public form: FormGroup;
     public viajeId = '';
     public viajeParaRetraso;
@@ -27,7 +23,7 @@ import { Viaje } from 'src/app/core/model/viaje';
     }
     ngOnInit() {
       //TODO: ver si pasar el viaje de esta forma o usar el id de la url
-      this.viajeParaRetraso = JSON.parse(localStorage.getItem("ViajeActual"));
+      this.viajeParaReporte = JSON.parse(localStorage.getItem("ViajeActual"));
       this.form = new FormGroup({
         tipo: new FormControl(""),
         descripcion: new FormControl(""),
@@ -36,24 +32,6 @@ import { Viaje } from 'src/app/core/model/viaje';
     }
 
     public submit() {
-/*       if (this.form.valid) {
-        this.store
-          .dispatch(new Retraso(this.form.value))
-          .pipe(
-            // gets the logged user profile from the store
-            switchMap(() => this.store.select(store => store.authentication.profile))
-          )
-          .subscribe((profile: string) => {
-            alert(profile);
-          });
-      } */
-      var retraso:Retraso=new Retraso();
-      retraso.id="Retraso1";
-      retraso.tipo=this.form.get("tipo").value;
-      retraso.descripcion=this.form.get("descripcion").value;
-      retraso.tiempo=this.form.get("tiempo").value;
-      this.viajeParaRetraso.retrasos.push(retraso);
-      localStorage.setItem("ViajeActual", JSON.stringify(this.viajeParaRetraso));
     }
 
     cancelar() {
