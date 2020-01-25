@@ -22,17 +22,24 @@ import { Viaje } from 'src/app/core/model/viaje';
     public form: FormGroup;
     public viajeId = '';
     public viajeParaRetraso;
-    constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private dataService: DataService) {
-    this.viajeId = activateRoute.snapshot.params['id'];
+    public retrasoPorDemora;
+    constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private dataService: DataService) 
+    {
+      this.viajeId = activateRoute.snapshot.params['id'];
+      this.retrasoPorDemora=JSON.parse(localStorage.getItem("Demora"));
+      console.log("RETRASO POR DEMORA "+this.retrasoPorDemora);
     }
     ngOnInit() {
       //TODO: ver si pasar el viaje de esta forma o usar el id de la url
       this.viajeParaRetraso = JSON.parse(localStorage.getItem("ViajeActual"));
+      console.log(localStorage);
+      console.log(JSON.parse(localStorage.getItem("ViajeActual")));
       this.form = new FormGroup({
         tipo: new FormControl(""),
         descripcion: new FormControl(""),
         tiempo: new FormControl("")
       })
+
     }
 
     public submit() {

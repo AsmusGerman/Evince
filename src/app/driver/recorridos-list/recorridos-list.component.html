@@ -32,8 +32,9 @@
                     {{viaje.id}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
-                        <button mat-raised-button color="warn" (click)="detenerViajeActual()">
-                        Detener
+                        <button mat-raised-button color="warn" (click)="comprobarDemora(viaje)">
+<!--                         <button mat-raised-button color="warn" (click)="detenerViajeActual()">
+ -->                        Detener
                         </button>
                         <button mat-raised-button (click)="nuevoRetraso(viajeActual.id)">
                         Registrar retraso
