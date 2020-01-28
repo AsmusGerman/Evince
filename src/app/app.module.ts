@@ -9,6 +9,8 @@ import { NgxsStoragePluginModule } from "@ngxs/storage-plugin";
 import { environment } from "src/environments/environment";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./authentication/interceptors/token.interceptor";
+import { CoreModule } from '@angular/flex-layout';
+import { SettingsState } from './core/store/settings.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,10 +19,11 @@ import { TokenInterceptor } from "./authentication/interceptors/token.intercepto
     HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([SettingsState], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
       key: ["auth.token", "auth.tokenRefresh"]
-    })
+    }),
+    CoreModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true }

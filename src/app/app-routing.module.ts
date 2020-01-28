@@ -4,31 +4,38 @@ import { OverviewComponent } from "./administrator/overview/overview.component";
 import { AuthGuard } from "./authentication/guards/authentication.guard";
 import { SigninComponent } from "./authentication/components/signin/signin.component";
 
+export const PATH = {
+  HOME: "home",
+  AUTHENTICATION: "authentication",
+  DRIVER: "driver",
+  ADMINISTRATOR: "administrator"
+};
+
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "home",
+    redirectTo: PATH.HOME,
     pathMatch: "full"
   },
   {
-    path: "home",
+    path: PATH.HOME,
     loadChildren: () => import("./home/home.module").then(m => m.HomeModule)
   },
   {
-    path: "authentication",
+    path: PATH.AUTHENTICATION,
     loadChildren: () =>
       import("./authentication/authentication.module").then(
         m => m.AuthenticationModule
       )
   },
   {
-    path: "driver",
+    path: PATH.DRIVER,
     loadChildren: () =>
       import("./driver/driver.module").then(m => m.DriverModule)
     //canActivate: [AuthGuard]
   },
   {
-    path: "administrator",
+    path: PATH.ADMINISTRATOR,
     loadChildren: () =>
       import("./administrator/administrator.module").then(
         m => m.AdministratorModule
@@ -37,14 +44,14 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: "home"
+    redirectTo: PATH.HOME
   }
 ];
 
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      enableTracing: true
+      //enableTracing: true
     })
   ],
   exports: [RouterModule]

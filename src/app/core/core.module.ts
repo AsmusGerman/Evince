@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
 import { UserService } from "./services/user.service";
+import { SettingsService } from "./services/settings.service";
+import { NgxsModule } from "@ngxs/store";
+import { SettingsState } from "./store/settings.state";
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
-  providers: [UserService]
+  providers: [UserService],
 })
 export class CoreModule {}

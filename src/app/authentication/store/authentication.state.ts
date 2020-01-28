@@ -61,8 +61,8 @@ export class AuthState {
 
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
-    const { username, password, remember } = action.payload;
-    return this.authenticationService.login(username, password, remember).pipe(
+    const { username, password } = action.payload;
+    return this.authenticationService.login(username, password, true).pipe(
       tap((result: { token: string; tokenRefresh: string }) => {
         ctx.patchState({
           token: result.token,

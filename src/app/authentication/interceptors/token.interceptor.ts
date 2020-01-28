@@ -15,7 +15,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     let authorizationRequest = req;
-    const token = this.store.select(store => store.auth.token);
+    const token = this.store.selectSnapshot(AuthState.token);
     if (!!token) {
       // after null check, do expiration check
       const isExpired = this.store.selectSnapshot(AuthState.isExpired);

@@ -1,16 +1,19 @@
 import { Injectable } from "@angular/core";
 import { from } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, tap } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 
-@Injectable({
-  providedIn: "root"
-})
+@Injectable({ providedIn: "root" })
 export class SettingsService {
   constructor() {}
 
   loadSettings() {
-    return from(import("src/assets/settings.json")).pipe(
-      map(json => json.default)
-    );
+    return from(
+      import(
+        /* webpackInclude: /\.json$/ */
+        /* webpackChunkName: "settings" */
+        `src/assets/settings${environment.production ? "" : ".dev"}.json`
+      )
+    ).pipe(map(json => json.default));
   }
 }
