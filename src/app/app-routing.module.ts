@@ -43,6 +43,22 @@ const routes: Routes = [
     //canActivate: [AuthGuard]
   },
   {
+    path: "driver/retraso/:id",
+    loadChildren: () =>
+      import("./driver/retraso/retraso.module").then(
+        m => m.RetrasoModule
+      )
+    //canActivate: [AuthGuard]
+  },
+  {
+    path: "driver/reporte-viaje/:id",
+    loadChildren: () =>
+      import("./driver/reporte-viaje/reporte-viaje.module").then(
+        m => m.ReporteViajeModule
+      )
+    //canActivate: [AuthGuard]
+  },
+  {
     path: "**",
     redirectTo: PATH.HOME
   }

@@ -1,4 +1,5 @@
 import { Trayecto } from "./trayecto";
+import {Retraso} from "./retraso";
 export interface Viaje {
     id: string;
     cantPasajeros: number;
@@ -10,4 +11,5 @@ export interface Viaje {
     horaRealLlegada:string;
     recorridoId:string;
     trayecto: Trayecto;
+    retrasos: Retraso[];
 } 
