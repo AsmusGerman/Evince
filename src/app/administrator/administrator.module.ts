@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
 import { SubscriptionListComponent } from './overview/components/subscription-list/subscription-list.component';
 import { SubscriptionFilterComponent } from './overview/components/subscription-filter/subscription-filter.component';
+import { LoginGuard } from '../authentication/guards/login.guard';
 
 const routes: Routes = [
   {

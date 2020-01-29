@@ -16,6 +16,7 @@ import { RetrasoComponent } from './retraso/retraso.component';
 import { ReporteViajeComponent } from './reporte-viaje/reporte-viaje.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { DataService } from '../core/services/data.service';
+import { LoginGuard } from '../authentication/guards/login.guard';
 
 const routes: Routes = [
   {

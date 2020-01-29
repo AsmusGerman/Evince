@@ -36,7 +36,6 @@ export class LoginHandler {
   }
 
   private onSuccess() {
-    debugger;
     //this.store.dispatch(new GetRole());
     this.iAuthenticationResources
       .pipe(first())

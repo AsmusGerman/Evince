@@ -11,31 +11,12 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { LoginHandler } from "./store/handlers/login.handler";
 import { LogoutHandler } from "./store/handlers/logout.handler";
 import { RegisterHandler } from "./store/handlers/register.handler";
-import { LoginGuard } from "./guards/login.guard";
-import { AuthenticationResources } from "./authentication-resources.token";
-
-const routes: Routes = [
-  {
-    path: "login",
-    component: LoginComponent,
-    canActivate: [LoginGuard]
-  },
-  {
-    path: "register",
-    component: SigninComponent
-  },
-  {
-    path: "**",
-    redirectTo: "login"
-  }
-];
 
 @NgModule({
   declarations: [LoginComponent, SigninComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterModule.forChild(routes),
     MaterialModule,
     NgxsModule.forFeature([AuthState])
   ],

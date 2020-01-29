@@ -11,6 +11,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { TokenInterceptor } from "./authentication/interceptors/token.interceptor";
 import { CoreModule } from './core/core.module';
 import { NotificationModule } from './shared/notification/notification.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { NotificationModule } from './shared/notification/notification.module';
       key: ["auth.token", "auth.refreshToken"]
     }),
     CoreModule,
+    AuthenticationModule,
     NotificationModule
   ],
   providers: [

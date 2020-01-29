@@ -89,8 +89,7 @@ export class AuthState {
             refreshToken: result.refreshToken,
             username
           });
-        },
-        error => console.log("error login")
+        }
       )
     );
   }

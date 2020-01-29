@@ -3,7 +3,7 @@ import { from } from "rxjs";
 import { map, tap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
-@Injectable({ providedIn: "root" })
+@Injectable()
 export class SettingsService {
   constructor() {}
 

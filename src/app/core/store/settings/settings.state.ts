@@ -1,21 +1,16 @@
 import { Selector, State, StateContext, NgxsAfterBootstrap } from "@ngxs/store";
-import { SettingsService } from "../../services/settings.service";
-import { SettingsStateModel } from "./settings.model";
+import { SettingsService } from '../../services/settings.service';
 
-@State<SettingsStateModel | null>({
+@State<any | null>({
   name: "settings",
-  defaults: {
-    entrypoint: null
-  }
+  defaults: null
 })
 export class SettingsState implements NgxsAfterBootstrap {
   constructor(private settingsService: SettingsService) {}
 
-  ngxsAfterBootstrap(ctx: StateContext<SettingsStateModel>) {
+  ngxsAfterBootstrap(ctx: StateContext<any>) {
     this.settingsService.loadSettings().subscribe(settings =>
-      ctx.setState({
-        entrypoint: settings.entrypoint
-      })
+      ctx.setState(settings)
     );
   }
 

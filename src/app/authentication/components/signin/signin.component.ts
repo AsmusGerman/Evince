@@ -37,7 +37,6 @@ export class SigninComponent implements OnInit {
   }
 
   public submit() {
-    debugger;
     if (this.form.valid) {
       this.store
         .dispatch(new Register(this.form.value))

@@ -3,6 +3,8 @@ import { Routes, RouterModule } from "@angular/router";
 import { OverviewComponent } from "./administrator/overview/overview.component";
 import { AuthenticationGuard } from "./authentication/guards/authentication.guard";
 import { SigninComponent } from "./authentication/components/signin/signin.component";
+import { LoginGuard } from "./authentication/guards/login.guard";
+import { LoginComponent } from "./authentication/components/login/login.component";
 
 export const PATH = {
   HOME: "home",
@@ -23,16 +25,27 @@ const routes: Routes = [
   },
   {
     path: PATH.AUTHENTICATION,
-    loadChildren: () =>
-      import("./authentication/authentication.module").then(
-        m => m.AuthenticationModule
-      )
+    children: [
+      {
+        path: "login",
+        component: LoginComponent
+      },
+      {
+        path: "signin",
+        component: SigninComponent
+      },
+      {
+        path: "**",
+        redirectTo: "/login"
+      }
+    ]
   },
+
   {
     path: PATH.DRIVER,
     loadChildren: () =>
       import("./driver/driver.module").then(m => m.DriverModule),
-    canActivate: [AuthenticationGuard]
+      canActivate: [LoginGuard]
   },
   {
     path: PATH.ADMINISTRATOR,
@@ -40,14 +53,12 @@ const routes: Routes = [
       import("./administrator/administrator.module").then(
         m => m.AdministratorModule
       ),
-    canActivate: [AuthenticationGuard]
+      canActivate: [LoginGuard]
   },
   {
     path: "driver/retraso/:id",
     loadChildren: () =>
-      import("./driver/retraso/retraso.module").then(
-        m => m.RetrasoModule
-      )
+      import("./driver/retraso/retraso.module").then(m => m.RetrasoModule)
     //canActivate: [AuthGuard]
   },
   {

@@ -3,17 +3,11 @@ import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
 import { map } from "rxjs/operators";
+import { SettingsState } from "src/app/core/store/settings/settings.state";
 
 @Injectable()
 export class AuthenticationService {
-  private entrypoint: string;
-
-  constructor(private http: HttpClient, private store: Store) {
-    // get the api url from store
-    this.store
-      .select(state => state.settings.entrypoint)
-      .subscribe(url => (this.entrypoint = url));
-  }
+  constructor(private http: HttpClient, private store: Store) {}
 
   public register(
     username: string,
@@ -22,7 +16,8 @@ export class AuthenticationService {
     lastname: string,
     role: number
   ) {
-    return this.http.post(`${this.entrypoint}/auth/register`, {
+    const url = this.store.selectSnapshot(SettingsState.entrypoint);
+    return this.http.post(`${url}/auth/register`, {
       username,
       password,
       name,
@@ -36,7 +31,8 @@ export class AuthenticationService {
     password: string,
     remember: boolean
   ): Observable<any> {
-    return this.http.post(`${this.entrypoint}/auth/login`, {
+    const url = this.store.selectSnapshot(SettingsState.entrypoint);
+    return this.http.post(`${url}/auth/login`, {
       username,
       password,
       remember
@@ -44,19 +40,22 @@ export class AuthenticationService {
   }
 
   public logout(token: string) {
-    return this.http.post(`${this.entrypoint}/auth/logout`, {
+    const url = this.store.selectSnapshot(SettingsState.entrypoint);
+    return this.http.post(`${url}/auth/logout`, {
       token
     });
   }
 
   public getRole() {
+    const url = this.store.selectSnapshot(SettingsState.entrypoint);
     return this.http
-      .get<{ id: number; name: string }>(`${this.entrypoint}/auth/role`)
+      .get<{ id: number; name: string }>(`${url}/auth/role`)
       .pipe(map(role => role.id));
   }
 
   public refreshToken(refreshToken: string) {
-    return this.http.post(this.entrypoint, {
+    const url = this.store.selectSnapshot(SettingsState.entrypoint);
+    return this.http.post(url, {
       refreshToken
     });
   }

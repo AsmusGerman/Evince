@@ -34,7 +34,7 @@ export class LoginGuard implements CanActivate {
             .subscribe(({ login }) =>
               this.iSnackbarService.success(login.success)
             );
-          return this.router.parseUrl("/administrator");
+          return true;
         }
         case Roles.driver: {
           this.iAuthenticationResources
@@ -42,9 +42,11 @@ export class LoginGuard implements CanActivate {
             .subscribe(({ login }) =>
               this.iSnackbarService.success(login.success)
             );
-          return this.router.parseUrl("/driver");
+          return true;
         }
       }
+    } else {
+      return this.router.parseUrl('home');
     }
     return false;
   }
