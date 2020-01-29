@@ -1,6 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ɵConsole } from "@angular/core";
 import {MatInputModule} from '@angular/material';
 import { Viaje } from 'src/app/core/model/viaje';
+import { DataService } from 'src/app/core/services/data.service';
+import { Router } from '@angular/router';
 
 var RECORRIDOS = [
   {
@@ -15,6 +17,7 @@ var RECORRIDOS = [
         "diaLlegada" : "30/06/2020",
         "horaEstipuladaSalida" : "18:00",
         "horaEstipuladaLlegada" : "22:00",
+        "tiempoEnSegsEstipulado": 10,
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "A-C",
@@ -26,7 +29,8 @@ var RECORRIDOS = [
           "trayectoId" : "AB",
           "terminalOrigen" : "A",
           "terminalDestino" : "B"
-        }
+        },
+        "retrasos" : []
         },
         {
         "id" : "Viaje2Rec1",
@@ -37,6 +41,7 @@ var RECORRIDOS = [
         "fechaHoraLlegadaEstipuladas" : "30/06/2020 23:00",
         "horaEstipuladaSalida" : "22:00",
         "horaEstipuladaLlegada" : "23:00",
+        "tiempoEnSegsEstipulado": 10,
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "A-C",
@@ -48,7 +53,8 @@ var RECORRIDOS = [
           "trayectoId" : "BC",
           "terminalOrigen" : "B",
           "terminalDestino" : "C"
-        }
+        },
+        "retrasos" : []
         }
     ]
   },
@@ -64,6 +70,7 @@ var RECORRIDOS = [
         "fechaHoraLlegadaEstipuladas" : "01/07/2020 09:00",
         "horaEstipuladaSalida" : "08:00",
         "horaEstipuladaLlegada" : "09:00",
+        "tiempoEnSegsEstipulado": 10,
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "F-I",
@@ -75,7 +82,8 @@ var RECORRIDOS = [
           "trayectoId" : "FG",
           "terminalOrigen" : "F",
           "terminalDestino" : "G"
-        }
+        },
+        "retrasos" : []
       },
       {
         "id" : "Viaje2Rec2",
@@ -86,6 +94,7 @@ var RECORRIDOS = [
         "fechaHoraLlegadaEstipuladas" : "01/07/2020 11:00",
         "horaEstipuladaSalida" : "09:00",
         "horaEstipuladaLlegada" : "11:00",
+        "tiempoEnSegsEstipulado": 10,
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "F-I",
@@ -97,7 +106,8 @@ var RECORRIDOS = [
           "trayectoId" : "GH",
           "terminalOrigen" : "G",
           "terminalDestino" : "H"
-        }
+        },
+        "retrasos" : []
       },
       {
         "id" : "Viaje3Rec2",
@@ -108,6 +118,7 @@ var RECORRIDOS = [
         "fechaHoraLlegadaEstipuladas" : "01/07/2020 13:00",
         "horaEstipuladaSalida" : "09:00",
         "horaEstipuladaLlegada" : "13:00",
+        "tiempoEnSegsEstipulado": 10,
         "horaRealSalida" : "",
         "horaRealLlegada" : "",
         "recorridoId" : "F-I",
@@ -119,7 +130,8 @@ var RECORRIDOS = [
           "trayectoId" : "HI",
           "terminalOrigen" : "H",
           "terminalDestino" : "I"
-        }
+        },
+        "retrasos" : []
       }
     ]
 }
@@ -138,35 +150,10 @@ export class RecorridosListComponent implements OnInit {
     public viajeSiguiente:Viaje=new Viaje();
     public fecha:Date = new Date();
     public cronos;
-    public tiempo=0;
+    public tiempoEnSegs=0;
     public tiempoUltimoViaje;
+    public tiempoCrono;
 
-/*     timer() {
-      this.tiempo = parseInt((<HTMLInputElement>document.getElementById('time')).value);
-      (<HTMLInputElement>document.getElementById('time')).value = eval(this.tiempo + 1);
-    } */
-
-    timer() {
-      this.tiempo=this.tiempo+1;
-      console.log(this.tiempo);
-    }
-
-    init() {
-      this.cronos = setInterval((e)=>{this.timer()}, 1000);
-    }
-
-    /* reset() {
-      this.tiempo = parseInt((<HTMLInputElement>document.getElementById('time')).value);
-      (<HTMLInputElement>document.getElementById('time')).value = "0";
-    } */
-
-    reset() {
-      this.tiempo = 0;
-    }
-
-    stop() {
-      clearInterval(this.cronos);
-    }
 
    getViajeActual() {
      this.iDataSource.filter(e=>{
@@ -177,11 +164,20 @@ export class RecorridosListComponent implements OnInit {
       });
   }
 
+  actualizarTiempo(){
+    setInterval(()=>{this.tiempoCrono=this.dataService.getTiempoCrono()},1000);
+  }
+
   comenzarViaje(viaje) {
-    this.init();
+    this.dataService.init();
+    //this.tiempoCrono=this.dataService.getTiempoCrono();
+    this.actualizarTiempo();
     viaje.siguiente=false;
     viaje.actual=true;
+    viaje.horaRealSalida="0h0m0s";
     this.viajeActual=viaje;
+    localStorage.setItem('ViajeActual', JSON.stringify(this.viajeActual));
+    //localStorage.setItem(viaje.id, JSON.stringify(viaje));
     this.iDataSource.filter(e=>{
       e.viajes.filter(ee=> {
        if(ee.orden==viaje.orden+1){
@@ -190,20 +186,27 @@ export class RecorridosListComponent implements OnInit {
         }
       });
      });
+     localStorage.setItem("Demora",JSON.stringify(false));
   }
 
   detenerViajeActual() {
-    this.tiempoUltimoViaje=this.tiempo;
-    this.stop();
-    this.reset();
-    this.iDataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-       if(ee.actual==true) {
-         this.viajeActual=new Viaje();
-         ee.actual=false;
+    this.tiempoUltimoViaje=this.tiempoCrono;
+    this.dataService.stop();
+    this.dataService.reset();
+    var viaje=JSON.parse(localStorage.getItem("ViajeActual"));
+
+    this.iDataSource.filter(recorrido=>{
+      recorrido.viajes.filter(viajeFiltro=> {
+        if(viajeFiltro.id==viaje.id){
+          viajeFiltro.actual=false;
+          viajeFiltro.horaRealLlegada=this.tiempoUltimoViaje;
+          viajeFiltro.retrasos=viaje.retrasos;
         }
       });
-     });
+    });
+
+    this.viajeActual=new Viaje();
+    localStorage.setItem(viaje.id,JSON.stringify(viaje));
   }
 
   getViajeSiguiente() {
@@ -215,10 +218,49 @@ export class RecorridosListComponent implements OnInit {
      });
  }
 
-  constructor() {}
+  mostrarReporte(viajeParam) {
+    localStorage.setItem('ViajeReporte', JSON.stringify(viajeParam));
+    this.router.navigate(['driver/reporte-viaje/'+viajeParam.id]);
+  }
+
+  nuevoRetraso(viajeParam:string) {
+    this.router.navigate(['driver/retraso/'+viajeParam]);
+  }
+
+  demoraTotal(viaje) {
+    var demoraTotal=0;
+    console.log(viaje.retrasos);
+    viaje.retrasos.forEach(retraso => {
+      demoraTotal+=retraso.tiempo;
+    });
+    console.log("DEMORA TOTAL: "+demoraTotal);
+    return demoraTotal;
+  }
+
+  comprobarDemora() {
+    var viaje=JSON.parse(localStorage.getItem("ViajeActual"));
+    console.log("COMPROBANDO DEMORA PARA EL VIAJE: "+viaje.retrasos);
+    console.log("RESTA");
+    console.log(this.dataService.tiempoEnSegs-this.demoraTotal(viaje));
+    if(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)>viaje.tiempoEnSegsEstipulado) {
+
+      localStorage.setItem('Demora',JSON.stringify(true));
+      this.router.navigate(['driver/retraso/'+viaje.id]);
+    }
+    else {
+      this.detenerViajeActual();
+    }
+
+  }
+
+  constructor(private router: Router, private dataService: DataService) {}
 
   ngOnInit() {
     this.getViajeActual();
+    this.actualizarTiempo();
+    if(JSON.parse(localStorage.getItem("Demora"))) {
+      this.detenerViajeActual();
+    }
+    localStorage.setItem('Demora', JSON.stringify(false));
   }
-
 }
