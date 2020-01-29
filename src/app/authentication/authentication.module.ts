@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { NgModule, APP_INITIALIZER } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { LoginComponent } from "./components/login/login.component";
 import { RouterModule, Routes } from "@angular/router";
@@ -8,11 +8,17 @@ import { AuthState } from "./store/authentication.state";
 import { SigninComponent } from "./components/signin/signin.component";
 import { AuthenticationService } from "./services/authentication.service";
 import { ReactiveFormsModule } from "@angular/forms";
+import { LoginHandler } from "./store/handlers/login.handler";
+import { LogoutHandler } from "./store/handlers/logout.handler";
+import { RegisterHandler } from "./store/handlers/register.handler";
+import { LoginGuard } from "./guards/login.guard";
+import { AuthenticationResources } from "./authentication-resources.token";
 
 const routes: Routes = [
   {
     path: "login",
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [LoginGuard]
   },
   {
     path: "register",
@@ -33,6 +39,11 @@ const routes: Routes = [
     MaterialModule,
     NgxsModule.forFeature([AuthState])
   ],
-  providers: [AuthenticationService]
+  providers: [
+    AuthenticationService,
+    LoginHandler,
+    LogoutHandler,
+    RegisterHandler
+  ]
 })
 export class AuthenticationModule {}

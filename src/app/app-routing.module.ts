@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { OverviewComponent } from "./administrator/overview/overview.component";
-import { AuthGuard } from "./authentication/guards/authentication.guard";
+import { AuthenticationGuard } from "./authentication/guards/authentication.guard";
 import { SigninComponent } from "./authentication/components/signin/signin.component";
 
 export const PATH = {
@@ -31,16 +31,16 @@ const routes: Routes = [
   {
     path: PATH.DRIVER,
     loadChildren: () =>
-      import("./driver/driver.module").then(m => m.DriverModule)
-    //canActivate: [AuthGuard]
+      import("./driver/driver.module").then(m => m.DriverModule),
+    canActivate: [AuthenticationGuard]
   },
   {
     path: PATH.ADMINISTRATOR,
     loadChildren: () =>
       import("./administrator/administrator.module").then(
         m => m.AdministratorModule
-      )
-    //canActivate: [AuthGuard]
+      ),
+    canActivate: [AuthenticationGuard]
   },
   {
     path: "**",

@@ -1,5 +1,5 @@
 import { Selector, State, StateContext, NgxsAfterBootstrap } from "@ngxs/store";
-import { SettingsService } from "../services/settings.service";
+import { SettingsService } from "../../services/settings.service";
 import { SettingsStateModel } from "./settings.model";
 
 @State<SettingsStateModel | null>({

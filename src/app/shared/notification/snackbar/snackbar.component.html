@@ -1,0 +1,12 @@
+<div class="flex">
+  <div class="content">
+    <mat-icon>{{ iData.icon }}</mat-icon>
+    <h1>{{ iData.title }}</h1>
+    {{ iData.message }}
+  </div>
+  <div class="dismiss">
+    <button mat-icon-button (click)="iMatSnackbarRef.dismiss()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+</div>

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   public submit() {
     if (this.form.valid) {
-      this.store.dispatch(new Login(this.form.value)).subscribe();
+      this.store.dispatch(new Login(this.form.value));
     }
   }
 

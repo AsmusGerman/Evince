@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
-import { tap } from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class AuthenticationService {
@@ -36,18 +36,23 @@ export class AuthenticationService {
     password: string,
     remember: boolean
   ): Observable<any> {
-    return this.http
-      .post(`${this.entrypoint}/auth/login`, {
-        username,
-        password,
-        remember
-      });
+    return this.http.post(`${this.entrypoint}/auth/login`, {
+      username,
+      password,
+      remember
+    });
   }
 
   public logout(token: string) {
     return this.http.post(`${this.entrypoint}/auth/logout`, {
       token
     });
+  }
+
+  public getRole() {
+    return this.http
+      .get<{ id: number; name: string }>(`${this.entrypoint}/auth/role`)
+      .pipe(map(role => role.id));
   }
 
   public refreshToken(refreshToken: string) {

@@ -1,0 +1,24 @@
+{
+    "login": {
+        "fail": {
+            "title": "Lo sentimos",
+            "message": "No pudimos identificarte. Si el problema persiste, comunícate con el administrador."
+        },
+        "success": {
+            "message": "Bienvenido!"
+        }
+    },
+    "register": {
+        "fail": {
+            "message": "La operación no finalizó correctamente. Vuelva a intentarlo."
+        },
+        "success": {
+            "message": "La operación finalizó correctamente. Los datos del nuevo usario están registrados."
+        }
+    },
+    "logout": {
+        "success": {
+            "message": "Sesión finalizada."
+        }
+    }
+}

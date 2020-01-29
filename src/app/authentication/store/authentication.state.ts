@@ -3,18 +3,23 @@ import {
   Login,
   Logout,
   RefreshToken,
-  Register
+  Register,
+  GetRole
 } from "./authentication.model";
-import { Selector, State, Action, StateContext } from "@ngxs/store";
+import { Selector, State, Action, StateContext, Actions, NgxsOnInit } from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { AuthenticationService } from "../services/authentication.service";
 import * as decoder from "jwt-decode";
+import { LoginHandler } from "./handlers/login.handler";
+import { LogoutHandler } from "./handlers/logout.handler";
+import { RegisterHandler } from "./handlers/register.handler";
 
 const defaults: AuthStateModel = {
   token: null,
   refreshToken: null,
   username: null,
-  registered: null
+  registered: null,
+  role: null
 };
 
 @State<AuthStateModel>({
@@ -22,6 +27,22 @@ const defaults: AuthStateModel = {
   defaults
 })
 export class AuthState {
+  constructor(
+    private iLoginHandler: LoginHandler,
+    private iLogoutHandler: LogoutHandler,
+    private iRegisterHandler: RegisterHandler,
+    private iAuthenticationService: AuthenticationService
+  ) {
+    this.iLoginHandler.initialize();
+    this.iLogoutHandler.initialize();
+    this.iRegisterHandler.initialize();
+  }
+
+  @Selector()
+  static role(state: AuthStateModel): number | null {
+    return state.role;
+  }
+
   @Selector()
   static token(state: AuthStateModel): string | null {
     return state.token;
@@ -43,12 +64,10 @@ export class AuthState {
     return state.registered;
   }
 
-  constructor(private authenticationService: AuthenticationService) {}
-
   @Action(Register)
   register(ctx: StateContext<AuthStateModel>, action: Register) {
     const { username, password, name, lastname, role } = action.payload;
-    return this.authenticationService
+    return this.iAuthenticationService
       .register(username, password, name, lastname, role)
       .pipe(
         tap((result: { registered }) => {
@@ -62,23 +81,37 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     const { username, password } = action.payload;
-    return this.authenticationService.login(username, password, true).pipe(
-      tap((result: { token: string; tokenRefresh: string }) => {
-        ctx.patchState({
-          token: result.token,
-          refreshToken: result.tokenRefresh,
-          username
-        });
-      })
+    return this.iAuthenticationService.login(username, password, true).pipe(
+      tap(
+        (result: { token: string; refreshToken: string }) => {
+          ctx.patchState({
+            token: result.token,
+            refreshToken: result.refreshToken,
+            username
+          });
+        },
+        error => console.log("error login")
+      )
     );
   }
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
     const state = ctx.getState();
-    return this.authenticationService.logout(state.token).pipe(
+    return this.iAuthenticationService.logout(state.token).pipe(
       tap(() => {
         ctx.setState(defaults);
+      })
+    );
+  }
+
+  @Action(GetRole)
+  getRoels(ctx: StateContext<AuthStateModel>) {
+    return this.iAuthenticationService.getRole().pipe(
+      tap(role => {
+        ctx.patchState({
+          role
+        });
       })
     );
   }
@@ -86,7 +119,7 @@ export class AuthState {
   @Action(RefreshToken)
   refresh(ctx: StateContext<AuthStateModel>) {
     const state = ctx.getState();
-    return this.authenticationService.refreshToken(state.refreshToken).pipe(
+    return this.iAuthenticationService.refreshToken(state.refreshToken).pipe(
       tap(
         (result: { token: string; tokenRefresh: string; username: string }) => {
           ctx.patchState({

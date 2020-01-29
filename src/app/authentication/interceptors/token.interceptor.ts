@@ -14,6 +14,7 @@ export class TokenInterceptor implements HttpInterceptor {
   constructor(private store: Store) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
+    debugger
     let authorizationRequest = req;
     const token = this.store.selectSnapshot(AuthState.token);
     if (!!token) {
