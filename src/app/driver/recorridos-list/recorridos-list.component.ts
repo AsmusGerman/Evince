@@ -3,6 +3,8 @@ import {MatInputModule} from '@angular/material';
 import { Viaje } from 'src/app/core/model/viaje';
 import { DataService } from 'src/app/core/services/data.service';
 import { Router } from '@angular/router';
+import { RecorridoService } from 'src/app/core/services/recorrido.service';
+import { ViajeService } from 'src/app/core/services/viaje.service';
 
 var RECORRIDOS = [
   {
@@ -146,23 +148,23 @@ var RECORRIDOS = [
 export class RecorridosListComponent implements OnInit {
     public iDataSource = RECORRIDOS;
     public recorridosOrdenadosPorFecha=RECORRIDOS;
-    public viajeActual:Viaje=new Viaje();
+    public viajeActual = this.viajeService.getViajeActual();
     public viajeSiguiente:Viaje=new Viaje();
     public fecha:Date = new Date();
     public cronos;
     public tiempoEnSegs=0;
     public tiempoUltimoViaje;
     public tiempoCrono;
+    
 
-
-   getViajeActual() {
+/*    getViajeActual() {
      this.iDataSource.filter(e=>{
        e.viajes.filter(ee=> {
         if(ee.actual==true)
           this.viajeActual=ee;
        });
       });
-  }
+  } */
 
   actualizarTiempo(){
     setInterval(()=>{this.tiempoCrono=this.dataService.getTiempoCrono()},1000);
@@ -229,19 +231,19 @@ export class RecorridosListComponent implements OnInit {
 
   demoraTotal(viaje) {
     var demoraTotal=0;
-    console.log(viaje.retrasos);
+    //console.log(viaje.retrasos);
     viaje.retrasos.forEach(retraso => {
       demoraTotal+=retraso.tiempo;
     });
-    console.log("DEMORA TOTAL: "+demoraTotal);
+    //console.log("DEMORA TOTAL: "+demoraTotal);
     return demoraTotal;
   }
 
   comprobarDemora() {
     var viaje=JSON.parse(localStorage.getItem("ViajeActual"));
-    console.log("COMPROBANDO DEMORA PARA EL VIAJE: "+viaje.retrasos);
+/*     console.log("COMPROBANDO DEMORA PARA EL VIAJE: "+viaje.retrasos);
     console.log("RESTA");
-    console.log(this.dataService.tiempoEnSegs-this.demoraTotal(viaje));
+    console.log(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)); */
     if(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)>viaje.tiempoEnSegsEstipulado) {
 
       localStorage.setItem('Demora',JSON.stringify(true));
@@ -253,10 +255,14 @@ export class RecorridosListComponent implements OnInit {
 
   }
 
-  constructor(private router: Router, private dataService: DataService) {}
+  constructor(private router: Router, private dataService: DataService, private recorridoService: RecorridoService,
+    private viajeService: ViajeService) {}
 
   ngOnInit() {
-    this.getViajeActual();
+    console.log(this.viajeService.getViajeActual());
+    this.viajeService.getViajeActual();
+    this.iDataSource=this.recorridoService.get_recorridos();
+    //this.getViajeActual();
     this.actualizarTiempo();
     if(JSON.parse(localStorage.getItem("Demora"))) {
       this.detenerViajeActual();
