@@ -146,9 +146,12 @@ var RECORRIDOS = [
 })
 
 export class RecorridosListComponent implements OnInit {
-    public iDataSource = RECORRIDOS;
+    //public iDataSource;
     public recorridosOrdenadosPorFecha=RECORRIDOS;
-    public viajeActual = this.viajeService.getViajeActual();
+    //public viajeActual :Viaje = this.viajeService.getViajeActual();
+    public iDataSource=this.dataService.getRecorridos();
+    public viajeActual = this.dataService.getViajeActual();
+
     public viajeSiguiente:Viaje=new Viaje();
     public fecha:Date = new Date();
     public cronos;
@@ -171,7 +174,8 @@ export class RecorridosListComponent implements OnInit {
   }
 
   comenzarViaje(viaje) {
-    this.dataService.init();
+    this.dataService.comenzarViaje(viaje);
+/*     this.dataService.init();
     //this.tiempoCrono=this.dataService.getTiempoCrono();
     this.actualizarTiempo();
     viaje.siguiente=false;
@@ -188,7 +192,7 @@ export class RecorridosListComponent implements OnInit {
         }
       });
      });
-     localStorage.setItem("Demora",JSON.stringify(false));
+     localStorage.setItem("Demora",JSON.stringify(false)); */
   }
 
   detenerViajeActual() {
@@ -207,7 +211,7 @@ export class RecorridosListComponent implements OnInit {
       });
     });
 
-    this.viajeActual=new Viaje();
+    //this.dataService.resetViajeActual();
     localStorage.setItem(viaje.id,JSON.stringify(viaje));
   }
 
@@ -259,10 +263,12 @@ export class RecorridosListComponent implements OnInit {
     private viajeService: ViajeService) {}
 
   ngOnInit() {
-    console.log(this.viajeService.getViajeActual());
-    this.viajeService.getViajeActual();
-    this.iDataSource=this.recorridoService.get_recorridos();
+    
+    //this.viajeActual=this.viajeService.getViajeActual();
+//    this.iDataSource=this.recorridoService.get_recorridos();
+    //console.log(this.iDataSource);
     //this.getViajeActual();
+    console.log(this.dataService.getViajeSiguiente());
     this.actualizarTiempo();
     if(JSON.parse(localStorage.getItem("Demora"))) {
       this.detenerViajeActual();

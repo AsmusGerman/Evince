@@ -9,7 +9,7 @@ import { Store } from '@ngxs/store';
 export class RecorridoService {
     constructor(private http:HttpClient,private injector: Injector) {}
 
-    get_recorridos(){
+    getRecorridos(){
         var recorridos = [];
         //return this.http.get('http://localhost:3000/recorridos');
         const url = this.injector
@@ -20,7 +20,7 @@ export class RecorridoService {
             .get(`${url}/passengerstransport/getdriverroadmap`)
             .subscribe({
                 //next: result => console.log(result),
-                next: result => recorridos.push(result),
+                next: result => {recorridos.push(result); console.log(result)},
                 error: error => console.log(error)
             });
             return recorridos;

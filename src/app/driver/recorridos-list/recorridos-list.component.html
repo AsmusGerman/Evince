@@ -2,11 +2,11 @@
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
 <div [(ngModel)]='tiempoCrono' name="tiempoCrono" ngDefaultControl></div>
 <mat-card>
-    <div *ngIf="((viajeActual.id==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
+    <div *ngIf="((viajeActual==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
     <ng-template #dataUltimoViaje>
         Tiempo último viaje: {{tiempoUltimoViaje}}
     </ng-template>
-    <div *ngIf="viajeActual.id!=null; then dataViajeActual"></div>
+    <div *ngIf="viajeActual!=null; then dataViajeActual"></div>
     <ng-template #dataViajeActual>
         Viaje actual: {{viajeActual.id}}
         <br>
@@ -30,6 +30,10 @@
             <ul>
                 <li *ngFor="let viaje of recorrido.viajes">
                     {{viaje.id}}
+                    {{viaje.actual}}
+                    {{viaje.orden}}
+                    {{viaje.estado}}
+                    {{viaje.siguiente}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
                         <button mat-raised-button color="warn" (click)="comprobarDemora(viaje)">
@@ -40,19 +44,19 @@
                         Registrar retraso
                         </button>
                     </ng-template>
-                    <ng-container #siguienteBlock *ngIf="viaje.siguiente && viajeActual.id==null; then existeActualBlock; else deshabBlock"></ng-container>
+                    <ng-container #siguienteBlock *ngIf="viaje.siguiente && viajeActual==null; then existeActualBlock; else deshabBlock"></ng-container>
                     <ng-template #existeActualBlock>
                         <button mat-raised-button color="primary" (click)="comenzarViaje(viaje)">
                         Comenzar
                         </button>
                     </ng-template>
-                    <ng-container #deshabBlock *ngIf="((!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual.id!=null)) && viaje.horaRealLlegada==''; then deshabBlock2; else viajeTerminadoBlock"></ng-container>
+                    <ng-container #deshabBlock *ngIf="((!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual==null)) && viaje.horaRealLlegada==''; then deshabBlock2; else viajeTerminadoBlock"></ng-container>
                     <ng-template #deshabBlock2>
                         <button mat-raised-button disabled color="primary">
                         Comenzar
                         </button>
                     </ng-template>
-                    <ng-container #viajeTerminadoBlock *ngIf="viaje.horaRealLlegada!=''; then viajeTerminadoBlock2"></ng-container>
+                    <ng-container #viajeTerminadoBlock *ngIf="viaje.fechaHoraRealLlegada!=null; then viajeTerminadoBlock2"></ng-container>
                     <ng-template #viajeTerminadoBlock2>
                         <button mat-fab color="accent" (click)="mostrarReporte(viaje)">
                         Reporte
