@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Login } from "../../store/authentication.model";
 import { Router } from "@angular/router";
-import { map, switchMap } from "rxjs/operators";
+import { IconsService } from 'src/app/shared/material/services/icons.service';
 
 @Component({
   selector: "evince-login",
@@ -12,9 +12,12 @@ import { map, switchMap } from "rxjs/operators";
 export class LoginComponent implements OnInit {
   public form: FormGroup;
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(private store: Store, private router: Router, private iIconsService: IconsService) {
+    
+  }
 
   ngOnInit() {
+    this.iIconsService.register("login", "assets/icons/key.svg");
     this.form = new FormGroup({
       username: new FormControl(""),
       password: new FormControl("")

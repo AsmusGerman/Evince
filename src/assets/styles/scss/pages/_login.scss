@@ -1,19 +1,18 @@
 .evince-ui {
   evince-login {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
 
-    margin: 0 2rem;
+    height: 100%;
+    padding: 0 2rem;
+    overflow-y: auto;
+    overflow-x: hidden;
 
-    .title {
-      text-align: center;
-      margin: 0 1rem;
-      line-height: 1.2;
-      > * {
-        color: white;
-      }
+    .icon {
+      width: auto;
+      height: auto;
+      transform: scale(0.5);
+      filter: grayscale(1);
     }
 
     .container {
@@ -21,19 +20,33 @@
       flex-direction: column;
       align-items: stretch;
       justify-content: center;
+      height: 100%;
 
-      section {
-        &:last-child {
-          padding: 1.5rem 0;
-        }
-        > * {
-          width: 100%;
-        }
+      .icon {
+        width: 10rem;
+        height: auto;
+        align-self: center;
       }
 
-      .mat-flat-button {
-        background-color: white;
-        color: black;
+      .title {
+        text-align: center;
+        margin: auto;
+      }
+
+      .form {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: center;
+
+        section {
+          &:last-child {
+            padding: 1.5rem 0;
+          }
+          > * {
+            width: 100%;
+          }
+        }
       }
     }
   }

@@ -10,6 +10,7 @@ export class IconsService {
     this.register("info", "src/assets/icons/lamp.svg");
     this.register("warn", "src/assets/icons/alert.svg");
   }
+  
   public register(name: string, path: string) {
     this.matIconRegistry.addSvgIcon(name, this.iDomSanitizer.bypassSecurityTrustResourceUrl(path));
   }

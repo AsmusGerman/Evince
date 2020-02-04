@@ -1,17 +1,5 @@
-%flex-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-%glass {
-  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
-  border-radius: 0.5rem;
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(0.5rem);
-}
-
+@import './abstracts';
+@import './variables';
 body {
   background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
   background-repeat: no-repeat;
@@ -25,6 +13,10 @@ body {
   @extend %flex-row;
   @extend %glass;
   margin: 1rem;
+
+  h1.title {
+    color: $light-primary-text;
+  }
 }
 
 @-webkit-keyframes flow {
