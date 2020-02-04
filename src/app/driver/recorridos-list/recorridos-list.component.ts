@@ -15,15 +15,11 @@ import * as moment from 'moment';
 })
 
 export class RecorridosListComponent implements OnInit {
-  subscriptionCrono: Subscription;
-  subscriptionViajeActual: Subscription;
     public iDataSource=this.dataService.getRecorridos();
-    public viajeActual:Viaje=this.dataService.getViajeActual();
     public fecha:Date = new Date();
     public cronos;
     public tiempoEnSegs=0;
     public tiempoUltimoViaje;
-    public tiempoCrono : string = this.dataService.getTiempoCrono();
 
   comenzarViaje(viaje) {
     this.dataService.comenzarViaje(viaje);
@@ -31,16 +27,15 @@ export class RecorridosListComponent implements OnInit {
 
   detenerViajeActual(viaje) {
     this.dataService.detenerViaje(viaje);
-    console.log(this.dataService.getViajeActual());
   } 
 
-  mostrarReporte(viajeParam) {
-    localStorage.setItem('ViajeReporte', JSON.stringify(viajeParam));
-    this.router.navigate(['driver/reporte-viaje/'+viajeParam.id]);
+  mostrarReporte(viaje) {
+    this.dataService.setViajeReporte(viaje);
+    this.router.navigate(['driver/reporte-viaje/']);
   }
 
   nuevoRetraso(viajeParam:string) {
-    this.router.navigate(['driver/retraso/'+viajeParam]);
+    this.router.navigate(['driver/retraso/']);
   }
 
   demoraTotal(viaje) {
@@ -48,25 +43,18 @@ export class RecorridosListComponent implements OnInit {
     viaje.retrasos.forEach(retraso => {
       demoraTotal+=retraso.tiempo;
     });
-    /* console.log("EL TIEMPO ESTIPULADO EN SEGNUNDOS ES ", 
-    moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
-    .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
-    .asSeconds()); */
     return demoraTotal;
   }
 
   comprobarDemora(viaje) {
-    console.log("TIEMPO TOTAL VIAJE: ",this.dataService.tiempoEnSegs);
-    console.log("TIEMPO DEMORAS: ",this.demoraTotal(viaje));
-    console.log("TIEMPO ESTIPULADO EN SEGUNDOS: ",moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
+    var duracionViajeEnSegs=moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
     .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
-    .asSeconds());
-    if(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)>
-    moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
-    .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
-    .asSeconds()) {
+    .asSeconds();
+    var tiempoDemora = this.dataService.tiempoEnSegs-this.demoraTotal(viaje);
+    if(tiempoDemora>duracionViajeEnSegs) {
+      viaje["tiempoDemora"]=tiempoDemora;
       this.dataService.setViajeActual(viaje);
-      this.router.navigate(['driver/retraso/'+viaje.id]);
+      this.router.navigate(['driver/retraso']);
     }
     else {
       this.detenerViajeActual(viaje);
@@ -75,40 +63,7 @@ export class RecorridosListComponent implements OnInit {
   }
 
   constructor(private router: Router, private dataService: DataService, private recorridoService: RecorridoService,
-    private viajeService: ViajeService) {
-      // subscribe to home component messages
-/*       this.subscriptionCrono = this.dataService.getTiempoCrono().subscribe(tc => {
-        if (tc) {
-          this.tiempoCrono=tc.text;
+    private viajeService: ViajeService) { }
 
-        }
-      }); */
-
-/*       this.subscriptionViajeActual = this.dataService.getViajeActual().subscribe(va => {
-        if (va) {
-          
-          this.viajeActual=va;
-          console.log("VIAJE ACTUAL != NULL");
-          console.log(this.viajeActual);
-        }
-        else {
-          this.viajeActual=null;
-          console.log("VIAJE ACTUAL NULL");
-        }
-      }); */
-    }
-
-  ngOnInit() {
-    
-    //this.viajeActual=this.dataService.getViajeActual();
-//    this.iDataSource=this.recorridoService.get_recorridos();
-    //console.log(this.iDataSource);
-    //this.getViajeActual();
-    //console.log(this.dataService.getViajeSiguiente());
-    this.dataService.actualizarTiempo();
-/*     if(JSON.parse(localStorage.getItem("Demora"))) {
-      this.detenerViajeActual(viaje);
-    } */
-    //localStorage.setItem('Demora', JSON.stringify(false));
-  }
+  ngOnInit() { }
 }

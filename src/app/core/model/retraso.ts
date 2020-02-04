@@ -3,5 +3,5 @@ export class Retraso {
     id: string;
     tipo: string;
     descripcion: string;
-    tiempo: string;
+    tiempo: number;
 }

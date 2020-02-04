@@ -1,11 +1,8 @@
-<div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
-<div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
-<div [(ngModel)]='tiempoCrono' name="tiempoCrono" ngDefaultControl></div>
 <mat-card>
-    <div *ngIf="((dataService.viajeActual==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
+<!--     <div *ngIf="((dataService.viajeActual==null) && (dataService.tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
     <ng-template #dataUltimoViaje>
-        Tiempo último viaje: {{tiempoUltimoViaje}}
-    </ng-template>
+        Tiempo último viaje: {{dataService.tiempoUltimoViaje}}
+    </ng-template> -->
     <div *ngIf="dataService.viajeActual!=null; then dataViajeActual"></div>
     <ng-template #dataViajeActual>
         Viaje actual: {{dataService.viajeActual.id}}
@@ -16,7 +13,7 @@
         <br>
         Horario estipulado de llegada: {{dataService.viajeActual.fechaHoraLlegadaEstipuladas}}
         <br>
-        Tiempo de viaje actual: {{tiempoCrono}}
+        Tiempo de viaje actual: {{dataService.tiempoCrono}}
     </ng-template>
     <mat-accordion>
         <mat-expansion-panel *ngFor="let recorrido of iDataSource">
@@ -30,14 +27,10 @@
             <ul>
                 <li *ngFor="let viaje of recorrido.viajes">
                     {{viaje.id}}
-                    {{viaje.actual}}
-                    {{viaje.orden}}
-                    {{viaje.siguiente}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
                         <button mat-raised-button color="warn" (click)="comprobarDemora(viaje)">
-<!--                         <button mat-raised-button color="warn" (click)="detenerViajeActual()">
- -->                        Detener
+                        Detener
                         </button>
                         <button mat-raised-button (click)="nuevoRetraso(dataService.viajeActual.id)">
                         Registrar retraso
@@ -68,5 +61,3 @@
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>
-{{dataService.contador}}
-<input type="button" value="+" (click)="pulsar()"/>

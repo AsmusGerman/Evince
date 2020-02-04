@@ -13,20 +13,11 @@ import { Viaje } from 'src/app/core/model/viaje';
   })
 
   export class ReporteViajeComponent implements OnInit {
-    public viajeParaReporte;
     public form: FormGroup;
-    public viajeId = '';
     constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, private dataService: DataService) {
-    this.viajeId = activateRoute.snapshot.params['id'];
     }
     ngOnInit() {
-      //TODO: ver si pasar el viaje de esta forma o usar el id de la url
-      this.viajeParaReporte = JSON.parse(localStorage.getItem("ViajeReporte"));
-      this.form = new FormGroup({
-        tipo: new FormControl(""),
-        descripcion: new FormControl(""),
-        tiempo: new FormControl("")
-      })
+
     }
 
     public submit() {

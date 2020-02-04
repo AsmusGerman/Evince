@@ -8,6 +8,7 @@ import {Location} from '@angular/common';
 import { Viaje } from 'src/app/core/model/viaje';
 import { Subscription } from 'rxjs';
 import { DataService } from 'src/app/core/services/data.service';
+import * as moment from 'moment';
 
 @Component({
     selector: "evince-retraso",
@@ -16,16 +17,15 @@ import { DataService } from 'src/app/core/services/data.service';
   })
 
   export class RetrasoComponent implements OnInit {
-    subscriptionViajeActual: Subscription;
-    public viajeActual:Viaje=this.dataService.getViajeActual();
+    //subscriptionViajeActual: Subscription;
+    //public viajeActual:Viaje=this.dataService.getViajeActual();
     public tipo;
     public descripcion;
     public tiempo;
     public retraso:Retraso=new Retraso();
     public form: FormGroup;
-    public viajeId = '';
-    //public viajeParaRetraso;
     public retrasoPorDemora;
+    tiempoDemoraNum:number;
 
   public submit() {
     if (this.form.valid) {
@@ -33,11 +33,10 @@ import { DataService } from 'src/app/core/services/data.service';
       retraso.id="Retraso1";
       retraso.tipo=this.form.get("tipo").value;
       retraso.descripcion=this.form.get("descripcion").value;
-      retraso.tiempo=this.form.get("tiempo").value;
-      this.viajeActual.retrasos.push(retraso);
+      retraso.tiempo=parseFloat(this.form.get("tiempo").value);
+      //this.viajeActual.retrasos.push(retraso);
+      this.dataService.getViajeActual().retrasos.push(retraso);
       this._location.back();
-      //this.viajeParaRetraso.retrasos.push(retraso);
-      //localStorage.setItem("ViajeActual", JSON.stringify(this.viajeParaRetraso));
       }
     }
 
@@ -46,33 +45,13 @@ import { DataService } from 'src/app/core/services/data.service';
     }
 
     constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, 
-      private dataService: DataService) 
-    {
-/*       console.log(this.viajeActual);
-      this.subscriptionViajeActual = this.dataService.getViajeActual().subscribe(va => {
-        console.log(va);
-        if (va) {
-          this.viajeActual=va;
-          console.log(this.viajeActual);
-        }
-        else {
-          console.log("VIAJE ACTUAL NULL");
-          this.viajeActual=null;
-        }
-      }); */
-    }
+      private dataService: DataService) {}
+
     ngOnInit() {
-      //TODO: ver si pasar el viaje de esta forma o usar el id de la url
-      //this.viajeParaRetraso = JSON.parse(localStorage.getItem("ViajeActual"));
-      //console.log(localStorage);
-      //console.log(JSON.parse(localStorage.getItem("ViajeActual")));
       this.form = new FormGroup({
         tipo: new FormControl(""),
         descripcion: new FormControl(""),
         tiempo: new FormControl("")
       })
-
     }
-
-
 }

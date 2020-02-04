@@ -12,7 +12,7 @@ var RECORRIDOS = [
         "id" : "Viaje1Rec1",
         "cantPasajeros" : 43,
         "fechaHoraSalidaEstipuladas" : "2020/03/13 18:00:00",
-        "fechaHoraLlegadaEstipuladas" : "2020/03/13 18:00:15",
+        "fechaHoraLlegadaEstipuladas" : "2020/03/13 18:00:05",
         "fechaHoraRealSalida" : null,
         "fechaHoraRealLlegada" : null,
         "actual" : false,
@@ -31,7 +31,7 @@ var RECORRIDOS = [
           "id" : "Viaje2Rec1",
           "cantPasajeros" : 43,
           "fechaHoraSalidaEstipuladas" : "2020/03/13 18:00:00",
-          "fechaHoraLlegadaEstipuladas" : "2020/03/13 22:00:00",
+          "fechaHoraLlegadaEstipuladas" : "2020/03/13 18:00:03",
           "fechaHoraRealSalida" : null,
           "fechaHoraRealLlegada" : null,
           "actual" : false,
@@ -54,8 +54,8 @@ var RECORRIDOS = [
       {
         "id" : "Viaje1Rec2",
         "cantPasajeros" : 43,
-        "fechaHoraSalidaEstipuladas" : "2020/03/13 18:00",
-        "fechaHoraLlegadaEstipuladas" : "2020/03/13 22:00",
+        "fechaHoraSalidaEstipuladas" : "2020/12/13 22:06:05",
+        "fechaHoraLlegadaEstipuladas" : "2020/12/13 22:06:10",
         "fechaHoraRealSalida" : null,
         "fechaHoraRealLlegada" : null,
         "actual" : false,
@@ -115,13 +115,13 @@ var RECORRIDOS = [
 @Injectable()
 export class DataService implements OnInit{
   tiempoEnSegs:number=0;
-  //tiempoCrono:string="";
-  private tiempoCronoSubj = new Subject<any>();
-  private viajeActualSubj = new Subject<any>();
-  //private viajeActualSubj = new Subject<any>();
+  tiempoDemoraViajeActualEnHMS:string;
   tiempoCrono:string;
   viajeActual:Viaje;
+  viajeReporte:Viaje;
   cronos:any;
+  private dataSource = RECORRIDOS;
+  tiempoUltimoViaje:string;
 
   constructor(private recorridoService: RecorridoService) {}
 
@@ -133,13 +133,6 @@ export class DataService implements OnInit{
     this.tiempoCrono=tc;
   }
 
-/*   setTiempoCrono(tc: string) {
-    this.tiempoCronoSubj.next({text:tc});
-  }
-  getTiempoCrono(): Observable<any> {
-    return this.tiempoCronoSubj.asObservable();
-  } */
-
   setViajeActual(va: Viaje) {
     this.viajeActual=va;
   }
@@ -148,77 +141,33 @@ export class DataService implements OnInit{
     return this.viajeActual;
   }
 
-/*   setViajeActual(va: Viaje) {
-    this.viajeActualSubj.next(va);
+  setViajeReporte(vr: Viaje) {
+    this.viajeReporte=vr;
   }
 
-  getViajeActual(): Observable<any> {
-    return this.viajeActualSubj.asObservable();
-  } */
-
-  private dataSource = RECORRIDOS;
-  //private dataSource=this.recorridoService.getRecorridos();
-
-  //private viajeActual:Viaje=null;
-  //private viajeSiguiente:Viaje=null;
-  public tiempoUltimoViaje;
-
-
-/*   getViajeActual() {
-    this.dataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-        if(ee.actual){
-          return ee;
-        }
-      });
-    });
-    return null;
-  } */
-
-/*   getViajeSiguiente() {
-    this.dataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-        if(ee.siguiente){
-          return ee;
-        }
-      });
-    });
-    return null;
-  } */
-
-/*   resetViajeActual() {
-    this.viajeActual = new Viaje();
-  } */
+  getViajeReporte(): Viaje {
+    return this.viajeReporte;
+  }
 
    getRecorridos() {
     return this.dataSource;
   }
 
-/*   getTiempoCrono():string{
-    console.log(this.tiempoCrono);
-    return this.tiempoCrono;
-  } */
-
   actualizarTiempo(){
-    //setInterval(()=>{this.setTiempoCrono,1000});
     setInterval(()=>{this.tiempoCrono=this.getTiempoCrono()},1000);
   }
 
   comenzarViaje(viaje) {
     this.init();
-    //this.tiempoCrono=this.getTiempoCrono();
     this.actualizarTiempo();
-    //console.log(moment().format("DD/MM/YYYY HH:mm"));
     viaje.actual=true;
     viaje.siguiente=false;
     viaje.fechaHoraRealSalida=moment().format("YYYY/MM/DD HH:mm:ss");
     this.setViajeActual(viaje);
-    //this.viajeActual=viaje;
      this.dataSource.filter(e=>{
       e.viajes.filter(ee=> {
        if(ee.orden==viaje.orden+1){
          ee.siguiente=true;
-         //this.viajeSiguiente=ee;
         }
       });
      });
@@ -227,15 +176,15 @@ export class DataService implements OnInit{
     }
 
   detenerViaje(viaje) {
-    //this.tiempoUltimoViaje=this.tiempoCrono;
+    this.tiempoUltimoViaje=this.tiempoCrono;
     this.stop();
     this.reset();
+    this.setTiempoCrono(0+"h "+0+"m "+0+"s");
     this.setViajeActual(null);
     this.dataSource.filter(e=>{
       e.viajes.filter(ee=> {
         if(ee.id==viaje.id){
           ee.actual=false;
-          //viajeFiltro.fechaHoraRealLlegada=this.tiempoUltimoViaje;
           ee.fechaHoraRealLlegada=moment().format("DD/MM/YYYY HH:mm:ss");
           ee.retrasos=viaje.retrasos;
         }
@@ -244,16 +193,27 @@ export class DataService implements OnInit{
         }
       });
     });
-    console.log(this.getViajeActual());
   }
 
   timer() {
+
+    //este calculo es para mostrar en la ventana del viaje actual
     this.tiempoEnSegs=this.tiempoEnSegs+1;
     var hours = Math.floor((this.tiempoEnSegs*1000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     var minutes = Math.floor((this.tiempoEnSegs*1000 % (1000 * 60 * 60)) / (1000 *60));
     var seconds = Math.floor(this.tiempoEnSegs*1000 % (1000 * 60) / 1000);
-    
+
     this.setTiempoCrono(hours+"h "+minutes+"m "+seconds+"s");
+
+    //este calculo es para mostrar en la ventana de retraso
+    var tiempoDemoraViajeActualEnSegs = this.tiempoEnSegs - moment.duration(moment(this.getViajeActual().fechaHoraLlegadaEstipuladas)
+    .diff(moment(this.getViajeActual().fechaHoraSalidaEstipuladas)))
+    .asSeconds();
+    var hoursTiempoDemora = Math.floor((tiempoDemoraViajeActualEnSegs*1000 % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutesTiempoDemora = Math.floor((tiempoDemoraViajeActualEnSegs*1000 % (1000 * 60 * 60)) / (1000 *60));
+    var secondsTiempoDemora = Math.floor(tiempoDemoraViajeActualEnSegs*1000 % (1000 * 60) / 1000);
+
+    this.tiempoDemoraViajeActualEnHMS=hoursTiempoDemora+"h "+minutesTiempoDemora+"m "+secondsTiempoDemora+"s";
   }
 
   init() {

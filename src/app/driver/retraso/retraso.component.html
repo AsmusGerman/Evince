@@ -1,15 +1,16 @@
 <div [(ngModel)]='tipo' name="tipo" ngDefaultControl></div>
 <div [(ngModel)]='descripcion' name="descripcion" ngDefaultControl></div>
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
-<div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
 <div class="container">
     <mat-card>
-      <div *ngIf="viajeActual!=null ; then dataUltimoViaje"></div>
-      <ng-template #dataUltimoViaje>
-          Tiempo último viaje: {{viajeActual}}
+      <div *ngIf="dataService.viajeActual.tiempoDemora!=null ; then avisoRetrasoPorDemora ; else retrasoVoluntario"></div>
+      <ng-template #avisoRetrasoPorDemora>
+        El tiempo real del viaje es mayor al estipulado por {{dataService.tiempoDemoraViajeActualEnHMS}}, debe informar un retraso
       </ng-template>
-<!--       <mat-card-title>Nuevo retraso para el viaje {{viajeActual.id}}</mat-card-title>
- -->      <mat-card-content>
+      <ng-template #retrasoVoluntario>
+        Informar retraso para el viaje {{ dataService.viajeActual.id }}
+      </ng-template>
+      <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()">
           <p>
             <mat-form-field>
@@ -52,5 +53,3 @@
       </mat-card-content>
     </mat-card>
   </div>
-  {{dataService.contador}}
-<input type="button" value="+" (click)="pulsar()"/>

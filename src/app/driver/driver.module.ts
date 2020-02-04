@@ -24,11 +24,11 @@ const routes: Routes = [
     component: DriverComponent
   },
   {
-    path: "retraso/:id",
+    path: "retraso",
     component: RetrasoComponent
   },
   {
-    path: "reporte-viaje/:id",
+    path: "reporte-viaje",
     component: ReporteViajeComponent
   }
 ];
