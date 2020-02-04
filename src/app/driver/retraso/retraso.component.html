@@ -1,10 +1,15 @@
 <div [(ngModel)]='tipo' name="tipo" ngDefaultControl></div>
 <div [(ngModel)]='descripcion' name="descripcion" ngDefaultControl></div>
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
+<div [(ngModel)]='viajeActual' name="viajeActual" ngDefaultControl></div>
 <div class="container">
     <mat-card>
-      <mat-card-title>Nuevo retraso para el viaje {{viajeParaRetraso.id}}</mat-card-title>
-      <mat-card-content>
+      <div *ngIf="viajeActual!=null ; then dataUltimoViaje"></div>
+      <ng-template #dataUltimoViaje>
+          Tiempo último viaje: {{viajeActual}}
+      </ng-template>
+<!--       <mat-card-title>Nuevo retraso para el viaje {{viajeActual.id}}</mat-card-title>
+ -->      <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="submit()">
           <p>
             <mat-form-field>
@@ -40,10 +45,12 @@
           </p>
   
           <div class="button-group">
-            <button type="button" mat-flat-button (click)="cancelar()" >Cancelar (ESTE SI)</button>
-            <button type="submit" mat-raised-button color="primary">Guardar (ESTE NO HACE NADA)</button>
+            <button type="button" mat-flat-button (click)="cancelar()" >Cancelar</button>
+            <button type="submit" mat-raised-button color="primary">Guardar</button>
           </div>
         </form>
       </mat-card-content>
     </mat-card>
   </div>
+  {{dataService.contador}}
+<input type="button" value="+" (click)="pulsar()"/>

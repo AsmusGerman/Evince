@@ -5,139 +5,8 @@ import { DataService } from 'src/app/core/services/data.service';
 import { Router } from '@angular/router';
 import { RecorridoService } from 'src/app/core/services/recorrido.service';
 import { ViajeService } from 'src/app/core/services/viaje.service';
-
-var RECORRIDOS = [
-  {
-    "id" : "A-C",
-    "viajes": [
-        {
-        "id" : "Viaje1Rec1",
-        "cantPasajeros" : 43,
-        "fechaHoraSalidaEstipuladas" : "30/06/2020 18:00",
-        "fechaHoraLlegadaEstipuladas" : "30/06/2020 22:00",
-        "diaSalida" : "30/06/2020",
-        "diaLlegada" : "30/06/2020",
-        "horaEstipuladaSalida" : "18:00",
-        "horaEstipuladaLlegada" : "22:00",
-        "tiempoEnSegsEstipulado": 10,
-        "horaRealSalida" : "",
-        "horaRealLlegada" : "",
-        "recorridoId" : "A-C",
-        "actual" : false,
-        "siguiente" : true,
-        "orden":1,
-        "trayecto" : 
-        {
-          "trayectoId" : "AB",
-          "terminalOrigen" : "A",
-          "terminalDestino" : "B"
-        },
-        "retrasos" : []
-        },
-        {
-        "id" : "Viaje2Rec1",
-        "diaSalida" : "30/06/2020",
-        "diaLlegada" : "30/06/2020",
-        "cantPasajeros" : 40,
-        "fechaHoraSalidaEstipuladas" : "30/06/2020 22:00",
-        "fechaHoraLlegadaEstipuladas" : "30/06/2020 23:00",
-        "horaEstipuladaSalida" : "22:00",
-        "horaEstipuladaLlegada" : "23:00",
-        "tiempoEnSegsEstipulado": 10,
-        "horaRealSalida" : "",
-        "horaRealLlegada" : "",
-        "recorridoId" : "A-C",
-        "actual" : false,
-        "siguiente": false,
-        "orden" :2,
-        "trayecto" : 
-        {
-          "trayectoId" : "BC",
-          "terminalOrigen" : "B",
-          "terminalDestino" : "C"
-        },
-        "retrasos" : []
-        }
-    ]
-  },
-  {
-    "id" : "F-I",
-    "viajes": [
-      {
-        "id" : "Viaje1Rec2",
-        "diaSalida" : "01/07/2020",
-        "diaLlegada" : "01/07/2020",
-        "cantPasajeros" : 50,
-        "fechaHoraSalidaEstipuladas" : "01/07/2020 08:00",
-        "fechaHoraLlegadaEstipuladas" : "01/07/2020 09:00",
-        "horaEstipuladaSalida" : "08:00",
-        "horaEstipuladaLlegada" : "09:00",
-        "tiempoEnSegsEstipulado": 10,
-        "horaRealSalida" : "",
-        "horaRealLlegada" : "",
-        "recorridoId" : "F-I",
-        "actual" : false,
-        "siguiente": false,
-        "orden" :3,
-        "trayecto" : 
-        {
-          "trayectoId" : "FG",
-          "terminalOrigen" : "F",
-          "terminalDestino" : "G"
-        },
-        "retrasos" : []
-      },
-      {
-        "id" : "Viaje2Rec2",
-        "diaSalida" : "01/07/2020",
-        "diaLlegada" : "01/07/2020",
-        "cantPasajeros" : 54,
-        "fechaHoraSalidaEstipuladas" : "01/07/2020 09:00",
-        "fechaHoraLlegadaEstipuladas" : "01/07/2020 11:00",
-        "horaEstipuladaSalida" : "09:00",
-        "horaEstipuladaLlegada" : "11:00",
-        "tiempoEnSegsEstipulado": 10,
-        "horaRealSalida" : "",
-        "horaRealLlegada" : "",
-        "recorridoId" : "F-I",
-        "actual" : false,
-        "siguiente": false,
-        "orden" :4,
-        "trayecto" : 
-        {
-          "trayectoId" : "GH",
-          "terminalOrigen" : "G",
-          "terminalDestino" : "H"
-        },
-        "retrasos" : []
-      },
-      {
-        "id" : "Viaje3Rec2",
-        "diaSalida" : "01/07/2020",
-        "diaLlegada" : "01/07/2020",
-        "cantPasajeros" : 46,
-        "fechaHoraSalidaEstipuladas" : "01/07/2020 09:00",
-        "fechaHoraLlegadaEstipuladas" : "01/07/2020 13:00",
-        "horaEstipuladaSalida" : "09:00",
-        "horaEstipuladaLlegada" : "13:00",
-        "tiempoEnSegsEstipulado": 10,
-        "horaRealSalida" : "",
-        "horaRealLlegada" : "",
-        "recorridoId" : "F-I",
-        "actual" : false,
-        "siguiente": false,
-        "orden" :5,
-        "trayecto" : 
-        {
-          "trayectoId" : "HI",
-          "terminalOrigen" : "H",
-          "terminalDestino" : "I"
-        },
-        "retrasos" : []
-      }
-    ]
-}
-];
+import { Subscription } from 'rxjs';
+import * as moment from 'moment';
 
 @Component({
   selector: "evince-recorridos-list",
@@ -146,83 +15,24 @@ var RECORRIDOS = [
 })
 
 export class RecorridosListComponent implements OnInit {
-    //public iDataSource;
-    public recorridosOrdenadosPorFecha=RECORRIDOS;
-    //public viajeActual :Viaje = this.viajeService.getViajeActual();
+  subscriptionCrono: Subscription;
+  subscriptionViajeActual: Subscription;
     public iDataSource=this.dataService.getRecorridos();
-    public viajeActual = this.dataService.getViajeActual();
-
-    public viajeSiguiente:Viaje=new Viaje();
+    public viajeActual:Viaje=this.dataService.getViajeActual();
     public fecha:Date = new Date();
     public cronos;
     public tiempoEnSegs=0;
     public tiempoUltimoViaje;
-    public tiempoCrono;
-    
-
-/*    getViajeActual() {
-     this.iDataSource.filter(e=>{
-       e.viajes.filter(ee=> {
-        if(ee.actual==true)
-          this.viajeActual=ee;
-       });
-      });
-  } */
-
-  actualizarTiempo(){
-    setInterval(()=>{this.tiempoCrono=this.dataService.getTiempoCrono()},1000);
-  }
+    public tiempoCrono : string = this.dataService.getTiempoCrono();
 
   comenzarViaje(viaje) {
     this.dataService.comenzarViaje(viaje);
-/*     this.dataService.init();
-    //this.tiempoCrono=this.dataService.getTiempoCrono();
-    this.actualizarTiempo();
-    viaje.siguiente=false;
-    viaje.actual=true;
-    viaje.horaRealSalida="0h0m0s";
-    this.viajeActual=viaje;
-    localStorage.setItem('ViajeActual', JSON.stringify(this.viajeActual));
-    //localStorage.setItem(viaje.id, JSON.stringify(viaje));
-    this.iDataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-       if(ee.orden==viaje.orden+1){
-         this.viajeSiguiente=ee;
-         ee.siguiente=true;
-        }
-      });
-     });
-     localStorage.setItem("Demora",JSON.stringify(false)); */
   }
 
-  detenerViajeActual() {
-    this.tiempoUltimoViaje=this.tiempoCrono;
-    this.dataService.stop();
-    this.dataService.reset();
-    var viaje=JSON.parse(localStorage.getItem("ViajeActual"));
-
-    this.iDataSource.filter(recorrido=>{
-      recorrido.viajes.filter(viajeFiltro=> {
-        if(viajeFiltro.id==viaje.id){
-          viajeFiltro.actual=false;
-          viajeFiltro.horaRealLlegada=this.tiempoUltimoViaje;
-          viajeFiltro.retrasos=viaje.retrasos;
-        }
-      });
-    });
-
-    //this.dataService.resetViajeActual();
-    localStorage.setItem(viaje.id,JSON.stringify(viaje));
-  }
-
-  getViajeSiguiente() {
-    this.iDataSource.filter(e=>{
-      e.viajes.filter(ee=> {
-       if(ee.actual==true)
-         this.viajeActual=ee;
-      });
-     });
- }
+  detenerViajeActual(viaje) {
+    this.dataService.detenerViaje(viaje);
+    console.log(this.dataService.getViajeActual());
+  } 
 
   mostrarReporte(viajeParam) {
     localStorage.setItem('ViajeReporte', JSON.stringify(viajeParam));
@@ -235,44 +45,70 @@ export class RecorridosListComponent implements OnInit {
 
   demoraTotal(viaje) {
     var demoraTotal=0;
-    //console.log(viaje.retrasos);
     viaje.retrasos.forEach(retraso => {
       demoraTotal+=retraso.tiempo;
     });
-    //console.log("DEMORA TOTAL: "+demoraTotal);
+    /* console.log("EL TIEMPO ESTIPULADO EN SEGNUNDOS ES ", 
+    moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
+    .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
+    .asSeconds()); */
     return demoraTotal;
   }
 
-  comprobarDemora() {
-    var viaje=JSON.parse(localStorage.getItem("ViajeActual"));
-/*     console.log("COMPROBANDO DEMORA PARA EL VIAJE: "+viaje.retrasos);
-    console.log("RESTA");
-    console.log(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)); */
-    if(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)>viaje.tiempoEnSegsEstipulado) {
-
-      localStorage.setItem('Demora',JSON.stringify(true));
+  comprobarDemora(viaje) {
+    console.log("TIEMPO TOTAL VIAJE: ",this.dataService.tiempoEnSegs);
+    console.log("TIEMPO DEMORAS: ",this.demoraTotal(viaje));
+    console.log("TIEMPO ESTIPULADO EN SEGUNDOS: ",moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
+    .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
+    .asSeconds());
+    if(this.dataService.tiempoEnSegs-this.demoraTotal(viaje)>
+    moment.duration(moment(viaje.fechaHoraLlegadaEstipuladas)
+    .diff(moment(viaje.fechaHoraSalidaEstipuladas)))
+    .asSeconds()) {
+      this.dataService.setViajeActual(viaje);
       this.router.navigate(['driver/retraso/'+viaje.id]);
     }
     else {
-      this.detenerViajeActual();
+      this.detenerViajeActual(viaje);
     }
 
   }
 
   constructor(private router: Router, private dataService: DataService, private recorridoService: RecorridoService,
-    private viajeService: ViajeService) {}
+    private viajeService: ViajeService) {
+      // subscribe to home component messages
+/*       this.subscriptionCrono = this.dataService.getTiempoCrono().subscribe(tc => {
+        if (tc) {
+          this.tiempoCrono=tc.text;
+
+        }
+      }); */
+
+/*       this.subscriptionViajeActual = this.dataService.getViajeActual().subscribe(va => {
+        if (va) {
+          
+          this.viajeActual=va;
+          console.log("VIAJE ACTUAL != NULL");
+          console.log(this.viajeActual);
+        }
+        else {
+          this.viajeActual=null;
+          console.log("VIAJE ACTUAL NULL");
+        }
+      }); */
+    }
 
   ngOnInit() {
     
-    //this.viajeActual=this.viajeService.getViajeActual();
+    //this.viajeActual=this.dataService.getViajeActual();
 //    this.iDataSource=this.recorridoService.get_recorridos();
     //console.log(this.iDataSource);
     //this.getViajeActual();
-    console.log(this.dataService.getViajeSiguiente());
-    this.actualizarTiempo();
-    if(JSON.parse(localStorage.getItem("Demora"))) {
-      this.detenerViajeActual();
-    }
-    localStorage.setItem('Demora', JSON.stringify(false));
+    //console.log(this.dataService.getViajeSiguiente());
+    this.dataService.actualizarTiempo();
+/*     if(JSON.parse(localStorage.getItem("Demora"))) {
+      this.detenerViajeActual(viaje);
+    } */
+    //localStorage.setItem('Demora', JSON.stringify(false));
   }
 }

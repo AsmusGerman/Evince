@@ -1,6 +1,6 @@
 import { Trayecto } from "./trayecto";
 import {Retraso} from "./retraso";
-export interface Viaje {
+export class Viaje {
     id: string;
     cantPasajeros: number;
     diaSalida:string;

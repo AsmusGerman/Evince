@@ -2,19 +2,19 @@
 <div [(ngModel)]='tiempo' name="tiempo" ngDefaultControl></div>
 <div [(ngModel)]='tiempoCrono' name="tiempoCrono" ngDefaultControl></div>
 <mat-card>
-    <div *ngIf="((viajeActual==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
+    <div *ngIf="((dataService.viajeActual==null) && (tiempoUltimoViaje!=null)) ; then dataUltimoViaje"></div>
     <ng-template #dataUltimoViaje>
         Tiempo último viaje: {{tiempoUltimoViaje}}
     </ng-template>
-    <div *ngIf="viajeActual!=null; then dataViajeActual"></div>
+    <div *ngIf="dataService.viajeActual!=null; then dataViajeActual"></div>
     <ng-template #dataViajeActual>
-        Viaje actual: {{viajeActual.id}}
+        Viaje actual: {{dataService.viajeActual.id}}
         <br>
-        Cantidad de pasajeros: {{viajeActual.cantPasajeros}}
+        Cantidad de pasajeros: {{dataService.viajeActual.cantPasajeros}}
         <br>
-        Horario estipulado de salida: {{viajeActual.horaEstipuladaSalida}}
+        Horario estipulado de salida: {{dataService.viajeActual.fechaHoraSalidaEstipuladas}}
         <br>
-        Horario estipulado de llegada: {{viajeActual.horaEstipuladaLlegada}}
+        Horario estipulado de llegada: {{dataService.viajeActual.fechaHoraLlegadaEstipuladas}}
         <br>
         Tiempo de viaje actual: {{tiempoCrono}}
     </ng-template>
@@ -32,7 +32,6 @@
                     {{viaje.id}}
                     {{viaje.actual}}
                     {{viaje.orden}}
-                    {{viaje.estado}}
                     {{viaje.siguiente}}
                     <ng-container *ngIf="viaje.actual; then actualBlock; else siguienteBlock"></ng-container>
                     <ng-template #actualBlock>
@@ -40,17 +39,19 @@
 <!--                         <button mat-raised-button color="warn" (click)="detenerViajeActual()">
  -->                        Detener
                         </button>
-                        <button mat-raised-button (click)="nuevoRetraso(viajeActual.id)">
+                        <button mat-raised-button (click)="nuevoRetraso(dataService.viajeActual.id)">
                         Registrar retraso
                         </button>
                     </ng-template>
-                    <ng-container #siguienteBlock *ngIf="viaje.siguiente && viajeActual==null; then existeActualBlock; else deshabBlock"></ng-container>
+                    <ng-container #siguienteBlock *ngIf="viaje.siguiente && dataService.viajeActual==null; then existeActualBlock; else deshabBlock"></ng-container>
                     <ng-template #existeActualBlock>
                         <button mat-raised-button color="primary" (click)="comenzarViaje(viaje)">
                         Comenzar
                         </button>
                     </ng-template>
-                    <ng-container #deshabBlock *ngIf="((!viaje.actual && !viaje.siguiente) || (viaje.siguiente && viajeActual==null)) && viaje.horaRealLlegada==''; then deshabBlock2; else viajeTerminadoBlock"></ng-container>
+                    <ng-container #deshabBlock *ngIf="((!viaje.actual && !viaje.siguiente) || 
+                    (viaje.siguiente && dataService.viajeActual!=null)) && viaje.fechaHoraRealLlegada==null; 
+                    then deshabBlock2; else viajeTerminadoBlock"></ng-container>
                     <ng-template #deshabBlock2>
                         <button mat-raised-button disabled color="primary">
                         Comenzar
@@ -67,3 +68,5 @@
         </mat-expansion-panel>
     </mat-accordion>
 </mat-card>
+{{dataService.contador}}
+<input type="button" value="+" (click)="pulsar()"/>

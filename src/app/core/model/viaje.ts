@@ -9,6 +9,7 @@ export class Viaje {
     fechaHoraRealSalida:string;
     fechaHoraRealLlegada:string;
     actual:boolean;
+    siguiente:boolean;
     estado:string;
     orden: number;
     trayecto: Trayecto;

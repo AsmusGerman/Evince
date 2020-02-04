@@ -31,9 +31,6 @@ const routes: Routes = [
     MatExpansionModule,
     MatFormFieldModule,
     MatCardModule
-  ],
-  providers:[
-    DataService
   ]
 })
 export class RetrasoModule {}

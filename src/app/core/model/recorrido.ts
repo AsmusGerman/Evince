@@ -1,3 +1,7 @@
+import {Viaje} from "./viaje";
 export class Recorrido {
-    constructor(public name: string) {}
+    constructor() {}
+        id:string;
+        nombre:string;
+        viajes:Viaje[];
 }
