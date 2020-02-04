@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { OverviewComponent } from "./administrator/overview/overview.component";
-import { AuthenticationGuard } from "./authentication/guards/authentication.guard";
-import { SigninComponent } from "./authentication/components/signin/signin.component";
+import { SignupComponent } from "./authentication/components/signup/signup.component";
 import { LoginGuard } from "./authentication/guards/login.guard";
 import { LoginComponent } from "./authentication/components/login/login.component";
 
@@ -16,12 +14,8 @@ export const PATH = {
 const routes: Routes = [
   {
     path: "",
-    redirectTo: PATH.HOME,
+    redirectTo: PATH.AUTHENTICATION,
     pathMatch: "full"
-  },
-  {
-    path: PATH.HOME,
-    loadChildren: () => import("./home/home.module").then(m => m.HomeModule)
   },
   {
     path: PATH.AUTHENTICATION,
@@ -31,8 +25,8 @@ const routes: Routes = [
         component: LoginComponent
       },
       {
-        path: "signin",
-        component: SigninComponent
+        path: "signup",
+        component: SignupComponent
       },
       {
         path: "**",
@@ -71,7 +65,7 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: PATH.HOME
+    redirectTo: PATH.AUTHENTICATION
   }
 ];
 

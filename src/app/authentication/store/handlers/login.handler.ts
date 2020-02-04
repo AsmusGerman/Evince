@@ -6,9 +6,9 @@ import {
 } from "@ngxs/store";
 import { Injectable, Inject } from "@angular/core";
 import { Router } from "@angular/router";
-import { Login, GetRole } from "../authentication.model";
+import { Login } from "../authentication.model";
 import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
-import { AuthenticationResources } from "../../authentication-resources.token";
+import { AuthenticationResourcesToken } from "../../authentication-resources.token";
 import { Observable } from "rxjs";
 import { first } from "rxjs/operators";
 
@@ -18,7 +18,7 @@ export class LoginHandler {
     private router: Router,
     private actions$: Actions,
     private store: Store,
-    @Inject(AuthenticationResources)
+    @Inject(AuthenticationResourcesToken)
     private iAuthenticationResources: Observable<any>,
     private iSnackbarService: SnackbarService
   ) {}

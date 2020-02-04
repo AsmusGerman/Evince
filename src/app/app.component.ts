@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import { Actions, ofActionDispatched } from '@ngxs/store';
-import { Router } from '@angular/router';
-import { Logout } from './authentication/store/authentication.model';
+import { Actions, ofActionDispatched } from "@ngxs/store";
+import { Router } from "@angular/router";
+import { Logout } from "./authentication/store/authentication.model";
 
 @Component({
   selector: "evince-root",

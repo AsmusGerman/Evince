@@ -1,0 +1,90 @@
+%flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+%glass {
+  flex: 1;
+  margin: 2rem;
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.2);
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(0.5rem);
+}
+
+.evince-ui {
+  flex: 1;
+  @extend %flex-row;
+  font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+
+  background-image: linear-gradient(to top, #30cfd0 0%, #330867 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  animation: flow 5s ease-in-out infinite;
+
+  evince-home {
+    flex: 1;
+    height: 100%;
+    display: grid;
+    grid-template:
+      "header" 50px
+      "main" 1fr / 1fr;
+
+    .header {
+      grid-area: header;
+      @extend %flex-row;
+      flex-direction: column;
+    }
+    .main {
+      @extend %glass;
+
+      grid-area: main;
+      display: grid;
+      grid-template:
+        "content" 1fr
+        "actions" 100px / 1fr;
+
+      .hero {
+        grid-area: content;
+        margin: 2rem;
+        padding: 2rem;
+
+        font-family: "Lato";
+        font-weight: normal;
+        font-size: 1.75em;
+        letter-spacing: 0.2em;
+        line-height: 1.1em;
+        text-align: center;
+        font-style: normal;
+
+        text-transform: uppercase;
+      }
+
+      .actions {
+        grid-area: actions;
+        @extend %flex-row;
+        .mat-stroked-button {
+          width: 33%;
+          border-radius: 20px;
+        }
+      }
+    }
+  }
+}
+
+@keyframes flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}

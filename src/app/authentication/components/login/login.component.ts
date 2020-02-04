@@ -7,8 +7,7 @@ import { map, switchMap } from "rxjs/operators";
 
 @Component({
   selector: "evince-login",
-  templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  templateUrl: "./login.component.html"
 })
 export class LoginComponent implements OnInit {
   public form: FormGroup;

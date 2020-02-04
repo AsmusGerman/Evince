@@ -1,8 +1,8 @@
 import { InjectionToken } from "@angular/core";
-import { from, Observable, ReplaySubject, Subject } from "rxjs";
-import { map, publishReplay, shareReplay } from "rxjs/operators";
+import { from, Observable} from "rxjs";
+import { map, shareReplay } from "rxjs/operators";
 
-export const AuthenticationResources = new InjectionToken<Observable<any>>(
+export const AuthenticationResourcesToken = new InjectionToken<Observable<any>>(
   "AUTHENTICATION_RESOURCES",
   {
     factory: function() {

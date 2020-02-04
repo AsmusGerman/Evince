@@ -4,7 +4,7 @@ import { Store } from "@ngxs/store";
 import { AuthState } from "../store/authentication.state";
 import { Roles } from "src/app/core/model/roles";
 import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
-import { AuthenticationResources } from "../authentication-resources.token";
+import { AuthenticationResourcesToken } from "../authentication-resources.token";
 import { Observable } from "rxjs";
 import { first } from "rxjs/operators";
 
@@ -15,7 +15,7 @@ export class LoginGuard implements CanActivate {
   constructor(
     private store: Store,
     private router: Router,
-    @Inject(AuthenticationResources)
+    @Inject(AuthenticationResourcesToken)
     private iAuthenticationResources: Observable<any>,
     private iSnackbarService: SnackbarService
   ) {}
