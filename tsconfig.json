@@ -17,7 +17,25 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@core/*": [
+        "src/app/core/*"
+      ],
+      "@shared/*": [
+        "src/app/shared/responsive/*",
+        "src/app/shared/notification/*"
+      ],
+      "@authentication/*": [
+        "src/app/authentication/*"
+      ],
+      "@driver/*": [
+        "src/app/driver/*"
+      ],
+      "@administrator/*": [
+        "src/app/administrator/*"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

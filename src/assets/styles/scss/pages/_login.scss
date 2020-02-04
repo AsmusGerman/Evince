@@ -5,19 +5,36 @@
     align-items: stretch;
     justify-content: center;
 
-    .login {
+    margin: 0 2rem;
+
+    .title {
+      text-align: center;
+      margin: 0 1rem;
+      line-height: 1.2;
+      > * {
+        color: white;
+      }
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       justify-content: center;
-    }
 
-    .action-wrapper {
-        margin-left: 2rem;
-        margin-right: 2rem;
-        border-radius: 20px;
-        display: flex;
-        flex-direction: column;
+      section {
+        &:last-child {
+          padding: 1.5rem 0;
+        }
+        > * {
+          width: 100%;
+        }
+      }
+
+      .mat-flat-button {
+        background-color: white;
+        color: black;
+      }
     }
   }
 }
