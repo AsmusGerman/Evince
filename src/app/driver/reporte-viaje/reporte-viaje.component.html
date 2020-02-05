@@ -12,9 +12,9 @@
         <br>
         Horario real de llegada: {{dataService.viajeReporte.fechaHoraRealLlegada}}
         <br><br>
-        <div *ngIf="dataService.viajeReporte.retrasos!=null ; then reporteConRetrasos ; else reporteSinRetrasos"></div>
+        <b>Retrasos registrados:</b>
+        <div *ngIf="dataService.viajeReporte.retrasos.length>0 ; then reporteConRetrasos ; else reporteSinRetrasos"></div>
         <ng-template #reporteConRetrasos>
-          <b>Retrasos registrados:</b>
           <ul *ngFor="let retraso of dataService.viajeReporte.retrasos">
             <li>
               {{retraso.tipo}}
@@ -25,6 +25,7 @@
             <li>
               {{retraso.tiempo}}
             </li>
+            <hr>
           </ul>
         </ng-template>
         <ng-template #reporteSinRetrasos>

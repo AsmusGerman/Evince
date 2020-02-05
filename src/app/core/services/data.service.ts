@@ -125,31 +125,31 @@ export class DataService implements OnInit{
 
   constructor(private recorridoService: RecorridoService) {}
 
+  tiposRetraso : any[] = [
+    {value: '0', viewValue: 'Atropello de rinoceronte'},
+    {value: '1', viewValue: 'Compra de pizza'},
+    {value: '2', viewValue: 'Ir al baño'}
+  ];
+
   getTiempoCrono():string{
     return this.tiempoCrono;
   }
-
   setTiempoCrono(tc:string) {
     this.tiempoCrono=tc;
   }
-
   setViajeActual(va: Viaje) {
     this.viajeActual=va;
   }
-
   getViajeActual(): Viaje {
     return this.viajeActual;
   }
-
   setViajeReporte(vr: Viaje) {
     this.viajeReporte=vr;
   }
-
   getViajeReporte(): Viaje {
     return this.viajeReporte;
   }
-
-   getRecorridos() {
+  getRecorridos() {
     return this.dataSource;
   }
 

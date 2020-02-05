@@ -65,5 +65,9 @@ export class RecorridosListComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService, private recorridoService: RecorridoService,
     private viajeService: ViajeService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    //TODO: CUANDO INICIA ESTA PAGE, TOMAR EL TIEMPO ACTUAL Y RESTARLO AL TIEMPO ENVIADO
+    // AL SERVER EN EL INICIO DEL VIAJE ACTUAL, PARA DAR CONTINUIDAD AL CRONO POR MAS
+    // QUE HAYA SALIDO DE SU USUARIO
+  }
 }

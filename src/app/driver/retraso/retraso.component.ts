@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Retraso } from 'src/app/core/model/retraso';
 import { ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { switchMap } from 'rxjs/operators';
 import {Location} from '@angular/common';
@@ -19,7 +19,11 @@ import * as moment from 'moment';
   export class RetrasoComponent implements OnInit {
     //subscriptionViajeActual: Subscription;
     //public viajeActual:Viaje=this.dataService.getViajeActual();
-    public tipo;
+    public tipo:any;
+    tipoControl:FormControl;
+    descripcionControl:FormControl;
+    horasControl:FormControl;
+    minutosControl:FormControl;
     public descripcion;
     public tiempo;
     public retraso:Retraso=new Retraso();
@@ -31,11 +35,11 @@ import * as moment from 'moment';
     if (this.form.valid) {
       var retraso:Retraso=new Retraso();
       retraso.id="Retraso1";
-      retraso.tipo=this.form.get("tipo").value;
-      retraso.descripcion=this.form.get("descripcion").value;
-      retraso.tiempo=parseFloat(this.form.get("tiempo").value);
-      //this.viajeActual.retrasos.push(retraso);
+      retraso.tipo=this.tipo.viewValue;
+      retraso.descripcion=this.form.get("descripcionControl").value;
+      retraso.tiempo=parseFloat(this.form.get("horasControl").value);
       this.dataService.getViajeActual().retrasos.push(retraso);
+
       this._location.back();
       }
     }
@@ -44,14 +48,17 @@ import * as moment from 'moment';
       this._location.back();
     }
 
+    //TODO:VALIDACIONES EN LOS CONTROLES DEL FORM
+
     constructor(activateRoute: ActivatedRoute,private store: Store, private _location: Location, 
-      private dataService: DataService) {}
+      private dataService: DataService) {
+        this.form = new FormGroup({
+          tipoControl: new FormControl(),
+          descripcionControl: new FormControl(),
+          horasControl:new FormControl()
+        })
+      }
 
     ngOnInit() {
-      this.form = new FormGroup({
-        tipo: new FormControl(""),
-        descripcion: new FormControl(""),
-        tiempo: new FormControl("")
-      })
     }
 }
