@@ -53,7 +53,7 @@ const routes: Routes = [
       import("./administrator/administrator.module").then(
         m => m.AdministratorModule
       ),
-      canActivate: [LoginGuard]
+      //canActivate: [LoginGuard]
   },
   {
     path: "driver/retraso/:id",

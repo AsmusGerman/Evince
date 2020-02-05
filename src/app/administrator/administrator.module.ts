@@ -12,6 +12,7 @@ import { TimeComparativeReportComponent } from './time-comparative-report/time-c
 import { SubscriptionListComponent } from './overview/components/subscription-list/subscription-list.component';
 import { SubscriptionFilterComponent } from './overview/components/subscription-filter/subscription-filter.component';
 import { LoginGuard } from '../authentication/guards/login.guard';
+import { TopDelayReportComponent } from './top-delay-report/top-delay-report.component';
 
 const routes: Routes = [
   {
@@ -28,7 +29,8 @@ const routes: Routes = [
     SettingsComponent,
     TimeComparativeReportComponent,
     SubscriptionListComponent,
-    SubscriptionFilterComponent
+    SubscriptionFilterComponent,
+    TopDelayReportComponent
   ],
   imports: [
     CommonModule,
