@@ -22,6 +22,6 @@
         <mat-option>None</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-slide-toggle color="primary">My subscriptions</mat-slide-toggle>
+    <mat-slide-toggle color="primary" [(ngModel)]="isChecked" (change)="onChange(isChecked)">My subscriptions</mat-slide-toggle>
   </div>
 </div>

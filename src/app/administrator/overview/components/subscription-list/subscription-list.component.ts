@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FilterService } from 'src/app/core/services/filter.service';
 
 const ELEMENT_DATA = [
   {
@@ -67,9 +68,14 @@ const ELEMENT_DATA = [
 export class SubscriptionListComponent implements OnInit {
   public iDisplayedColumns: string[] = ["code", "last", "state","subscription", "analyze"];
   public iDataSource = ELEMENT_DATA;
-  constructor() {}
+  isChecked: boolean;
 
-  ngOnInit() {}
+  
+  constructor(private filterService: FilterService) {}
+
+  ngOnInit() {
+    this.filterService.currentCheck.subscribe(check => this.isChecked = check)
+  }
 
   analyze(row) {
     console.log("showing report");

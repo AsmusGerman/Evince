@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FilterService } from 'src/app/core/services/filter.service';
 
 @Component({
   selector: 'evince-subscription-filter',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SubscriptionFilterComponent implements OnInit {
 
-  constructor() { }
+  isChecked: boolean;
+  
+  constructor(private filterService: FilterService) { }
 
-  ngOnInit() {
+  onChange(ch: boolean) {
+    console.log(ch);
+    this.filterService.changeChecked(ch);
   }
 
+  ngOnInit() {
+    this.filterService.currentCheck.subscribe(check => this.isChecked = check)
+  }
 }
