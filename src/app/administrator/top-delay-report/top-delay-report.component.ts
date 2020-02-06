@@ -25,7 +25,12 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
+
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    this.iChart.setOption(template,true);
+    //this.iChart.resize({ width: 500, height: 500 });
+
+/*     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize({ width: 600, height: 800 });
 
@@ -38,8 +43,8 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
       { value: 35, name: "retraso 6" },
       { value: 30, name: "retraso 7" },
       { value: 40, name: "retraso 8" }
-    ];
+    ]; 
     // algun servicio que trae información para el reporte
-    this.iChart.setOption(template, true);
+    this.iChart.setOption(template, true);*/
   }
 }
