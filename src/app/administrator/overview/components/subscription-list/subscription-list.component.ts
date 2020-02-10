@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FilterService } from 'src/app/core/services/filter.service';
 
-const ELEMENT_DATA = [
+/* const ELEMENT_DATA = [
   {
     position: 1,
     last: "01-01-2020 10:15",
@@ -59,7 +59,7 @@ const ELEMENT_DATA = [
     subscription: true
   }
 ];
-
+ */
 @Component({
   selector: "evince-subscription-list",
   templateUrl: "./subscription-list.component.html",
@@ -67,14 +67,15 @@ const ELEMENT_DATA = [
 })
 export class SubscriptionListComponent implements OnInit {
   public iDisplayedColumns: string[] = ["code", "last", "state","subscription", "analyze"];
-  public iDataSource = ELEMENT_DATA;
+  public iDataSource = this.filterService.ELEMENT_DATA;
   isChecked: boolean;
 
   
   constructor(private filterService: FilterService) {}
 
   ngOnInit() {
-    this.filterService.currentCheck.subscribe(check => this.isChecked = check)
+    this.filterService.currentCheck.subscribe(check => this.isChecked = check);
+    this.filterService.ELEMENT_DATA.
   }
 
   analyze(row) {
