@@ -5,9 +5,11 @@ import { BehaviorSubject, Subject } from 'rxjs';
     providedIn: 'root'
   })
 export class FilterService {
-    constructor() {}
+    constructor() {
+      this.currentDataSubj.next(this.ELEMENT_DATA);
+    }
 
-    private ELEMENT_DATA: Subject<Array<any>> = new BehaviorSubject<Array<any>>([]) = [
+    ELEMENT_DATA= [
       {
         position: 1,
         last: "01-01-2020 10:15",
@@ -65,14 +67,24 @@ export class FilterService {
         subscription: true
       }
     ];
-    currentData = this.ELEMENT_DATA.asObservable();
+
+    private currentDataSubj: Subject<Array<any>> = new BehaviorSubject<Array<any>>([]);
+    currentData = this.currentDataSubj.asObservable();
 
     private isChecked: Subject<boolean> = new BehaviorSubject<boolean>(null);
     currentCheck = this.isChecked.asObservable();
 
     changeChecked(check: boolean) {
         this.isChecked.next(check);
-        console.log(this.ELEMENT_DATA);
-        this.ELEMENT_DATA.pop();
-      } 
+        check ? 
+          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.subscription)) :
+            this.currentDataSubj.next(this.ELEMENT_DATA);
+      }
+
+    updateData(elem: any){
+/*       this.currentDataSubj.next(this.ELEMENT_DATA.filter(filterElem=>
+        if(filterElem.code==elem.code){
+          filterElem.subscription=!filterElem.subscription;
+        }) */
+    }
 }

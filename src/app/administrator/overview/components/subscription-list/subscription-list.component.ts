@@ -67,15 +67,20 @@ import { FilterService } from 'src/app/core/services/filter.service';
 })
 export class SubscriptionListComponent implements OnInit {
   public iDisplayedColumns: string[] = ["code", "last", "state","subscription", "analyze"];
-  public iDataSource = this.filterService.ELEMENT_DATA;
+  public iDataSource = Array<any>();
   isChecked: boolean;
-
+  //data: Array<any>;
   
   constructor(private filterService: FilterService) {}
 
   ngOnInit() {
     this.filterService.currentCheck.subscribe(check => this.isChecked = check);
-    this.filterService.ELEMENT_DATA.
+    this.filterService.currentData.subscribe(data => this.iDataSource = data);
+  }
+
+  changeChecked(element: any){
+    //this.filterService.
+
   }
 
   analyze(row) {

@@ -23,7 +23,8 @@
         <ng-container matColumnDef="subscription">
           <th mat-header-cell *matHeaderCellDef>Subscription</th>
           <td mat-cell *matCellDef="let element">
-            <mat-slide-toggle color="primary" [checked]="element.subscription">
+            <mat-slide-toggle color="primary" [checked]="element.subscription" 
+            (click)="changeChecked(element)">
             </mat-slide-toggle>
           </td>
         </ng-container>
