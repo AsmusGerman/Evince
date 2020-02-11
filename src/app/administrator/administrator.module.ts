@@ -7,7 +7,7 @@ import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { OverviewComponent } from "./overview/overview.component";
 import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
 import { SubscriptionListComponent } from './overview/components/subscription-list/subscription-list.component';
 import { SubscriptionFilterComponent } from './overview/components/subscription-filter/subscription-filter.component';
@@ -37,7 +37,8 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     MaterialModule,
     ResponsiveModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class AdministratorModule {}

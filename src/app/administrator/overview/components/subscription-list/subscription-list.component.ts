@@ -66,7 +66,7 @@ import { FilterService } from 'src/app/core/services/filter.service';
   styleUrls: ["./subscription-list.component.scss"]
 })
 export class SubscriptionListComponent implements OnInit {
-  public iDisplayedColumns: string[] = ["code", "last", "state","subscription", "analyze"];
+  public iDisplayedColumns: string[] = ["code", "origen", "destino", "last", "state","subscription", "analyze"];
   public iDataSource = Array<any>();
   isChecked: boolean;
   //data: Array<any>;
@@ -78,9 +78,8 @@ export class SubscriptionListComponent implements OnInit {
     this.filterService.currentData.subscribe(data => this.iDataSource = data);
   }
 
-  changeChecked(element: any){
-    //this.filterService.
-
+  changeChecked(elementCode: any){
+    this.filterService.updateData(elementCode);
   }
 
   analyze(row) {

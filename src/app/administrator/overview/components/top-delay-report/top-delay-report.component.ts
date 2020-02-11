@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./top-delay-report.template";
+import { FilterService } from 'src/app/core/services/filter.service';
 
 @Component({
   selector: "evince-top-delay-report",
@@ -18,33 +19,36 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
     HTMLDivElement
   >;
 
+  public iDataSource = Array<any>();
   private iChart: any;
 
-  constructor() {}
+  constructor(private filterService: FilterService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.filterService.currentData.subscribe(data => this.iDataSource = data);
+  }
 
   ngAfterViewInit() {
-
+    var codeRecorridos=[];
+    var cantRetrasosRecorridos=[];
+/*     this.iDataSource.filter(e=>e.subscription).forEach(function(elem) {
+      codeRecorridos.push(elem.code);
+      cantRetrasosRecorridos.push(elem.cantRetrasos);
+    }) */
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    //template.yAxis[0].data=['Recorrido4', 'Recorrido3', 'Recorrido2', 'Recorrido1'];
+/*     template.yAxis[0].data=function() {
+        this.iDataSource.filter(e=>e.subscription).get
+    } */
+    template.yAxis[0].data=function(){
+      var codes = [];
+        this.iDataSource.filter(e=>e.subscription).forEach(codes.push(e.code));
+      return codes;
+    }
+    for (var recorrido of Object.entries(this.iDataSource)) {
+      console.log(recorrido[1].code); // "a 5", "b 7", "c 9"
+  }
+    template.series[0].data=cantRetrasosRecorridos;
     this.iChart.setOption(template,true);
-    //this.iChart.resize({ width: 500, height: 500 });
-
-/*     this.iChart = echarts.init(this.iChartContainer.nativeElement);
-    this.iChart.setOption(template, true);
-    this.iChart.resize({ width: 600, height: 800 });
-
-    template.series[0].data = [
-      { value: 10, name: "retraso 1" },
-      { value: 5, name: "retraso 2" },
-      { value: 15, name: "retraso 3" },
-      { value: 25, name: "retraso 4" },
-      { value: 20, name: "retraso 5" },
-      { value: 35, name: "retraso 6" },
-      { value: 30, name: "retraso 7" },
-      { value: 40, name: "retraso 8" }
-    ]; 
-    // algun servicio que trae información para el reporte
-    this.iChart.setOption(template, true);*/
   }
 }
