@@ -133,6 +133,9 @@ export class FilterService {
     private destinoSelectSubj/* : Subject<Array<any>> */ = new BehaviorSubject<string>(null);
     destinoSelect = this.destinoSelectSubj.asObservable();
 
+    private searchFilterSubj/* : Subject<Array<any>> */ = new BehaviorSubject<string>(null);
+    searchFilter = this.searchFilterSubj.asObservable();
+
     sort() {
       this.ELEMENT_DATA.sort((rec1, rec2) => {
         if (rec1.cantRetrasos > rec2.cantRetrasos) {
@@ -185,31 +188,29 @@ export class FilterService {
       this.getCantRetrasos();
     }
 
-    searchFilter(filter) {
+    setSearchFilter(filter: string) {
+      this.searchFilterSubj.next(filter);
       this.origenSelectSubj.next(null);
       this.destinoSelectSubj.next(null);
       this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>
-        elem.origen.toLowerCase().includes(filter.toLowerCase()) || 
-          elem.destino.toLowerCase().includes(filter.toLowerCase())));
+        elem.origen.toLowerCase().includes(this.searchFilterSubj.value.toLowerCase()) || 
+          elem.destino.toLowerCase().includes(this.searchFilterSubj.value.toLowerCase())));
+      console.log(this.searchFilterSubj.value);
     }
 
     changeOrigen(origen) {
-      console.log("estoy cambiando origen");
-      console.log("origen " +origen["viewValue"]);
-      console.log("destino " +this.destinoSelectSubj.value["viewValue"]);
+      this.searchFilterSubj.next(null);
       this.origenSelectSubj.next(origen);
       this.destinoSelectSubj.value==null ?
-        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen["viewValue"])):
-          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen["viewValue"] && elem.destino==this.destinoSelectSubj.value));
+        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==this.origenSelectSubj.value["viewValue"])):
+          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==this.origenSelectSubj.value["viewValue"] && elem.destino==this.destinoSelectSubj.value["viewValue"]));
     }
 
     changeDestino(destino) {
-      console.log("estoy cambiando destino");
-      console.log("origen " +this.origenSelectSubj.value["viewValue"]);
-      console.log("destino " +destino["viewValue"]);
+      this.searchFilterSubj.next(null);
       this.destinoSelectSubj.next(destino);
       this.origenSelectSubj.value==null ?
-        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino["viewValue"])):
-          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino["viewValue"] && elem.origen==this.origenSelectSubj.value));
+        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==this.destinoSelectSubj.value["viewValue"])):
+          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==this.destinoSelectSubj.value["viewValue"] && elem.origen==this.origenSelectSubj.value["viewValue"]));
     }
 }

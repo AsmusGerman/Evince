@@ -2,7 +2,7 @@
 <div fxLayout fxLayoutAlign="center center">
   <mat-form-field fxFlex="50">
     <mat-icon matPrefix>search</mat-icon>
-    <input #search type="text" matInput placeholder="Search" fxFill (keyup)="searchFilter(search.value)"/>
+    <input #searchInput type="text" [(ngModel)]='search' matInput placeholder="Search" fxFill (keyup)="searchFilter(searchInput.value)"/>
   </mat-form-field>
 </div>
 <div fxLayout fxLayoutAlign="center center">
@@ -15,9 +15,6 @@
         <mat-option  *ngFor="let origen of filterService.origenes" [(value)]="origen">
           {{origen.viewValue}}
         </mat-option>
-        <!-- <mat-option *ngFor="let state of states" [value]="state">{{
-              state
-            }}</mat-option> -->
       </mat-select>
     </mat-form-field>
 
