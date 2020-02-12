@@ -145,23 +145,19 @@ export class FilterService {
     }
 
     getCodigos() {
-      //this.sort();
       var codigos = [];
       for (var recorrido of Object.entries(this.ELEMENT_DATA.filter(elem=>elem.subscription))) {
         codigos.push(recorrido[1].code);
       }
-      //return codigos;
       this.codigosFiltroSubj.next(codigos);
       console.log(codigos);
     }
 
     getCantRetrasos() {
-      //this.sort();
       var cantsRetrasos = [];
       for (var recorrido of Object.entries(this.ELEMENT_DATA.filter(elem=>elem.subscription))) {
         cantsRetrasos.push(recorrido[1].cantRetrasos);
       }
-      //return cantsRetrasos;
       this.cantRetrasosPorCodigoSubj.next(cantsRetrasos);
       console.log(cantsRetrasos);
     }
@@ -171,11 +167,11 @@ export class FilterService {
       check ? 
         this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.subscription)) :
           this.currentDataSubj.next(this.ELEMENT_DATA);
-      this.sort();
+      //this.sort();
     }
 
     updateData(elemCode: any){
-      this.sort();
+      //this.sort();
       var index = this.ELEMENT_DATA.findIndex(elemToUpdate => elemToUpdate.code == elemCode );
       this.ELEMENT_DATA[index].subscription ?
         this.ELEMENT_DATA[index].subscription=false :
@@ -188,11 +184,9 @@ export class FilterService {
 
     changeOrigen(origen:string) {
       this.origenSelect=origen;
-      //var destino = this.destinoSelect;
       this.destinoSelect==null ?
         this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen)):
           this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen && elem.destino==this.destinoSelect));
-        //this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen))
     }
 
     changeDestino(destino:string) {
