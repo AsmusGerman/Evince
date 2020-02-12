@@ -33,6 +33,7 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconsService } from './services/icons.service';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const features = [
   MatCheckboxModule,
@@ -66,7 +67,8 @@ const features = [
   MatTableModule,
   MatSortModule,
   MatPaginatorModule,
-  FlexLayoutModule
+  FlexLayoutModule,
+  ScrollingModule
 ];
 
 @NgModule({

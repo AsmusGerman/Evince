@@ -45,7 +45,7 @@ const routes: Routes = [
     path: PATH.DRIVER,
     loadChildren: () =>
       import("./driver/driver.module").then(m => m.DriverModule),
-      canActivate: [LoginGuard]
+      //canActivate: [LoginGuard]
   },
   {
     path: PATH.ADMINISTRATOR,
@@ -54,20 +54,6 @@ const routes: Routes = [
         m => m.AdministratorModule
       ),
       //canActivate: [LoginGuard]
-  },
-  {
-    path: "driver/retraso/:id",
-    loadChildren: () =>
-      import("./driver/retraso/retraso.module").then(m => m.RetrasoModule)
-    //canActivate: [AuthGuard]
-  },
-  {
-    path: "driver/reporte-viaje/:id",
-    loadChildren: () =>
-      import("./driver/reporte-viaje/reporte-viaje.module").then(
-        m => m.ReporteViajeModule
-      )
-    //canActivate: [AuthGuard]
   },
   {
     path: "**",

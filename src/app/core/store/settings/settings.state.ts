@@ -16,7 +16,6 @@ export class SettingsState implements NgxsAfterBootstrap {
 
   @Selector()
   static entrypoint(state: any): string | null {
-    return "http://evince-web.azurewebsites.net/api/v1";
-    //return state.entrypoint;
+    return state.entrypoint;
   }
 }

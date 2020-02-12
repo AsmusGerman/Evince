@@ -1,17 +1,18 @@
 import { Trayecto } from "./trayecto";
-import {Retraso} from "./retraso";
+import { Retraso } from "./retraso";
 export class Viaje {
-    constructor() {}
-    id: string;
-    cantPasajeros: number;
-    fechaHoraSalidaEstipuladas:string;
-    fechaHoraLlegadaEstipuladas:string;
-    fechaHoraRealSalida:string;
-    fechaHoraRealLlegada:string;
-    actual:boolean;
-    siguiente:boolean;
-    estado:string;
-    orden: number;
-    trayecto: Trayecto;
-    retrasos: Retraso[];
+  constructor(
+    public id: string,
+    public cantPasajeros: number,
+    public fechaHoraSalidaEstipuladas: string,
+    public fechaHoraLlegadaEstipuladas: string,
+    public fechaHoraRealSalida: string,
+    public fechaHoraRealLlegada: string,
+    public actual: boolean,
+    public siguiente: boolean,
+    public estado: string,
+    public orden: number,
+    public trayecto: Trayecto,
+    public retrasos: Array<Retraso>
+  ) {}
 }
