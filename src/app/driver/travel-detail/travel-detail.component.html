@@ -1,0 +1,33 @@
+<mat-list *ngIf="!!iViaje">
+  <mat-list-item>
+    <span matLine>Viaje: {{ iViaje.id }}</span>
+  </mat-list-item>
+  <mat-list-item>
+    <span matLine>
+      Sale desde <b> {{ iViaje.trayecto.terminalOrigen }} </b>:
+    </span>
+    <span matLine>
+      <i>
+        {{
+          iViaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
+        }}
+      </i>
+    </span>
+  </mat-list-item>
+  <mat-list-item>
+    <span matLine>
+      Llega a
+      <b> {{ iViaje.trayecto.terminalDestino }} </b>:
+    </span>
+    <span matLine>
+      <i>
+        {{
+          iViaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
+        }}
+      </i>
+    </span>
+  </mat-list-item>
+</mat-list>
+<button mat-icon-button *ngIf="iWithAnalysis" (click)="analyze()">
+  restore
+</button>

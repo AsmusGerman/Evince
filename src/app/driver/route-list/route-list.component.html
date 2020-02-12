@@ -1,0 +1,17 @@
+  <div
+    *ngFor="let bRecorrido of iRecorridos"
+    class="item animated lightSpeedIn"
+  >
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Recorrido #{{ bRecorrido.id }}</mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-card *ngFor="let viaje of bRecorrido.viajes">
+          <mat-card-content>
+            <evince-travel-detail [viaje]="viaje"></evince-travel-detail>
+          </mat-card-content>
+        </mat-card>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>

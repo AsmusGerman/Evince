@@ -7,7 +7,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "mock-serve": "json-server ./mocking/index.js --routes ./mocking/routes.json"
   },
   "private": true,
   "dependencies": {
@@ -25,6 +26,7 @@
     "@ngxs/storage-plugin": "^3.6.1",
     "@ngxs/store": "^3.6.1",
     "@types/jwt-decode": "^2.2.1",
+    "animate.css": "^3.7.2",
     "echarts": "^4.6.0",
     "hammerjs": "^2.0.8",
     "jwt-decode": "^2.2.0",
@@ -34,11 +36,21 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.803.23",
+    "@angular-devkit/build-angular": "^0.803.25",
     "@angular/cli": "^8.3.23",
     "@angular/compiler-cli": "~8.2.14",
     "@angular/language-service": "~8.2.14",
+    "@types/jasmine": "^3.5.3",
     "@types/node": "~8.9.4",
+    "faker": "^4.1.0",
+    "jasmine": "^3.5.0",
+    "jasmine-core": "^3.5.0",
+    "json-server": "^0.16.0",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
+    "karma-jasmine": "^3.1.0",
+    "karma-jasmine-html-reporter": "^1.5.2",
     "ts-node": "~7.0.0",
     "tslint": "~5.15.0",
     "typescript": "~3.5.3"

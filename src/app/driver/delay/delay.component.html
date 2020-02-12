@@ -1,0 +1,41 @@
+<form (ngSubmit)="onSubmit(iFormGroup.value)" [formGroup]="iFormGroup">
+  <mat-form-field>
+    <mat-label>Tipo</mat-label>
+    <mat-select formControlName="type">
+      <mat-option>-</mat-option>
+      <mat-option
+        *ngFor="let bDelayType of iDelayTypes; let i = index"
+        value="i"
+      >
+        {{ bDelayType }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field [hintLabel]="'utilice el formato HH:mm'">
+    <mat-label>Tiempo</mat-label>
+    <input matInput type="text" formControlName="timestamp" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Descripción</mat-label>
+    <textarea
+      matInput
+      formControlName="description"
+      maxlength="350"
+      minlength="0"
+    ></textarea>
+  </mat-form-field>
+
+  <button data-test="button-cancel" mat-button type="button" (click)="cancel()">
+    Cancelar
+  </button>
+
+  <button
+    data-test="button-create"
+    mat-raised-button
+    type="submit"
+    color="primary"
+    [disabled]="!iFormGroup.valid"
+  >
+    Crear
+  </button>
+</form>

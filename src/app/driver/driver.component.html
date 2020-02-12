@@ -1,5 +1,65 @@
-  <div [ngSwitch]="iCurrentView">
-    <div *ngSwitchDefault><evince-recorridos-list></evince-recorridos-list></div>
-    <div *ngSwitchCase="'asd'"><p>asd</p></div>
-  </div>
-  
+<mat-toolbar class="header" color="primary">
+  <span>
+    {{ iUser | async }}
+    <button mat-icon-button>
+      <mat-icon>power_settings_new </mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+
+<mat-tab-group
+  *ngIf="!!iRecorrido"
+  headerPosition="below"
+  dynamicHeight
+  mat-align-tabs="center"
+>
+  <mat-tab label="ahora">
+    <cdk-virtual-scroll-viewport itemSize="10">
+      <ng-container
+        *ngIf="!!iViajeActual; then current; else next"
+      ></ng-container>
+    </cdk-virtual-scroll-viewport>
+  </mat-tab>
+  <mat-tab label="mis recorridos">
+    <cdk-virtual-scroll-viewport itemSize="10">
+      <evince-route-list [recorridos]="iRecorridos"></evince-route-list>
+    </cdk-virtual-scroll-viewport>
+  </mat-tab>
+</mat-tab-group>
+
+<ng-template #current let-actual>
+  <!-- recorrido actual iniciado-->
+  <evince-current-route
+    [iViajes]="iViajes"
+    [iViajeActualId]="iViajeActual.id"
+    (onStartTravelTriggered)="start($event)"
+    (onStopTravelTriggered)="stop($event)"
+    (onDelayTravelTriggered)="delay($event)"
+  ></evince-current-route>
+</ng-template>
+
+<ng-template #next>
+  <!-- sin recorrido actual iniciado-->
+  <mat-card *ngIf="!!iViajeSiguiente">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>
+          Su próximo viaje
+        </mat-card-title>
+        <mat-card-subtitle>
+          Para comenzar el viaje, haga click en la acción "comenzar"
+        </mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      <evince-travel-detail [viaje]="iViajeSiguiente"></evince-travel-detail>
+      <button
+        mat-button
+        color="primary"
+        (click)="start(iViajeSiguiente.id)"
+      >
+        Comenzar
+      </button>
+    </mat-card-content>
+  </mat-card>
+</ng-template>

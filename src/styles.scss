@@ -1,13 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 .container {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    height: 100vh;
-    & > mat-card {
-        margin: auto;
-    }
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  height: 100vh;
+  & > mat-card {
+    margin: auto;
   }
+}
+
+evince-driver {
+  mat-tab-group {
+    flex: 1;
+    display: flex;
+  }
+
+  .mat-tab-body-wrapper {
+    flex: 1;
+  }
+}
