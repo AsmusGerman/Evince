@@ -20,12 +20,16 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   >;
 
   public iDataSource = Array<any>();
+  public codigos = Array<string>();
+  public cantRetrasosPorCodigo = Array<number>();
   private iChart: any;
 
   constructor(private filterService: FilterService) {}
 
   ngOnInit() {
     this.filterService.currentData.subscribe(data => this.iDataSource = data);
+    this.filterService.codigosFiltro.subscribe(data => this.codigos = data);
+    this.filterService.cantRetrasosPorCodigoFiltro.subscribe(data => this.cantRetrasosPorCodigo = data);
   }
 
   ngAfterViewInit() {
@@ -40,15 +44,10 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
 /*     template.yAxis[0].data=function() {
         this.iDataSource.filter(e=>e.subscription).get
     } */
-    template.yAxis[0].data=function(){
-      var codes = [];
-        this.iDataSource.filter(e=>e.subscription).forEach(codes.push(e.code));
-      return codes;
-    }
-    for (var recorrido of Object.entries(this.iDataSource)) {
-      console.log(recorrido[1].code); // "a 5", "b 7", "c 9"
-  }
-    template.series[0].data=cantRetrasosRecorridos;
+    //template.yAxis[0].data=this.filterService.getCodigos();
+    template.yAxis[0].data=this.codigos;
+    //template.series[0].data=this.filterService.getCantRetrasos();
+    template.series[0].data=this.cantRetrasosPorCodigo;
     this.iChart.setOption(template,true);
   }
 }

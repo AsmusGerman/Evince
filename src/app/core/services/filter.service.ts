@@ -8,6 +8,8 @@ export class FilterService {
     constructor() {
       this.currentDataSubj.next(this.ELEMENT_DATA);
       this.sort();
+      this.getCodigos();
+      this.getCantRetrasos();
     }
 
     public origenSelect=null;
@@ -116,6 +118,12 @@ export class FilterService {
       {value: '6', viewValue: 'Concordia'}
     ];
 
+    private codigosFiltroSubj: Subject<Array<string>> = new BehaviorSubject<Array<string>>([]);
+    codigosFiltro=this.codigosFiltroSubj.asObservable();
+
+    private cantRetrasosPorCodigoSubj: Subject<Array<number>> = new BehaviorSubject<Array<number>>([]);
+    cantRetrasosPorCodigoFiltro=this.cantRetrasosPorCodigoSubj.asObservable();
+
     private currentDataSubj: Subject<Array<any>> = new BehaviorSubject<Array<any>>([]);
     currentData = this.currentDataSubj.asObservable();
 
@@ -136,6 +144,28 @@ export class FilterService {
       });
     }
 
+    getCodigos() {
+      //this.sort();
+      var codigos = [];
+      for (var recorrido of Object.entries(this.ELEMENT_DATA.filter(elem=>elem.subscription))) {
+        codigos.push(recorrido[1].code);
+      }
+      //return codigos;
+      this.codigosFiltroSubj.next(codigos);
+      console.log(codigos);
+    }
+
+    getCantRetrasos() {
+      //this.sort();
+      var cantsRetrasos = [];
+      for (var recorrido of Object.entries(this.ELEMENT_DATA.filter(elem=>elem.subscription))) {
+        cantsRetrasos.push(recorrido[1].cantRetrasos);
+      }
+      //return cantsRetrasos;
+      this.cantRetrasosPorCodigoSubj.next(cantsRetrasos);
+      console.log(cantsRetrasos);
+    }
+
     changeChecked(check: boolean) {
       this.isChecked.next(check);
       check ? 
@@ -152,6 +182,8 @@ export class FilterService {
           this.ELEMENT_DATA[index].subscription=true;
        this.currentDataSubj.next(this.ELEMENT_DATA);
       console.log(this.ELEMENT_DATA.filter(elem=>elem.subscription));
+      this.getCodigos();
+      this.getCantRetrasos();
     }
 
     changeOrigen(origen:string) {
