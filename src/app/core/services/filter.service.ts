@@ -12,9 +12,6 @@ export class FilterService {
       this.getCantRetrasos();
     }
 
-    public origenSelect=null;
-    public destinoSelect=null;
-
     ELEMENT_DATA= [
       {
         position: 1,
@@ -127,8 +124,14 @@ export class FilterService {
     private currentDataSubj: Subject<Array<any>> = new BehaviorSubject<Array<any>>([]);
     currentData = this.currentDataSubj.asObservable();
 
-    private isChecked: Subject<boolean> = new BehaviorSubject<boolean>(null);
+    private isChecked/* : Subject<boolean> */ = new BehaviorSubject<boolean>(null);
     currentCheck = this.isChecked.asObservable();
+
+    private origenSelectSubj /*:  Subject<Array<any>>  */= new BehaviorSubject<string>(null);
+    origenSelect = this.origenSelectSubj.asObservable();
+
+    private destinoSelectSubj/* : Subject<Array<any>> */ = new BehaviorSubject<string>(null);
+    destinoSelect = this.destinoSelectSubj.asObservable();
 
     sort() {
       this.ELEMENT_DATA.sort((rec1, rec2) => {
@@ -150,7 +153,6 @@ export class FilterService {
         codigos.push(recorrido[1].code);
       }
       this.codigosFiltroSubj.next(codigos);
-      console.log(codigos);
     }
 
     getCantRetrasos() {
@@ -159,7 +161,10 @@ export class FilterService {
         cantsRetrasos.push(recorrido[1].cantRetrasos);
       }
       this.cantRetrasosPorCodigoSubj.next(cantsRetrasos);
-      console.log(cantsRetrasos);
+    }
+
+    filterBySubscriptions() {
+      this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.subscription));
     }
 
     changeChecked(check: boolean) {
@@ -176,23 +181,35 @@ export class FilterService {
       this.ELEMENT_DATA[index].subscription ?
         this.ELEMENT_DATA[index].subscription=false :
           this.ELEMENT_DATA[index].subscription=true;
-       this.currentDataSubj.next(this.ELEMENT_DATA);
-      console.log(this.ELEMENT_DATA.filter(elem=>elem.subscription));
       this.getCodigos();
       this.getCantRetrasos();
     }
 
-    changeOrigen(origen:string) {
-      this.origenSelect=origen;
-      this.destinoSelect==null ?
-        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen)):
-          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen && elem.destino==this.destinoSelect));
+    searchFilter(filter) {
+      this.origenSelectSubj.next(null);
+      this.destinoSelectSubj.next(null);
+      this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>
+        elem.origen.toLowerCase().includes(filter.toLowerCase()) || 
+          elem.destino.toLowerCase().includes(filter.toLowerCase())));
     }
 
-    changeDestino(destino:string) {
-      this.destinoSelect=destino;
-      this.origenSelect==null ?
-        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino)):
-          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino && elem.origen==this.origenSelect));
+    changeOrigen(origen) {
+      console.log("estoy cambiando origen");
+      console.log("origen " +origen["viewValue"]);
+      console.log("destino " +this.destinoSelectSubj.value["viewValue"]);
+      this.origenSelectSubj.next(origen);
+      this.destinoSelectSubj.value==null ?
+        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen["viewValue"])):
+          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.origen==origen["viewValue"] && elem.destino==this.destinoSelectSubj.value));
+    }
+
+    changeDestino(destino) {
+      console.log("estoy cambiando destino");
+      console.log("origen " +this.origenSelectSubj.value["viewValue"]);
+      console.log("destino " +destino["viewValue"]);
+      this.destinoSelectSubj.next(destino);
+      this.origenSelectSubj.value==null ?
+        this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino["viewValue"])):
+          this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.destino==destino["viewValue"] && elem.origen==this.origenSelectSubj.value));
     }
 }

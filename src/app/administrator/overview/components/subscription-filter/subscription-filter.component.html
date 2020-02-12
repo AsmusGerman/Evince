@@ -2,7 +2,7 @@
 <div fxLayout fxLayoutAlign="center center">
   <mat-form-field fxFlex="50">
     <mat-icon matPrefix>search</mat-icon>
-    <input type="text" matInput placeholder="Search" fxFill />
+    <input #search type="text" matInput placeholder="Search" fxFill (keyup)="searchFilter(search.value)"/>
   </mat-form-field>
 </div>
 <div fxLayout fxLayoutAlign="center center">
@@ -11,7 +11,7 @@
     <mat-form-field>
       <mat-label>From</mat-label>
       <mat-select [(ngModel)]='origen' name="origen" formControlName="origenControl"
-      (selectionChange)="changeOrigen(origen.viewValue)">
+      (selectionChange)="changeOrigen(origen)">
         <mat-option  *ngFor="let origen of filterService.origenes" [(value)]="origen">
           {{origen.viewValue}}
         </mat-option>
@@ -24,7 +24,7 @@
     <mat-form-field>
       <mat-label>To</mat-label>
       <mat-select [(ngModel)]='destino' name="destino" formControlName="destinoControl"
-      (selectionChange)="changeDestino(destino.viewValue)">
+      (selectionChange)="changeDestino(destino)">
         <mat-option *ngFor="let destino of filterService.destinos" [(value)]="destino">
           {{destino.viewValue}}
         </mat-option>

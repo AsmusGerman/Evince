@@ -21,8 +21,8 @@ export class SubscriptionFilterComponent implements OnInit {
     })
   }
 
-  public origen;
-  public destino;
+  public origen:string;
+  public destino:string;
 /* 
   changeOrigDest(){
     this.filterService.changeOrigDest();
@@ -40,7 +40,13 @@ export class SubscriptionFilterComponent implements OnInit {
     this.filterService.changeChecked(ch);
   }
 
+  searchFilter(e) {
+    this.filterService.searchFilter(e);
+  }
+
   ngOnInit() {
-    this.filterService.currentCheck.subscribe(check => this.isChecked = check)
+    this.filterService.currentCheck.subscribe(check => this.isChecked = check);
+    this.filterService.origenSelect.subscribe(data => this.origen = data);
+    this.filterService.destinoSelect.subscribe(data => this.destino = data);
   }
 }
