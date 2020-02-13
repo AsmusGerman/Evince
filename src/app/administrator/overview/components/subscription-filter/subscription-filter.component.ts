@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FilterService } from 'src/app/core/services/filter.service';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -9,7 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class SubscriptionFilterComponent implements OnInit {
 
-  isChecked: boolean;
+  @Input() isChecked: boolean;
   public form:FormGroup;
   origenControl:FormControl;
   destinoControl:FormControl;
@@ -42,9 +42,9 @@ export class SubscriptionFilterComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filterService.currentCheck.subscribe(check => this.isChecked = check);
+    //this.filterService.currentCheck.subscribe(check => this.isChecked = check);
     this.filterService.origenSelect.subscribe(data => this.origen = data);
     this.filterService.destinoSelect.subscribe(data => this.destino = data);
-    this.filterService.searchFilter.subscribe(data=>this.search = data);
+    //this.filterService.searchFilter.subscribe(data=>this.search = data);
   }
 }

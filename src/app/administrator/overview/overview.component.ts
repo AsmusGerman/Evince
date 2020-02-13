@@ -8,10 +8,14 @@ import { Recorrido } from "src/app/core/model/recorrido";
   styleUrls: ["./overview.component.scss"]
 })
 export class OverviewComponent implements OnInit {
+
   constructor(private iAdministratorService: AdministratorService) {}
-  private iRecorridos: Array<Recorrido>;
+
+  private iRecorridos:Array<any>;
+
   ngOnInit() {
-    this.iAdministratorService.RoutesClient.get().subscribe(
+    console.log("estoy en ngoninit de overview component ts");
+     this.iAdministratorService.RoutesClient.get().subscribe(
       recorridos => (this.iRecorridos = recorridos)
     );
   }

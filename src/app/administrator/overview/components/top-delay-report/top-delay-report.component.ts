@@ -3,7 +3,8 @@ import {
   OnInit,
   ViewChild,
   ElementRef,
-  AfterViewInit
+  AfterViewInit,
+  Input
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./top-delay-report.template";
@@ -19,7 +20,9 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
     HTMLDivElement
   >;
 
-  public iDataSource = Array<any>();
+  //public iDataSource = Array<any>();
+  @Input('ELEMENT_DATA') iDataSource: Array<any>;
+  @Input() iRecorridos: Array<any>;
   public codigos = Array<string>();
   public cantRetrasosPorCodigo = Array<number>();
   private iChart: any;

@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "mock-serve": "json-server ./mocking/index.js --routes ./mocking/routes.json"
+    "mock-serve-driver": "json-server ./mocking/index.js --routes ./mocking/routes.json",
+    "mock-serve-administrator": "json-server ./mocking/admindata.js --routes ./mocking/adminroutes.json"
   },
   "private": true,
   "dependencies": {

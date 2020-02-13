@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FilterService } from 'src/app/core/services/filter.service';
 
 /* const ELEMENT_DATA = [
@@ -68,13 +68,14 @@ import { FilterService } from 'src/app/core/services/filter.service';
 export class SubscriptionListComponent implements OnInit {
   public iDisplayedColumns: string[] = ["code", "origen", "destino", "last", "state","subscription", "analyze"];
   public iDataSource = Array<any>();
-  isChecked: boolean;
-  //data: Array<any>;
+  //isChecked: boolean;
+  @Input () isChecked : boolean;
+  @Input() iRecorridos: Array<any>;
   
   constructor(private filterService: FilterService) {}
 
   ngOnInit() {
-    this.filterService.currentCheck.subscribe(check => this.isChecked = check);
+    //this.filterService.currentCheck.subscribe(check => this.isChecked = check);
     this.filterService.currentData.subscribe(data => this.iDataSource = data);
   }
 

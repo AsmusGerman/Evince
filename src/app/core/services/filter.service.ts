@@ -124,8 +124,9 @@ export class FilterService {
     private currentDataSubj: Subject<Array<any>> = new BehaviorSubject<Array<any>>([]);
     currentData = this.currentDataSubj.asObservable();
 
-    private isChecked/* : Subject<boolean> */ = new BehaviorSubject<boolean>(null);
-    currentCheck = this.isChecked.asObservable();
+    //private isChecked/* : Subject<boolean> */ = new BehaviorSubject<boolean>(null);
+    //currentCheck = this.isChecked.asObservable();
+    isChecked:boolean;
 
     private origenSelectSubj /*:  Subject<Array<any>>  */= new BehaviorSubject<string>(null);
     origenSelect = this.origenSelectSubj.asObservable();
@@ -171,7 +172,8 @@ export class FilterService {
     }
 
     changeChecked(check: boolean) {
-      this.isChecked.next(check);
+      this.isChecked=check;
+      //this.isChecked.next(check);
       check ? 
         this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>elem.subscription)) :
           this.currentDataSubj.next(this.ELEMENT_DATA);
