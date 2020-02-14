@@ -29,14 +29,24 @@ export class AdministratorService {
 class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
-  get() {
-    return this.iHttpClient.get<Array<any>>(this.iUrl);
+  get(getSubscribed:boolean) {
+    console.log("TRAER SOLO SUSCRITOS?");
+    console.log(getSubscribed);
+    if(!getSubscribed) {
+      console.log("TRAIGO TODOS");
+      console.log(this.iHttpClient.get<Array<any>>(this.iUrl));
+      return this.iHttpClient.get<Array<any>>(this.iUrl);
+    }
+    else {
+      console.log("TRAIGO SOLO SUSCRITOS, LA URL ES");
+      console.log(`${this.iUrl}/subscribed/`);
+      console.log(this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`));
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`);
+    }
   }
 
-  subscription(id: number, state: boolean) {
-    return this.iHttpClient.post(`${this.iUrl}/subscription`, {
-      id,
-      state
-    });
+
+  subscription(rec) {
+    return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);
   }
 }

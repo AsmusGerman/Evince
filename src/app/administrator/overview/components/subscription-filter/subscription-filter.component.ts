@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FilterService } from 'src/app/core/services/filter.service';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -9,7 +9,12 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class SubscriptionFilterComponent implements OnInit {
 
-  @Input() isChecked: boolean;
+  @Input () origenes: Array<string>;
+  @Input () destinos: Array<string>;
+  //@Input () onlySubs: boolean;
+  @Input () showSubscribed;
+  @Output() showSubscribedEmitter = new EventEmitter<any>();
+  
   public form:FormGroup;
   origenControl:FormControl;
   destinoControl:FormControl;
@@ -23,23 +28,28 @@ export class SubscriptionFilterComponent implements OnInit {
 
   public origen:string;
   public destino:string;
-  public search:string;
+
+  showSubscribedChange(){
+    this.showSubscribed ? this.showSubscribed=false : this.showSubscribed=true;
+    console.log("voy a enviar "+this.showSubscribed+"desde el filtro");
+    this.showSubscribedEmitter.emit(this.showSubscribed);
+  }
 
   changeOrigen(origen: string) {
-    this.filterService.changeOrigen(origen);
+    console.log("El nuevo origen elegido es "+origen);
+    //this.filterService.changeOrigen(origen);
   }
 
   changeDestino(destino: string) {
-    this.filterService.changeDestino(destino);
+    console.log("El nuevo destino es "+destino);
+    //this.filterService.changeDestino(destino);
   }
 
-  onChange(ch: boolean) {
-    this.filterService.changeChecked(ch);
-  }
-
-  searchFilter(e) {
-    this.filterService.setSearchFilter(e);
-  }
+/*   onChange(checkSubs: boolean) {
+    console.log(this.showSubscribed);
+    this.showSubscribed.emit(checkSubs);
+    //this.filterService.changeChecked(ch);
+  } */
 
   ngOnInit() {
     //this.filterService.currentCheck.subscribe(check => this.isChecked = check);

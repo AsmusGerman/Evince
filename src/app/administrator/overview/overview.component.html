@@ -1,4 +1,4 @@
 <div class="main">
-    <evince-subscription-filter></evince-subscription-filter>
-    <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)=console($event)></evince-subscription-list>
+    <evince-subscription-filter [origenes]="origenes" [destinos]="destinos" (showSubscribedEmitter)="updateShowSubscribed($event)"></evince-subscription-filter>
+    <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)="updateSubscription($event)"></evince-subscription-list>
 </div>

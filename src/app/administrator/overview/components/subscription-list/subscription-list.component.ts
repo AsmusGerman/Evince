@@ -12,7 +12,7 @@ export class SubscriptionListComponent implements OnInit {
   //public iDataSource = Array<any>();
   //isChecked: boolean;
   @Input () iRecorridos: Array<any>;
-  @Output() onClick = new EventEmitter(Array<string,boolean>()); 
+  @Output() onClick = new EventEmitter<any>();
   constructor(private filterService: FilterService) {}
 
   ngOnInit() {
@@ -20,7 +20,9 @@ export class SubscriptionListComponent implements OnInit {
     //this.filterService.currentData.subscribe(data => this.iRecorridos = data);
   }
 
-  changeChecked(elementCode: any){
-    //this.filterService.updateData(elementCode);
+  enviarOnClick(id,subscription) {
+    console.log("ESTOY CAMBIANDO EL CHECK EN LA LISTA PARA EL ID "+id);
+    subscription=!subscription;
+    this.onClick.emit({id,subscription});
   }
 }

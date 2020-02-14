@@ -31,7 +31,7 @@ module.exports = () => {
     };
   
     
-    const qr = faker.random.number({ min: 2, max: 3 });
+    const qr = faker.random.number({ min: 2, max: 5 });
     for (let i = 0; i < qr; i++) {
       const recorrido = {
         id: faker.random.number(),

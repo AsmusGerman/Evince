@@ -1,4 +1,6 @@
 {
-    "/administrator/recorridos": "/recorridos"
+    "/administrator/recorridos": "/recorridos",
+    "/administrator/recorridos/subscribed":"/recorridos?subscription=true",
+    "/administrator/recorridos/update/:id": "/recorridos/:id"
 }
   
