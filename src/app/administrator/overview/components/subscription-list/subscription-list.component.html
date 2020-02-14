@@ -1,7 +1,7 @@
 <div class="main">
   <div fxLayout fxLayoutAlign="center center">
 
-      <table mat-table [dataSource]="iDataSource" fxFlex="50">
+      <table mat-table [dataSource]="iRecorridos" fxFlex="50">
 <!--         <div *ngIf="isChecked; then showSubscriptions"></div>
         <ng-template #showSubscriptions> -->
         <!-- <div *ngFor="let element of iDataSource"></div> -->
@@ -33,8 +33,8 @@
         <ng-container matColumnDef="subscription">
           <th mat-header-cell *matHeaderCellDef>Subscription</th>
           <td mat-cell *matCellDef="let element">
-            <mat-slide-toggle color="primary" [checked]="element.subscription" 
-            (change)="changeChecked(element.code)">
+            <mat-slide-toggle color="primary" [checked]="element.subscription"
+            (click)="onClick.emit(element.code,element.subscription)">
             </mat-slide-toggle>
           </td>
         </ng-container>

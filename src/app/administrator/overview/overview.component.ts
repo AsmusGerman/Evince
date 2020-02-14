@@ -11,10 +11,15 @@ export class OverviewComponent implements OnInit {
 
   constructor(private iAdministratorService: AdministratorService) {}
 
+  private subsOnly:boolean=false;
   private iRecorridos:Array<any>;
 
+  console(code:string,subscription:boolean):void{
+    console.log(code);
+    console.log(subscription);
+  }
+
   ngOnInit() {
-    console.log("estoy en ngoninit de overview component ts");
      this.iAdministratorService.RoutesClient.get().subscribe(
       recorridos => (this.iRecorridos = recorridos)
     );

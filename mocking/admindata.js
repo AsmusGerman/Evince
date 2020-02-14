@@ -19,15 +19,27 @@ module.exports = () => {
         "accidente",
         "incapacidad del chofer"
       ],
+      estados: [
+        "delayed",
+        "on the road",
+        "not started"
+      ],
+      ciudades : new Array(10)
+        .fill(null)
+        .map(() => faker.address.city()),
       recorridos: []
     };
   
+    
     const qr = faker.random.number({ min: 2, max: 3 });
     for (let i = 0; i < qr; i++) {
       const recorrido = {
         id: faker.random.number(),
-        name: faker.random.alphaNumeric(10),
-        //viajes : [],
+        code: faker.random.alphaNumeric(10),
+        origen: faker.random.arrayElement(data.ciudades),
+        destino: faker.random.arrayElement(data.ciudades),
+        state: faker.random.arrayElement(data.estados),
+        subscription : faker.random.boolean(),
         retrasos: []
       };
   
