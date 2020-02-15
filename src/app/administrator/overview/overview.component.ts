@@ -15,9 +15,22 @@ export class OverviewComponent implements OnInit {
   private recorrido:any;
   private showSubscribed:boolean=false;
   private origenes:Array<string> = new Array<string>();
-  private destinos:Array<string> = new Array<string>();;
+  private destinos:Array<string> = new Array<string>();
   private origenSeleccionado:string;
   private destinoSeleccionado:string;
+
+  updateOrigenSeleccionado(origen) {
+    this.origenSeleccionado=origen;
+    this.iAdministratorService.RoutesClient
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado)
+    .subscribe(recorridos => this.iRecorridos=recorridos);
+  }
+  updateDestinoSeleccionado(destino) {
+    this.destinoSeleccionado=destino;
+    this.iAdministratorService.RoutesClient
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado)
+    .subscribe(recorridos => this.iRecorridos=recorridos);
+  }
 
   updateOrigenes(){
     this.origenes = [];

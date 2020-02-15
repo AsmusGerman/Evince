@@ -11,9 +11,12 @@ export class SubscriptionFilterComponent implements OnInit {
 
   @Input () origenes: Array<string>;
   @Input () destinos: Array<string>;
-  //@Input () onlySubs: boolean;
+  @Input () origenSeleccionado: string;
+  @Input () destinoSeleccionado: string;
   @Input () showSubscribed;
   @Output() showSubscribedEmitter = new EventEmitter<any>();
+  @Output() origenSeleccionadoEmitter = new EventEmitter<string>();
+  @Output() destinoSeleccionadoEmitter = new EventEmitter<string>();
   
   public form:FormGroup;
   origenControl:FormControl;
@@ -36,25 +39,14 @@ export class SubscriptionFilterComponent implements OnInit {
   }
 
   changeOrigen(origen: string) {
-    console.log("El nuevo origen elegido es "+origen);
-    //this.filterService.changeOrigen(origen);
+    this.origenSeleccionadoEmitter.emit(origen);
   }
 
   changeDestino(destino: string) {
-    console.log("El nuevo destino es "+destino);
-    //this.filterService.changeDestino(destino);
+    this.destinoSeleccionadoEmitter.emit(destino);
   }
 
-/*   onChange(checkSubs: boolean) {
-    console.log(this.showSubscribed);
-    this.showSubscribed.emit(checkSubs);
-    //this.filterService.changeChecked(ch);
-  } */
-
   ngOnInit() {
-    //this.filterService.currentCheck.subscribe(check => this.isChecked = check);
-    this.filterService.origenSelect.subscribe(data => this.origen = data);
-    this.filterService.destinoSelect.subscribe(data => this.destino = data);
-    //this.filterService.searchFilter.subscribe(data=>this.search = data);
+    
   }
 }

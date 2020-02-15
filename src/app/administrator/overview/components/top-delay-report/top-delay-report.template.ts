@@ -20,14 +20,14 @@ xAxis : [
 yAxis : [
     {
         type : 'category',
-        data : []
+        data : ["asd","qwe"]
     }
 ],
 series : [
     {
         name:'Total en retrasos',
         type:'bar',
-        data:[]
+        data:[3,5]
     }
 ]
 };

@@ -4,20 +4,20 @@
     <form [formGroup]="form">
     <mat-form-field>
       <mat-label>From</mat-label>
-      <mat-select [(ngModel)]='origen' name="origen" formControlName="origenControl"
-      (selectionChange)="changeOrigen(origen)">
-        <mat-option  *ngFor="let origen of origenes" [(value)]="origen">
-          {{origen}}
+      <mat-select [(ngModel)]='origenSeleccionado' name="origenSeleccionado" formControlName="origenControl"
+      (selectionChange)="changeOrigen(origenSeleccionado)">
+        <mat-option *ngFor="let origenSeleccionado of origenes" [(value)]="origenSeleccionado">
+          {{origenSeleccionado}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>To</mat-label>
-      <mat-select [(ngModel)]='destino' name="destino" formControlName="destinoControl"
-      (selectionChange)="changeDestino(destino)">
-        <mat-option *ngFor="let destino of destinos" [(value)]="destino">
-          {{destino}}
+      <mat-select [(ngModel)]='destinoSeleccionado' name="destinoSeleccionado" formControlName="destinoControl"
+      (selectionChange)="changeDestino(destinoSeleccionado)">
+        <mat-option *ngFor="let destinoSeleccionado of destinos" [(value)]="destinoSeleccionado">
+          {{destinoSeleccionado}}
         </mat-option>
       </mat-select>
     </mat-form-field>

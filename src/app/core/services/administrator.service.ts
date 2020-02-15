@@ -45,6 +45,26 @@ class RouteClient {
     }
   }
 
+  getByOrigenDestino(origen:string,destino:string) {
+    var origenValido=origen!=null && origen!="";
+    var destinoValido=destino!=null && destino!="";
+    if(origenValido && !destinoValido){
+      console.log("1");
+      console.log("origen :" + origen + "destino:" +destino);
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origen/`+origen);
+    }
+    else if (!origenValido && destinoValido){
+      console.log("2");
+      console.log("origen :" + origen + "destino:" +destino);
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/destino/`+destino);
+    }
+    else if (origenValido && destinoValido){
+      console.log("3");
+      console.log("origen :" + origen + "destino:" +destino);
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origenydestino/`+origen+'&'+destino);
+    }
+  }
+
 
   subscription(rec) {
     return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);

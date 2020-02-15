@@ -21,8 +21,8 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   >;
 
   //public iDataSource = Array<any>();
-  @Input('ELEMENT_DATA') iDataSource: Array<any>;
-  @Input() iRecorridos: Array<any>;
+  //@Input('ELEMENT_DATA') iDataSource: Array<any>;
+  @Input('iRecorridos') iDataSource: Array<any>;
   public codigos = Array<string>();
   public cantRetrasosPorCodigo = Array<number>();
   private iChart: any;

@@ -1,4 +1,15 @@
-<div class="main">
-    <evince-subscription-filter [origenes]="origenes" [destinos]="destinos" (showSubscribedEmitter)="updateShowSubscribed($event)"></evince-subscription-filter>
+<div class="left">
+    <evince-top-delay-report></evince-top-delay-report>
+</div>
+<div class="right">
+    <evince-subscription-filter 
+        [origenes]="origenes" 
+        [destinos]="destinos" 
+        (showSubscribedEmitter)="updateShowSubscribed($event)"
+        (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
+        (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
+        [origenSeleccionado]="origenSeleccionado"
+        [destinoSeleccionado]="destinoSeleccionado"
+    ></evince-subscription-filter>
     <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)="updateSubscription($event)"></evince-subscription-list>
 </div>

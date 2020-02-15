@@ -1,6 +1,10 @@
 {
     "/administrator/recorridos": "/recorridos",
     "/administrator/recorridos/subscribed":"/recorridos?subscription=true",
+    "/administrator/recorridos/origen/:origen":"/recorridos?origen=:origen",
+    "/administrator/recorridos/destino/:destino":"/recorridos?destino=:destino",
+    "/administrator/recorridos/origenydestino/:origen&:destino":
+        "/recorridos?origen=:origen&destino=:destino",
     "/administrator/recorridos/update/:id": "/recorridos/:id"
 }
   
