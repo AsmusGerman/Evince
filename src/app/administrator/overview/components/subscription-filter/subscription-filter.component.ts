@@ -38,6 +38,8 @@ export class SubscriptionFilterComponent implements OnInit {
     this.showSubscribedEmitter.emit(this.showSubscribed);
   }
 
+  //TODO: control de duplicados en selectores de origen y destino
+  //TODO: poner una pequenia cruz (o similar) al lado de cada selector para limpiarlo
   changeOrigen(origen: string) {
     this.origenSeleccionadoEmitter.emit(origen);
   }

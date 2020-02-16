@@ -22,30 +22,56 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
 
   //public iDataSource = Array<any>();
   //@Input('ELEMENT_DATA') iDataSource: Array<any>;
-  @Input('iRecorridos') iDataSource: Array<any>;
+  @Input() iRecorridos: Array<any>;
   public codigos = Array<string>();
   public cantRetrasosPorCodigo = Array<number>();
   private iChart: any;
 
   constructor(private filterService: FilterService) {}
 
-  updateCodigos(data) {
-    template.yAxis[0].data=data;
-    this.iChart.setOption(template,true);
+  sort() {
+    console.log("en sort, los recorridos son", this.iRecorridos);
+    this.iRecorridos.sort((rec1, rec2) => {
+      if (rec1.retrasos.length > rec2.retrasos.length) {
+          return 1;
+      }
+  
+      if (rec1.retrasos.length < rec2.retrasos.length) {
+          return -1;
+      }
+  
+      return 0;
+    });
   }
 
-  updateData(data) {
-    template.series[0].data=data;
+  updateCodigosYCantRetrasos() {
+    var codigos = [];
+    var cantRetrasos = [];
+    for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
+      codigos.push(recorrido[1].code);
+      var sum=0;
+      for (var retrasos of recorrido[1].retrasos) {
+        sum+=recorrido[1].retrasos.length;
+      }
+      cantRetrasos.push(sum);
+    }
+    template.yAxis[0].data=codigos;
+    template.series[0].data=cantRetrasos;
     this.iChart.setOption(template,true);
   }
 
   ngOnInit() {
-    this.iChart = echarts.init(this.iChartContainer.nativeElement);
-    this.filterService.currentData.subscribe(data => this.iDataSource = data);
-    this.filterService.codigosFiltro.subscribe(data => this.updateCodigos(data));
-    this.filterService.cantRetrasosPorCodigoFiltro.subscribe(data => this.updateData(data));
+  }
+
+  ngOnChanges() {
+    console.log("enonchanges del primer reporte", this.iRecorridos);
+    this.sort();
+    this.updateCodigosYCantRetrasos();
   }
 
   ngAfterViewInit() {
+    this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    this.iChart.setOption(template, true);
+    this.iChart.resize({ width: 500, height: 500 });
   }
 }

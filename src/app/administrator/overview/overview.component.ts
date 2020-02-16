@@ -22,13 +22,13 @@ export class OverviewComponent implements OnInit {
   updateOrigenSeleccionado(origen) {
     this.origenSeleccionado=origen;
     this.iAdministratorService.RoutesClient
-    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado)
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado,this.showSubscribed)
     .subscribe(recorridos => this.iRecorridos=recorridos);
   }
   updateDestinoSeleccionado(destino) {
     this.destinoSeleccionado=destino;
     this.iAdministratorService.RoutesClient
-    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado)
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado,this.showSubscribed)
     .subscribe(recorridos => this.iRecorridos=recorridos);
   }
 
@@ -49,12 +49,14 @@ export class OverviewComponent implements OnInit {
  }
 
   updateSubscription(recorrido){
+    console.log("haciendo update, origen seleccionado: ",this.origenSeleccionado);
+    console.log("haciendo update, origen seleccionado: ",this.destinoSeleccionado);
     var recorridoAActualizar=this.iRecorridos.filter(elem=>elem.id==recorrido.id)[0];
     recorridoAActualizar.subscription=recorrido.subscription;
     this.iAdministratorService.RoutesClient
     .subscription(recorridoAActualizar)
       .subscribe(() => this.iAdministratorService.RoutesClient
-    .get(this.showSubscribed)
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado,this.showSubscribed)
       .subscribe(rec=>(this.iRecorridos=rec)));
   }
 
@@ -64,7 +66,7 @@ export class OverviewComponent implements OnInit {
       this.showSubscribed = false :
         this.showSubscribed=true;
     this.iAdministratorService.RoutesClient
-    .get(this.showSubscribed)
+    .getByOrigenDestino(this.origenSeleccionado,this.destinoSeleccionado,this.showSubscribed)
       .subscribe(rec=>this.iRecorridos=rec);
   }
 
