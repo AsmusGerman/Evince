@@ -93,9 +93,9 @@ export class DriverComponent implements OnInit {
   }
 
   stop(): void {
-    /*  this.iDriverService.TravelClient.stop({
-      travel: this.iCurrentTravel.id
-    }).subscribe(() => this.iDriverService.RoutesClient.get()); */
+    this.iDriverService.TravelClient.stop({
+      travel: this.iViajeActual.id
+    }).subscribe();
 
     this.iViajeActual.estado = "detenido";
     this.iViajeActual.fechaHoraRealLlegada = new Date().toLocaleString();
@@ -109,9 +109,9 @@ export class DriverComponent implements OnInit {
   }
 
   start(pViajeId: string) {
-    /*  this.iDriverService.TravelClient.start({
-      travel: pTravelId
-    }).subscribe(() => this.iDriverService.RoutesClient.get()); */
+    this.iDriverService.TravelClient.start({
+      travel: pViajeId
+    }).subscribe();
 
     try {
       if (this.iViajes.length === 0) {
@@ -164,7 +164,7 @@ export class DriverComponent implements OnInit {
       this.iViajes = this.iRecorrido.viajes.sort(travel => travel.orden);
       // si hay un viaje iniciado, sino -1
       let idx = this.iViajes.findIndex(travel => travel.estado === "actual");
-      if (idx > 0) {
+      if (idx > -1) {
         // se elimina de la lista de viajes
         this.iViajeActual = this.iViajes[idx];
       }
