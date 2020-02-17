@@ -120,7 +120,7 @@ function handleError(err) {
     errorMessage = err;
   } else {
     if (!(err instanceof ErrorEvent)) {
-      if (err.error && err.error.errors.length) {
+      if (err.error && err.error.errors && err.error.errors.length) {
         errorMessage = err.error.errors[0];
 
         // TODO: mostrar snackbar de error
