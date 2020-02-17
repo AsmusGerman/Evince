@@ -37,7 +37,7 @@ export class DelayComponent implements OnInit {
 
     this.iFormGroup = this.iFormBuilder.group({
       type: new FormControl("", [Validators.required]),
-      timestamp: new FormControl("", [
+      time: new FormControl("", [
         Validators.required,
         Validators.pattern(/^(0[0-9]|1[0-2]):[0-5][0-9]$/gm)
       ]),
@@ -52,13 +52,13 @@ export class DelayComponent implements OnInit {
     this.iRouter.navigate(["../"], { relativeTo: this.iActivatedRoute });
   }
 
-  public onSubmit({ type, timestamp, description }) {
+  public onSubmit({ type, time, description }) {
     this.iDriverService.DelayClient.push({
       type,
-      timestamp,
+      time,
       description,
       travel: this.iCurrentTravel
-    });
+    }).subscribe();
 
     this.iRouter.navigate(["../"], { relativeTo: this.iActivatedRoute });
   }

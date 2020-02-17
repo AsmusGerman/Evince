@@ -54,10 +54,10 @@ class DelayClient {
   push(body: {
     travel: string;
     type: string;
-    timestamp: string;
+    time: string;
     description: string;
   }) {
-    if (!body.type || !body.timestamp) {
+    if (!body.time) {
       throw new Error("los parámetros no pueden ser indefinidos");
     }
 

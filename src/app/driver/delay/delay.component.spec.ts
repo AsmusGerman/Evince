@@ -58,7 +58,7 @@ describe("delay component", () => {
     );
     component.iFormGroup.setValue({
       type: component.iDelayTypes[0],
-      timestamp: "13:10",
+      time: "13:10",
       description: "tiempo invalido"
     });
     component.iFormGroup.updateValueAndValidity();
@@ -72,7 +72,7 @@ describe("delay component", () => {
     );
     component.iFormGroup.setValue({
       type: component.iDelayTypes[0],
-      timestamp: "12:10",
+      time: "12:10",
       description: "tiempo válido"
     });
     component.iFormGroup.updateValueAndValidity();

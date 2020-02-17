@@ -16,8 +16,8 @@ import { DataService } from "../core/services/data.service";
 import { DelayComponent } from "./delay/delay.component";
 import { RouteListComponent } from "./route-list/route-list.component";
 import { ReportComponent } from "./report/report.component";
-import { TravelDetailComponent } from './travel-detail/travel-detail.component';
-import { CurrentRouteComponent } from './current-route/current-route.component';
+import { TravelDetailComponent } from "./travel-detail/travel-detail.component";
+import { CurrentRouteComponent } from "./current-route/current-route.component";
 
 const routes: Routes = [
   {
@@ -25,8 +25,8 @@ const routes: Routes = [
     component: DriverComponent
   },
   {
-    path: "delay",
-    component: DelayComponent,
+    path: "delay/:id",
+    component: DelayComponent
   },
   {
     path: "report/:id",

@@ -84,8 +84,8 @@ export class DriverComponent implements OnInit {
     );
   }
 
-  delay(): void {
-    this.iRouter.navigate(["driver/delay"]);
+  delay(pTravelId: string): void {
+    this.iRouter.navigate(["driver/delay/", pTravelId]);
   }
 
   analyze(pTravelId: string) {
