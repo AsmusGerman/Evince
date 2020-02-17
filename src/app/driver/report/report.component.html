@@ -17,36 +17,36 @@
           Salida estipulada desde :
           {{ iTravel.fechaHoraSalidaEstipuladas }}
         </span>
-        <span matLine>
-          Salida real: {{ iTravel.fechaHoraSalidaEstipuladas }}
-        </span>
+        <span matLine> Salida real: {{ iTravel.fechaHoraRealSalida }} </span>
       </mat-list-item>
       <mat-list-item>
         <span matLine>
-          Llegada estipulada: {{ iTravel.fechaHoraRealSalida }}
+          Llegada estipulada: {{ iTravel.fechaHoraLlegadaEstipuladas }}
         </span>
         <span matLine> Llegada real: {{ iTravel.fechaHoraRealLlegada }} </span>
       </mat-list-item>
     </mat-list>
     <ng-container *ngIf="iTravel.retrasos.length == 0; retrasos">
-        No hay retrasos registrados para este viaje
+      No hay retrasos registrados para este viaje
     </ng-container>
     <ng-template #retrasos>
       <h3>Retrasos registrados</h3>
       <mat-list *ngFor="let bRetraso of iTravel.retrasos">
-        <mat-list-item >
-            <span>{{bRetraso.tipo}}</span>
+        <mat-list-item>
+          <span>{{ bRetraso.tipo }}</span>
         </mat-list-item>
-        <mat-list-item >
-            <span>{{bRetraso.tiempo}}</span>
+        <mat-list-item>
+          <span>{{ bRetraso.tiempo }}</span>
         </mat-list-item>
-        <mat-list-item >
-            <span>{{bRetraso.descripcion}}</span>
+        <mat-list-item>
+          <span>{{ bRetraso.descripcion }}</span>
         </mat-list-item>
       </mat-list>
     </ng-template>
     <div class="button-group">
-      <button type="button" mat-flat-button (click)="returnToHome()">Volver</button>
+      <button type="button" mat-flat-button (click)="returnToHome()">
+        Volver
+      </button>
     </div>
   </mat-card-content>
 </mat-card>
