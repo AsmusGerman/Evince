@@ -18,6 +18,8 @@ import {
   export class RecorridoReportComponent implements OnInit {
 
     @Input() recorridoAAnalizar: any;
+    public iDisplayedColumns: string[] = ["id", "cantPasajeros", "fechaHoraSalidaEstipuladas", "fechaHoraLlegadaEstipuladas", 
+    "estado","terminalOrigen","terminalDestino"];
   
     constructor() {}
   
