@@ -3,6 +3,7 @@ import { Retraso } from "./retraso";
 export class Viaje {
   constructor(
     public id: string,
+    public nombre: string,
     public cantPasajeros: number,
     public fechaHoraSalidaEstipuladas: string,
     public fechaHoraLlegadaEstipuladas: string,
