@@ -40,10 +40,10 @@ module.exports = () => {
         destino: faker.random.arrayElement(data.ciudades),
         state: faker.random.arrayElement(data.estados),
         subscription : faker.random.boolean(),
-        retrasos: []
+        viajes: []
       };
   
-      /* const qv = faker.random.number({ min: 2, max: 2 });
+      const qv = faker.random.number({ min: 2, max: 7 });
       const ciudades = new Array(qv + 1)
         .fill(null)
         .map(() => faker.address.city());
@@ -62,20 +62,22 @@ module.exports = () => {
             id: faker.random.alphaNumeric(10),
             terminalOrigen: ciudades[i],
             terminalDestino: ciudades[i + 1]
-          }
+          },
+          retrasos: []
         };
+
+        const qret = faker.random.number({ min: 2, max: 4 });
+        for (let j = 0; j < qret; j++) {
+          const retraso = {
+              id: faker.random.alphaNumeric(10).toUpperCase(),
+              tipo: faker.random.arrayElement(data.retrasos),
+              descripcion: "",
+              tiempo: faker.random.number(15)
+          };
+          viaje.retrasos.push(retraso);
+        }
+
         recorrido.viajes.push(viaje);
-      }
- */
-      const qret = faker.random.number({ min: 2, max: 10 });
-      for (let j = 0; j < qret; j++) {
-        const retraso = {
-            id: faker.random.alphaNumeric(10).toUpperCase(),
-            tipo: faker.random.arrayElement(data.retrasos),
-            descripcion: "",
-            tiempo: faker.random.number(15)
-        };
-        recorrido.retrasos.push(retraso);
       }
 
       data.recorridos.push(recorrido);

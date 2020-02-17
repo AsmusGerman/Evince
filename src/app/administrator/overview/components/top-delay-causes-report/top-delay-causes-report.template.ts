@@ -4,16 +4,16 @@ export default {
       formatter: "{a} <br/> {b} : {c} ({d}%)"
     },
     title : {
-        text: 'Causas más comunes de retrasos',
+        text: 'Causas más comunes de retrasos (según tiempo perdido)',
         //subtext: 'subtext'
     },
     series: [
       {
-        name: "top-delays",
+        name: "top-delay-causes",
         type: "pie",
-        radius: [25, 100],
+        radius: [25, 150],
         center: ["50%", "50%"],
-        //roseType: "radius",
+        //roseType: "true",
         label: {
           show: false
         },

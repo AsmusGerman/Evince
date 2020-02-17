@@ -32,11 +32,25 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   sort() {
     console.log("en sort, los recorridos son", this.iRecorridos);
     this.iRecorridos.sort((rec1, rec2) => {
-      if (rec1.retrasos.length > rec2.retrasos.length) {
+      console.log(rec1.viajes[0].retrasos);
+      var cantRetRec1=0;
+      var cantRetRec2=0;
+      for(var viaje of rec1.viajes){
+        for (var retraso of viaje.retrasos){
+          cantRetRec1+=retraso.tiempo;
+        }
+      }
+      for(var viaje of rec2.viajes){
+        for (var retraso of viaje.retrasos){
+          cantRetRec2+=retraso.tiempo;
+        }
+      }
+
+      if (cantRetRec1 > cantRetRec2) {
           return 1;
       }
   
-      if (rec1.retrasos.length < rec2.retrasos.length) {
+      if (cantRetRec1 < cantRetRec2) {
           return -1;
       }
   
@@ -50,8 +64,10 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
     for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
       codigos.push(recorrido[1].code);
       var sum=0;
-      for (var retrasos of recorrido[1].retrasos) {
-        sum+=recorrido[1].retrasos.length;
+      for (var viaje of recorrido[1].viajes) {
+        for (var retraso of viaje.retrasos){
+          sum+=retraso.tiempo;
+        }
       }
       cantRetrasos.push(sum);
     }

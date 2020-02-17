@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { AdministratorService } from "src/app/core/services/administrator.service";
 import { Recorrido } from "src/app/core/model/recorrido";
 
@@ -11,6 +11,9 @@ export class OverviewComponent implements OnInit {
 
   constructor(private iAdministratorService: AdministratorService) {}
 
+  @Input() iCurrentRecorridoView: string='listado';
+  @Input() recorridoAAnalizar: any;
+  //private recorridoAAnalizar:any;
   private iRecorridos:Array<any>;
   private recorrido:any;
   private showSubscribed:boolean=false;
@@ -18,6 +21,20 @@ export class OverviewComponent implements OnInit {
   private destinos:Array<string> = new Array<string>();
   private origenSeleccionado:string;
   private destinoSeleccionado:string;
+
+  updateRecorridoAAnalizar(rec) {
+    this.recorridoAAnalizar=rec;
+  }
+
+  getRecorridoAAnalizar(rec) {
+    this.recorridoAAnalizar=rec;
+  }
+
+  updateiCurrentRecorridoView(iCurrentRecorridoView){
+    this.iCurrentRecorridoView=iCurrentRecorridoView;
+    console.log("actualizo icurrentrecview, ahora es ",iCurrentRecorridoView);
+    console.log(iCurrentRecorridoView);
+  }
 
   updateOrigenSeleccionado(origen) {
     this.origenSeleccionado=origen;
