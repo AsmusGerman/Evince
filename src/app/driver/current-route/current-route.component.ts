@@ -19,7 +19,7 @@ import { takeUntil, repeatWhen } from "rxjs/operators";
 })
 export class CurrentRouteComponent implements OnChanges {
   @Input() iViajes: Array<Viaje>;
-  @Input() iViajeActualId: number;
+  @Input() iViajeActualId: string;
   @Output() onStartTravelTriggered = new EventEmitter<string>();
   @Output() onStopTravelTriggered = new EventEmitter<string>();
   @Output() onDelayTravelTriggered = new EventEmitter<string>();
