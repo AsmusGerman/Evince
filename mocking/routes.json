@@ -2,7 +2,7 @@
   "/driver/recorridos": "/recorridos",
   "/driver/retrasos": "/retrasos",
   "/driver/viajes": "/viajes",
-  "/driver/retrasos/viaje\\?travel=:id": "/viajes?id=:id/retrasos",
+  "/driver/retrasos\\?travel=:id": "/viajes?id=:id/retrasos",
   "/driver/viajes\\?travel=:id": "/viajes?id=:id",
   "/driver/viajes/start/:travel": "/viajes?id=:viaje"
 }
