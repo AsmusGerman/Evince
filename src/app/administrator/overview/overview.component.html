@@ -18,7 +18,11 @@
             [origenSeleccionado]="origenSeleccionado"
             [destinoSeleccionado]="destinoSeleccionado"
             ></evince-subscription-filter>
-            <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)="updateSubscription($event)">
+            <evince-subscription-list 
+            [iRecorridos]="iRecorridos" 
+            (onClick)="updateSubscription($event)"
+            (iCurrentRecorridoViewEmitter)="updateiCurrentRecorridoView('recorrido-report')"
+            (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
             </evince-subscription-list>
         </div>
         <div *ngSwitchCase="'listado'">
