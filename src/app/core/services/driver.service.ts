@@ -66,7 +66,7 @@ class DelayClient {
 
   get(travel: string) {
     const params = new HttpParams().append("travel", travel);
-    this.iHttpClient.get(this.iUrl, { params });
+    this.iHttpClient.get(`${this.iUrl}/viaje`, { params });
   }
 
   types() {
