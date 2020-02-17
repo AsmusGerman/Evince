@@ -1,6 +1,11 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
+
 import { Store } from "@ngxs/store";
+
+import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+
 import { SettingsState } from "../store/settings/settings.state";
 import { Recorrido } from "../model/recorrido";
 import { Viaje } from "../model/viaje";
@@ -61,16 +66,18 @@ class DelayClient {
       throw new Error("los parámetros no pueden ser indefinidos");
     }
 
-    return this.iHttpClient.post(this.iUrl, body);
+    return this.iHttpClient.post(this.iUrl, body).pipe(catchError(handleError));
   }
 
   get(travel: string) {
     const params = new HttpParams().append("travel", travel);
-    this.iHttpClient.get(this.iUrl, { params });
+    this.iHttpClient.get(this.iUrl, { params }).pipe(catchError(handleError));
   }
 
   types() {
-    return this.iHttpClient.get<Array<string>>(`${this.iUrl}`);
+    return this.iHttpClient
+      .get<Array<string>>(`${this.iUrl}`)
+      .pipe(catchError(handleError));
   }
 }
 
@@ -78,7 +85,9 @@ class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   get() {
-    return this.iHttpClient.get<Array<Recorrido>>(this.iUrl);
+    return this.iHttpClient
+      .get<Array<Recorrido>>(this.iUrl)
+      .pipe(catchError(handleError));
   }
 }
 
@@ -86,15 +95,44 @@ class TravelClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   stop(body: { travel: string }) {
-    return this.iHttpClient.put(`${this.iUrl}/stop`, body);
+    return this.iHttpClient
+      .put(`${this.iUrl}/stop`, body)
+      .pipe(catchError(handleError));
   }
 
   start(body: { travel: string }) {
-    return this.iHttpClient.put(`${this.iUrl}/start`, body);
+    return this.iHttpClient
+      .put(`${this.iUrl}/start`, body)
+      .pipe(catchError(handleError));
   }
 
   get(travel: string) {
     const params = new HttpParams().append("travel", travel);
-    return this.iHttpClient.get<Viaje>(`${this.iUrl}`, { params });
+    return this.iHttpClient
+      .get<Viaje>(`${this.iUrl}`, { params })
+      .pipe(catchError(handleError));
   }
+}
+
+function handleError(err) {
+  let errorMessage: string;
+  if (typeof err === "string") {
+    errorMessage = err;
+  } else {
+    if (!(err instanceof ErrorEvent)) {
+      if (err.error && err.error.errors.length) {
+        errorMessage = err.error.errors[0];
+
+        // TODO: mostrar snackbar de error
+        console.error(errorMessage);
+        // this.iSnackbarService.error({
+        //   title: "Ha ocurrido un error",
+        //   message: err.error.errors[0],
+        //   icon: "error"
+        // });
+      }
+    }
+  }
+
+  return throwError(errorMessage);
 }
