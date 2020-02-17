@@ -29,29 +29,17 @@ import {
   
     constructor(private filterService: FilterService) {}
   
-/*     sort() {
-      this.iRecorridos.sort((rec1, rec2) => {
-        if (rec1.retrasos.length > rec2.retrasos.length) {
-            return 1;
-        }
-    
-        if (rec1.retrasos.length < rec2.retrasos.length) {
-            return -1;
-        }
-    
-        return 0;
-      });
-    } */
-  
     updateCausasYCantidades() {
       var causasYCantidades={};
-      for (var recorrido of Object.entries(this.iRecorridos)) {
-        for (var retraso of recorrido[1].retrasos) {
-          if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
-            causasYCantidades[retraso.tipo]+=1;
-          }
-          else {
-            causasYCantidades[retraso.tipo]=1;
+      for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
+        for (var viaje of recorrido[1].viajes) {
+          for (var retraso of viaje.retrasos) {
+            if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
+              causasYCantidades[retraso.tipo]+=retraso.tiempo;
+            }
+            else {
+              causasYCantidades[retraso.tipo]=retraso.tiempo;
+            }
           }
         }
       }

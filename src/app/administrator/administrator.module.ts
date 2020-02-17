@@ -14,6 +14,7 @@ import { SubscriptionFilterComponent } from './overview/components/subscription-
 import { LoginGuard } from '../authentication/guards/login.guard';
 import { TopDelayReportComponent } from './overview/components/top-delay-report/top-delay-report.component';
 import { TopDelayCausesReportComponent } from './overview/components/top-delay-causes-report/top-delay-causes-report.component';
+import { RecorridoReportComponent } from './overview/components/recorrido-report/recorrido-report.component';
 
 
 const routes: Routes = [
@@ -33,7 +34,8 @@ const routes: Routes = [
     SubscriptionListComponent,
     SubscriptionFilterComponent,
     TopDelayReportComponent,
-    TopDelayCausesReportComponent
+    TopDelayCausesReportComponent,
+    RecorridoReportComponent
   ],
   imports: [
     CommonModule,

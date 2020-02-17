@@ -2,9 +2,6 @@
   <div fxLayout fxLayoutAlign="center center">
 
       <table mat-table [dataSource]="iRecorridos" fxFlex="50">
-<!--         <div *ngIf="isChecked; then showSubscriptions"></div>
-        <ng-template #showSubscriptions> -->
-        <!-- <div *ngFor="let element of iDataSource"></div> -->
         <ng-container matColumnDef="code" >
           <th mat-header-cell *matHeaderCellDef>Code</th>
           <td mat-cell *matCellDef="let element">{{ element.code }}</td>
@@ -51,7 +48,6 @@
 
     <tr mat-header-row *matHeaderRowDef="iDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: iDisplayedColumns"></tr>
-<!--   </ng-template> -->
   </table>
 </div>
 </div>

@@ -2,15 +2,51 @@
     <evince-top-delay-causes-report [iRecorridos]="iRecorridos"></evince-top-delay-causes-report>
     <evince-top-delay-report [iRecorridos]="iRecorridos"></evince-top-delay-report>
 </div>
+
 <div class="right">
-    <evince-subscription-filter 
-        [origenes]="origenes" 
-        [destinos]="destinos" 
-        (showSubscribedEmitter)="updateShowSubscribed($event)"
-        (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
-        (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
-        [origenSeleccionado]="origenSeleccionado"
-        [destinoSeleccionado]="destinoSeleccionado"
-    ></evince-subscription-filter>
-    <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)="updateSubscription($event)"></evince-subscription-list>
+    <div [ngSwitch]="iCurrentRecorridoView">
+        <div *ngSwitchDefault>
+            <button mat-button (click)="updateiCurrentRecorridoView('recorrido-report')" title="recorrido-report">
+                ir a recorrido-report
+              </button>
+            <evince-subscription-filter 
+            [origenes]="origenes" 
+            [destinos]="destinos" 
+            (showSubscribedEmitter)="updateShowSubscribed($event)"
+            (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
+            (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
+            [origenSeleccionado]="origenSeleccionado"
+            [destinoSeleccionado]="destinoSeleccionado"
+            ></evince-subscription-filter>
+            <evince-subscription-list [iRecorridos]="iRecorridos" (onClick)="updateSubscription($event)">
+            </evince-subscription-list>
+        </div>
+        <div *ngSwitchCase="'listado'">
+            <button mat-button (click)="updateiCurrentRecorridoView('recorrido-report')" title="recorrido-report">
+                ir a recorrido-report
+              </button>
+            <evince-subscription-filter 
+            [origenes]="origenes" 
+            [destinos]="destinos" 
+            (showSubscribedEmitter)="updateShowSubscribed($event)"
+            (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
+            (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
+            [origenSeleccionado]="origenSeleccionado"
+            [destinoSeleccionado]="destinoSeleccionado"
+            ></evince-subscription-filter>
+            <evince-subscription-list 
+            [iRecorridos]="iRecorridos" 
+            (onClick)="updateSubscription($event)"
+            (iCurrentRecorridoViewEmitter)="updateiCurrentRecorridoView('recorrido-report')"
+            (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
+            </evince-subscription-list>
+        </div>
+        <div *ngSwitchCase="'recorrido-report'">
+            <button mat-button (click)="updateiCurrentRecorridoView('listado')" title="listado">
+                VOLVER
+              </button>
+            <evince-recorrido-report [recorridoAAnalizar]="recorridoAAnalizar">
+            </evince-recorrido-report>
+        </div>
+    </div>
 </div>
