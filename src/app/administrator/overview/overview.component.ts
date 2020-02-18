@@ -11,9 +11,11 @@ export class OverviewComponent implements OnInit {
 
   constructor(private iAdministratorService: AdministratorService) {}
 
-  @Input() iCurrentRecorridoView: string='listado';
-  @Input() recorridoAAnalizar: any;
+  @Input() iCurrentListView: string='general-list';
+  @Input() iCurrentChartView: string='general-chart';
+  @Input() recorridoAAnalizarId: any;
   //private recorridoAAnalizar:any;
+  private recorridoAAnalizar:any;
   private iRecorridos:Array<any>;
   private recorrido:any;
   private showSubscribed:boolean=false;
@@ -22,18 +24,20 @@ export class OverviewComponent implements OnInit {
   private origenSeleccionado:string;
   private destinoSeleccionado:string;
 
-  updateRecorridoAAnalizar(rec) {
-    this.recorridoAAnalizar=rec;
+  updateRecorridoAAnalizar(recId) {
+    this.iAdministratorService.RoutesClient.getById(recId).subscribe(recorrido => this.recorridoAAnalizar=recorrido);
+    console.log("el recorrido a analizar es,",this.recorridoAAnalizar);
+    //this.recorridoAAnalizar=rec;
   }
 
   getRecorridoAAnalizar(rec) {
-    this.recorridoAAnalizar=rec;
+    //this.recorridoAAnalizar=rec;
   }
 
-  updateiCurrentRecorridoView(iCurrentRecorridoView){
-    this.iCurrentRecorridoView=iCurrentRecorridoView;
-    console.log("actualizo icurrentrecview, ahora es ",iCurrentRecorridoView);
-    console.log(iCurrentRecorridoView);
+  updateiCurrentListView(iCurrentListView){
+    this.iCurrentListView=iCurrentListView;
+    console.log("actualizo icurrentrecview, ahora es ",iCurrentListView);
+    console.log(iCurrentListView);
   }
 
   updateOrigenSeleccionado(origen) {

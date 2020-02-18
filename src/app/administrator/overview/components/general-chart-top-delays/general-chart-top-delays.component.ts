@@ -7,15 +7,15 @@ import {
   Input
 } from "@angular/core";
 import * as echarts from "echarts";
-import template from "./top-delay-report.template";
+import template from "./general-chart-top-delays.template";
 import { FilterService } from 'src/app/core/services/filter.service';
 
 @Component({
-  selector: "evince-top-delay-report",
-  templateUrl: "./top-delay-report.component.html",
-  styleUrls: ["./top-delay-report.component.scss"]
+  selector: "evince-general-chart-top-delays",
+  templateUrl: "./general-chart-top-delays.component.html",
+  styleUrls: ["./general-chart-top-delays.component.scss"]
 })
-export class TopDelayReportComponent implements OnInit, AfterViewInit {
+export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
   @ViewChild("chart", { static: true }) iChartContainer: ElementRef<
     HTMLDivElement
   >;
@@ -30,21 +30,30 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   constructor(private filterService: FilterService) {}
 
   sort() {
-    console.log("en sort, los recorridos son", this.iRecorridos);
+    //console.log("en sort, los recorridos son", this.iRecorridos);
     this.iRecorridos.sort((rec1, rec2) => {
-      console.log(rec1.viajes[0].retrasos);
+      //console.log(rec1.retrasos);
+      //console.log(rec1.viajes[0].retrasos);
       var cantRetRec1=0;
       var cantRetRec2=0;
-      for(var viaje of rec1.viajes){
+      for (var retraso of rec1.retrasos) {
+        cantRetRec1+=retraso.tiempo;
+      }
+/*       for(var viaje of rec1.viajes){
         for (var retraso of viaje.retrasos){
           cantRetRec1+=retraso.tiempo;
         }
+      } */
+
+      for (var retraso of rec2.retrasos) {
+        cantRetRec2+=retraso.tiempo;
       }
-      for(var viaje of rec2.viajes){
+
+/*       for(var viaje of rec2.viajes){
         for (var retraso of viaje.retrasos){
           cantRetRec2+=retraso.tiempo;
         }
-      }
+      } */
 
       if (cantRetRec1 > cantRetRec2) {
           return 1;
@@ -64,11 +73,14 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
     for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
       codigos.push(recorrido[1].code);
       var sum=0;
-      for (var viaje of recorrido[1].viajes) {
+      for (var retraso of recorrido[1].retrasos) {
+        sum+=retraso.tiempo;
+      }
+/*       for (var viaje of recorrido[1].viajes) {
         for (var retraso of viaje.retrasos){
           sum+=retraso.tiempo;
         }
-      }
+      } */
       cantRetrasos.push(sum);
     }
     template.yAxis[0].data=codigos;
@@ -80,7 +92,7 @@ export class TopDelayReportComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges() {
-    console.log("enonchanges del primer reporte", this.iRecorridos);
+    //console.log("enonchanges del primer reporte", this.iRecorridos);
     this.sort();
     this.updateCodigosYCantRetrasos();
   }

@@ -11,15 +11,16 @@ import {
   //import { FilterService } from 'src/app/core/services/filter.service';
   
   @Component({
-    selector: "evince-recorrido-report",
-    templateUrl: "./recorrido-report.component.html",
-    styleUrls: ["./recorrido-report.component.scss"]
+    selector: "evince-recorrido-list",
+    templateUrl: "./recorrido-list.component.html",
+    styleUrls: ["./recorrido-list.component.scss"]
   })
-  export class RecorridoReportComponent implements OnInit {
+  export class RecorridoListComponent implements OnInit {
 
     @Input() recorridoAAnalizar: any;
-    public iDisplayedColumns: string[] = ["id", "cantPasajeros", "fechaHoraSalidaEstipuladas", "fechaHoraLlegadaEstipuladas", 
-    "estado","terminalOrigen","terminalDestino"];
+
+    public iDisplayedColumns: string[] = ["id" , "cantPasajeros", "fechaHoraSalidaEstipuladas", "fechaHoraLlegadaEstipuladas", 
+    "estado","terminalOrigen","terminalDestino","analyze"];
   
     constructor() {}
   
@@ -28,12 +29,16 @@ import {
         console.log(recorrido);
     }
 
+    getViajeAAnalizar(viaje) {
+      console.log("el viaje a analizar es: ",viaje);
+    }
+
     ngOnInit() {
 
     }
   
     ngOnChanges() {
-
+      console.log("ESTOY EN RECORRIDO-REPORT, EL RECORRIDO A ANALIZAR ES ",this.recorridoAAnalizar[0].viajes);
     }
   
     ngAfterViewInit() {

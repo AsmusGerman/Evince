@@ -3,11 +3,11 @@ import { FilterService } from 'src/app/core/services/filter.service';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'evince-subscription-filter',
-  templateUrl: './subscription-filter.component.html',
-  styleUrls: ['./subscription-filter.component.scss']
+  selector: 'evince-general-filter',
+  templateUrl: './general-filter.component.html',
+  styleUrls: ['./general-filter.component.scss']
 })
-export class SubscriptionFilterComponent implements OnInit {
+export class GeneralFilterComponent implements OnInit {
 
   @Input () origenes: Array<string>;
   @Input () destinos: Array<string>;
