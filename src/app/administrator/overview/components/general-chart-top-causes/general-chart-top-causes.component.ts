@@ -7,15 +7,15 @@ import {
     Input
   } from "@angular/core";
   import * as echarts from "echarts";
-  import template from "./top-delay-causes-report.template";
+  import template from "./general-chart-top-causes.template";
   import { FilterService } from 'src/app/core/services/filter.service';
   
   @Component({
-    selector: "evince-top-delay-causes-report",
-    templateUrl: "./top-delay-causes-report.component.html",
-    styleUrls: ["./top-delay-causes-report.component.scss"]
+    selector: "evince-general-chart-top-causes",
+    templateUrl: "./general-chart-top-causes.component.html",
+    styleUrls: ["./general-chart-top-causes.component.scss"]
   })
-  export class TopDelayCausesReportComponent implements OnInit, AfterViewInit {
+  export class GeneralChartTopCausesComponent implements OnInit, AfterViewInit {
     @ViewChild("chart", { static: true }) iChartContainer: ElementRef<
       HTMLDivElement
     >;
@@ -32,7 +32,15 @@ import {
     updateCausasYCantidades() {
       var causasYCantidades={};
       for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
-        for (var viaje of recorrido[1].viajes) {
+        for (var retraso of recorrido[1].retrasos) {
+          if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
+            causasYCantidades[retraso.tipo]+=retraso.tiempo;
+          }
+          else {
+            causasYCantidades[retraso.tipo]=retraso.tiempo;
+          }
+        }
+/*         for (var viaje of recorrido[1].viajes) {
           for (var retraso of viaje.retrasos) {
             if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
               causasYCantidades[retraso.tipo]+=retraso.tiempo;
@@ -41,7 +49,7 @@ import {
               causasYCantidades[retraso.tipo]=retraso.tiempo;
             }
           }
-        }
+        } */
       }
       console.log("data");
       console.log(causasYCantidades);

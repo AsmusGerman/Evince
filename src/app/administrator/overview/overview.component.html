@@ -1,15 +1,26 @@
 <div class="left">
-    <evince-top-delay-causes-report [iRecorridos]="iRecorridos"></evince-top-delay-causes-report>
-    <evince-top-delay-report [iRecorridos]="iRecorridos"></evince-top-delay-report>
+    <div [ngSwitch]="iCurrentChartView">
+        <div *ngSwitchDefault>
+            <evince-general-chart-top-causes [iRecorridos]="iRecorridos"></evince-general-chart-top-causes>
+            <evince-general-chart-top-delays [iRecorridos]="iRecorridos"></evince-general-chart-top-delays>
+        </div>
+        <div *ngSwitchCase="'general-chart'">
+            <evince-general-chart-top-causes [iRecorridos]="iRecorridos"></evince-general-chart-top-causes>
+            <evince-general-chart-top-delays [iRecorridos]="iRecorridos"></evince-general-chart-top-delays>
+        </div>
+        <div *ngSwitchCase="'recorrido-chart'">
+
+        </div>
+        <div *ngSwitchCase="'viaje-chart'">
+            
+        </div>
+    </div>
 </div>
 
 <div class="right">
-    <div [ngSwitch]="iCurrentRecorridoView">
+    <div [ngSwitch]="iCurrentListView">
         <div *ngSwitchDefault>
-            <button mat-button (click)="updateiCurrentRecorridoView('recorrido-report')" title="recorrido-report">
-                ir a recorrido-report
-              </button>
-            <evince-subscription-filter 
+            <evince-general-filter 
             [origenes]="origenes" 
             [destinos]="destinos" 
             (showSubscribedEmitter)="updateShowSubscribed($event)"
@@ -17,19 +28,16 @@
             (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
             [origenSeleccionado]="origenSeleccionado"
             [destinoSeleccionado]="destinoSeleccionado"
-            ></evince-subscription-filter>
-            <evince-subscription-list 
+            ></evince-general-filter>
+            <evince-general-list 
             [iRecorridos]="iRecorridos" 
             (onClick)="updateSubscription($event)"
-            (iCurrentRecorridoViewEmitter)="updateiCurrentRecorridoView('recorrido-report')"
+            (iCurrentListViewEmitter)="updateiCurrentListView('recorrido-list')"
             (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
-            </evince-subscription-list>
+            </evince-general-list>
         </div>
-        <div *ngSwitchCase="'listado'">
-            <button mat-button (click)="updateiCurrentRecorridoView('recorrido-report')" title="recorrido-report">
-                ir a recorrido-report
-              </button>
-            <evince-subscription-filter 
+        <div *ngSwitchCase="'general-list'">
+            <evince-general-filter 
             [origenes]="origenes" 
             [destinos]="destinos" 
             (showSubscribedEmitter)="updateShowSubscribed($event)"
@@ -37,20 +45,23 @@
             (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
             [origenSeleccionado]="origenSeleccionado"
             [destinoSeleccionado]="destinoSeleccionado"
-            ></evince-subscription-filter>
-            <evince-subscription-list 
+            ></evince-general-filter>
+            <evince-general-list 
             [iRecorridos]="iRecorridos" 
             (onClick)="updateSubscription($event)"
-            (iCurrentRecorridoViewEmitter)="updateiCurrentRecorridoView('recorrido-report')"
+            (iCurrentListViewEmitter)="updateiCurrentListView('recorrido-list')"
             (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
-            </evince-subscription-list>
+            </evince-general-list>
         </div>
-        <div *ngSwitchCase="'recorrido-report'">
-            <button mat-button (click)="updateiCurrentRecorridoView('listado')" title="listado">
+        <div *ngSwitchCase="'recorrido-list'">
+            <button mat-button (click)="updateiCurrentListView('general-list')" title="general-list">
                 VOLVER
               </button>
-            <evince-recorrido-report [recorridoAAnalizar]="recorridoAAnalizar">
-            </evince-recorrido-report>
+            <evince-recorrido-list [recorridoAAnalizar]="recorridoAAnalizar">
+            </evince-recorrido-list>
+        </div>
+        <div *ngSwitchCase="'viaje-list'">
+
         </div>
     </div>
 </div>

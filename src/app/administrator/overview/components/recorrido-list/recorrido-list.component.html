@@ -1,6 +1,6 @@
 <div class="main">
     <div fxLayout fxLayoutAlign="center center">
-        <table mat-table [dataSource]="recorridoAAnalizar.viajes" fxFlex="50">
+        <table mat-table [dataSource]="recorridoAAnalizar[0].viajes" fxFlex="50">
             <ng-container matColumnDef="id" >
             <th mat-header-cell *matHeaderCellDef>Code</th>
             <td mat-cell *matCellDef="let element">{{ element.id }}</td>
@@ -35,6 +35,15 @@
                 <th mat-header-cell *matHeaderCellDef>Terminal destino</th>
                 <td mat-cell *matCellDef="let element">{{ element.trayecto.terminalDestino }}</td>
             </ng-container>
+
+            <ng-container matColumnDef="analyze">
+                <th mat-header-cell *matHeaderCellDef>Analyze</th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-raised-button color="primary" (click)="getViajeAAnalizar(element)">
+                    Analyze
+                  </button>
+                </td>
+              </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="iDisplayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: iDisplayedColumns"></tr>

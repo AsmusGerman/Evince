@@ -10,6 +10,7 @@ export class AdministratorService {
   private iBaseAdministratorApiUrl: string;
 
   private _routesClient: RouteClient;
+  
   public get RoutesClient() {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
@@ -28,6 +29,10 @@ export class AdministratorService {
 
 class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
+
+  getById(recorridoId:number) {
+    return this.iHttpClient.get<Array<any>>(`${this.iUrl}/`+recorridoId);
+  }
 
   get(showSubscribed:boolean) {
     console.log("TRAER SOLO SUSCRITOS?");

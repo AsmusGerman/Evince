@@ -3,15 +3,15 @@ import { FilterService } from 'src/app/core/services/filter.service';
 
 
 @Component({
-  selector: "evince-subscription-list",
-  templateUrl: "./subscription-list.component.html",
-  styleUrls: ["./subscription-list.component.scss"]
+  selector: "evince-general-list",
+  templateUrl: "./general-list.component.html",
+  styleUrls: ["./general-list.component.scss"]
 })
-export class SubscriptionListComponent implements OnInit {
+export class GeneralListComponent implements OnInit {
   public iDisplayedColumns: string[] = ["code", "origen", "destino", "last", "state","subscription","analyze"];
   @Input () iRecorridos: Array<any>;
   @Output() onClick = new EventEmitter<any>();
-  @Output() iCurrentRecorridoViewEmitter = new EventEmitter<string>();
+  @Output() iCurrentListViewEmitter = new EventEmitter<string>();
   @Output() recorridoParaAnalizarEmitter = new EventEmitter<any>();
   constructor(private filterService: FilterService) {}
 
@@ -24,11 +24,11 @@ export class SubscriptionListComponent implements OnInit {
     this.onClick.emit({id,subscription});
   }
 
-  analyze(recorrido) {
+  getRecorridoAAnalizar(recorridoId) {
     console.log("cambio icurrentrecorridoview");
-    this.iCurrentRecorridoViewEmitter.emit('recorrido-report');
-    console.log("emitiendo el recorrido ", recorrido);
-    this.recorridoParaAnalizarEmitter.emit(recorrido);
+    this.iCurrentListViewEmitter.emit('recorrido-list');
+    console.log("emitiendo el recorrido ", recorridoId);
+    this.recorridoParaAnalizarEmitter.emit(recorridoId);
   }
 
 
