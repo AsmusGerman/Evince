@@ -74,13 +74,13 @@ module.exports = () => {
             retrasos: []
           };
 
-          const qret = faker.random.number({ min: 0, max: 2 });
+          const qret = faker.random.number({ min: 2, max: 4 });
           for (let j = 0; j < qret; j++) {
             const retraso = {
                 id: faker.random.alphaNumeric(10).toUpperCase(),
                 tipo: faker.random.arrayElement(data.retrasos),
                 descripcion: "",
-                tiempo: faker.random.number(15)
+                tiempo: faker.random.number({min: 10, max:20})
             };
             viaje.retrasos.push(retraso);
             recorrido.retrasos.push(retraso);

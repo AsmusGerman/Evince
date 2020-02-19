@@ -18,10 +18,11 @@ import {
   export class ViajesListComponent implements OnInit {
 
     @Input() viajesAAnalizar: any;
+    private origen:string; 
+    private destino:string;
 
-    public iDisplayedColumns: string[] = ["id" , "cantPasajeros", "fechaHoraSalidaEstipuladas", "fechaHoraLlegadaEstipuladas", 
-    "estado","terminalOrigen","terminalDestino","analyze"];
-  
+/*     public iDisplayedColumns: string[] = ["fechaHoraSalidaEstipulada","fechaHoraLlegadaEstipulada","cantPasajeros", "estado","retrasos"];
+ */  
     constructor() {}
   
 /*     updateViajesAAnalizar(viajes) {
@@ -29,13 +30,18 @@ import {
         console.log(viajes);
     } */
 
+    verRetrasosViaje(viaje) {
+      console.log(viaje);
+    }
+
     ngOnInit() {
-      console.log("estoy en viajes-list los viajes a analizar es: ")
-      console.log(this.viajesAAnalizar);
     }
   
     ngOnChanges() {
-      console.log("on changes viajeslist");
+      console.log("origen, ");
+      this.origen=this.viajesAAnalizar[0].trayecto.terminalOrigen; 
+      console.log("destino, ");
+      this.destino=this.viajesAAnalizar[0].trayecto.terminalDestino;
     }
   
     ngAfterViewInit() {
