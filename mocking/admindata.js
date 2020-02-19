@@ -74,7 +74,7 @@ module.exports = () => {
             retrasos: []
           };
 
-          const qret = faker.random.number({ min: 2, max: 4 });
+          const qret = faker.random.number({ min: 0, max: 2 });
           for (let j = 0; j < qret; j++) {
             const retraso = {
                 id: faker.random.alphaNumeric(10).toUpperCase(),

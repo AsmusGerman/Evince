@@ -16,9 +16,10 @@ export class OverviewComponent implements OnInit {
   @Input() recorridoAAnalizarId: any;
   //private recorridoAAnalizar:any;
   private recorridoAAnalizar:any;
+  private viajesAAnalizar:any;
   private iRecorridos:Array<any>;
   private recorrido:any;
-  private showSubscribed:boolean=false;
+  private showSubscribed:boolean=true;
   private origenes:Array<string> = new Array<string>();
   private destinos:Array<string> = new Array<string>();
   private origenSeleccionado:string;
@@ -28,6 +29,10 @@ export class OverviewComponent implements OnInit {
     this.iAdministratorService.RoutesClient.getById(recId).subscribe(recorrido => this.recorridoAAnalizar=recorrido);
     console.log("el recorrido a analizar es,",this.recorridoAAnalizar);
     //this.recorridoAAnalizar=rec;
+  }
+
+  updateViajesAAnalizar(viajes){
+    this.viajesAAnalizar=viajes;
   }
 
   getRecorridoAAnalizar(rec) {

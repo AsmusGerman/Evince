@@ -4,7 +4,9 @@ import {
     ViewChild,
     ElementRef,
     AfterViewInit,
-    Input
+    Input,
+    Output,
+    EventEmitter
   } from "@angular/core";
   //import * as echarts from "echarts";
   //import template from "./top-delay-causes-report.template";
@@ -18,19 +20,21 @@ import {
   export class RecorridoListComponent implements OnInit {
 
     @Input() recorridoAAnalizar: any;
+    private viajesAgrupados: Array<any>;
+    @Output() iCurrentListViewEmitter = new EventEmitter<string>();
+    @Output() viajesParaAnalizarEmitter = new EventEmitter<Array<any>>();
 
-    public iDisplayedColumns: string[] = ["id" , "cantPasajeros", "fechaHoraSalidaEstipuladas", "fechaHoraLlegadaEstipuladas", 
-    "estado","terminalOrigen","terminalDestino","analyze"];
+    public iDisplayedColumns: string[] = ["terminalOrigen","terminalDestino","estado","analyze"];
   
     constructor() {}
-  
-    recorridoParaAnalizar(recorrido) {
-        console.log("estoy en recorrido-report, el recorrido a analizar es: ")
-        console.log(recorrido);
-    }
 
-    getViajeAAnalizar(viaje) {
-      console.log("el viaje a analizar es: ",viaje);
+    getViajesAAnalizar(viaje) {
+      //console.log("cambio icurrentlistview");
+      this.iCurrentListViewEmitter.emit('viajes-list');
+      //console.log("emitiendo los viajes ",
+      //this.recorridoAAnalizar[0].viajes.filter(v=>v.orden==viaje.orden));
+      this.viajesParaAnalizarEmitter
+      .emit(this.recorridoAAnalizar[0].viajes.filter(v=>v.orden==viaje.orden));
     }
 
     ngOnInit() {
@@ -38,7 +42,15 @@ import {
     }
   
     ngOnChanges() {
-      console.log("ESTOY EN RECORRIDO-REPORT, EL RECORRIDO A ANALIZAR ES ",this.recorridoAAnalizar[0].viajes);
+      var grupoViaje=[];
+      var ordenViaje=[];
+      for (var viaje of this.recorridoAAnalizar[0].viajes) {
+        if (!ordenViaje.includes(viaje.orden)) {
+          grupoViaje.push(viaje);
+          ordenViaje.push(viaje.orden);
+        }
+      }
+      this.viajesAgrupados=grupoViaje;
     }
   
     ngAfterViewInit() {

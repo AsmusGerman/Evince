@@ -15,6 +15,7 @@ import { LoginGuard } from '../authentication/guards/login.guard';
 import { GeneralChartTopDelaysComponent } from './overview/components/general-chart-top-delays/general-chart-top-delays.component';
 import { GeneralChartTopCausesComponent } from './overview/components/general-chart-top-causes/general-chart-top-causes.component';
 import { RecorridoListComponent } from './overview/components/recorrido-list/recorrido-list.component';
+import { ViajesListComponent } from './overview/components/viajes-list/viajes-list.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
     GeneralFilterComponent,
     GeneralChartTopDelaysComponent,
     GeneralChartTopCausesComponent,
-    RecorridoListComponent
+    RecorridoListComponent,
+    ViajesListComponent
   ],
   imports: [
     CommonModule,
