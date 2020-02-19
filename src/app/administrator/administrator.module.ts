@@ -9,12 +9,13 @@ import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
-import { GeneralListComponent } from './overview/components/general-list/general-list.component';
-import { GeneralFilterComponent } from './overview/components/general-filter/general-filter.component';
+import { GeneralListComponent } from './overview/components/general/general-list/general-list.component';
+import { GeneralFilterComponent } from './overview/components/general/general-filter/general-filter.component';
 import { LoginGuard } from '../authentication/guards/login.guard';
-import { GeneralChartTopDelaysComponent } from './overview/components/general-chart-top-delays/general-chart-top-delays.component';
-import { GeneralChartTopCausesComponent } from './overview/components/general-chart-top-causes/general-chart-top-causes.component';
-import { RecorridoListComponent } from './overview/components/recorrido-list/recorrido-list.component';
+import { GeneralChartTopDelaysComponent } from './overview/components/general/general-chart-top-delays/general-chart-top-delays.component';
+import { GeneralChartTopCausesComponent } from './overview/components/general/general-chart-top-causes/general-chart-top-causes.component';
+import { RecorridoListComponent } from './overview/components/recorrido/recorrido-list/recorrido-list.component';
+import { ViajesListComponent } from './overview/components/general/viajes/viajes-list/viajes-list.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
     GeneralFilterComponent,
     GeneralChartTopDelaysComponent,
     GeneralChartTopCausesComponent,
-    RecorridoListComponent
+    RecorridoListComponent,
+    ViajesListComponent
   ],
   imports: [
     CommonModule,

@@ -32,7 +32,7 @@
             <evince-general-list 
             [iRecorridos]="iRecorridos" 
             (onClick)="updateSubscription($event)"
-            (iCurrentListViewEmitter)="updateiCurrentListView('recorrido-list')"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
             (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
             </evince-general-list>
         </div>
@@ -49,7 +49,7 @@
             <evince-general-list 
             [iRecorridos]="iRecorridos" 
             (onClick)="updateSubscription($event)"
-            (iCurrentListViewEmitter)="updateiCurrentListView('recorrido-list')"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
             (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
             </evince-general-list>
         </div>
@@ -57,11 +57,17 @@
             <button mat-button (click)="updateiCurrentListView('general-list')" title="general-list">
                 VOLVER
               </button>
-            <evince-recorrido-list [recorridoAAnalizar]="recorridoAAnalizar">
+            <evince-recorrido-list 
+            [recorridoAAnalizar]="recorridoAAnalizar"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
+            (viajesParaAnalizarEmitter)="updateViajesAAnalizar($event)">
             </evince-recorrido-list>
         </div>
-        <div *ngSwitchCase="'viaje-list'">
-
+        <div *ngSwitchCase="'viajes-list'">
+            <button mat-button (click)="updateiCurrentListView('recorrido-list')" title="recorrido-list">
+                VOLVER
+              </button>
+            <evince-viajes-list [viajesAAnalizar]="viajesAAnalizar"></evince-viajes-list>
         </div>
     </div>
 </div>

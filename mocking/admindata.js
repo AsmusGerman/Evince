@@ -80,7 +80,7 @@ module.exports = () => {
                 id: faker.random.alphaNumeric(10).toUpperCase(),
                 tipo: faker.random.arrayElement(data.retrasos),
                 descripcion: "",
-                tiempo: faker.random.number(15)
+                tiempo: faker.random.number({min: 10, max:20})
             };
             viaje.retrasos.push(retraso);
             recorrido.retrasos.push(retraso);
