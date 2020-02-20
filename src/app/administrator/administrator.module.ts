@@ -9,10 +9,15 @@ import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
-import { SubscriptionListComponent } from './overview/components/subscription-list/subscription-list.component';
-import { SubscriptionFilterComponent } from './overview/components/subscription-filter/subscription-filter.component';
 import { LoginGuard } from '../authentication/guards/login.guard';
-import { TopDelayReportComponent } from './overview/components/top-delay-report/top-delay-report.component';
+import { GeneralListComponent } from './overview/components/general/general-list/general-list.component';
+import { GeneralFilterComponent } from './overview/components/general/general-filter/general-filter.component';
+import { GeneralChartTopDelaysComponent } from './overview/components/general/general-chart-top-delays/general-chart-top-delays.component';
+import { GeneralChartTopCausesComponent } from './overview/components/general/general-chart-top-causes/general-chart-top-causes.component';
+import { RecorridoListComponent } from './overview/components/recorrido/recorrido-list/recorrido-list.component';
+import { RecorridoChartPercentDelaysComponent } from './overview/components/recorrido/recorrido-chart-percent-delays/recorrido-chart-percent-delays.component';
+import { RecorridoChartCausesComponent } from './overview/components/recorrido/recorrido-chart-causes/recorrido-chart-causes.component';
+import { ViajesListComponent } from './overview/components/viajes/viajes-list/viajes-list.component';
 
 const routes: Routes = [
   {
@@ -28,9 +33,14 @@ const routes: Routes = [
     SecurityComponent,
     SettingsComponent,
     TimeComparativeReportComponent,
-    SubscriptionListComponent,
-    SubscriptionFilterComponent,
-    TopDelayReportComponent
+    GeneralListComponent,
+    GeneralFilterComponent,
+    GeneralChartTopDelaysComponent,
+    GeneralChartTopCausesComponent,
+    RecorridoListComponent,
+    ViajesListComponent,
+    RecorridoChartPercentDelaysComponent,
+    RecorridoChartCausesComponent
   ],
   imports: [
     CommonModule,

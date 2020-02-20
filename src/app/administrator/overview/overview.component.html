@@ -1,4 +1,85 @@
-<div class="main">
-    <evince-subscription-filter></evince-subscription-filter>
-    <evince-subscription-list></evince-subscription-list>
+<div class="left">
+    <div [ngSwitch]="iCurrentChartView">
+        <div *ngSwitchDefault>
+            <evince-general-chart-top-causes [iRecorridos]="iRecorridos"></evince-general-chart-top-causes>
+            <evince-general-chart-top-delays [iRecorridos]="iRecorridos"></evince-general-chart-top-delays>
+        </div>
+        <div *ngSwitchCase="'general-chart'">
+            <evince-general-chart-top-causes [iRecorridos]="iRecorridos"></evince-general-chart-top-causes>
+            <evince-general-chart-top-delays [iRecorridos]="iRecorridos"></evince-general-chart-top-delays>
+        </div>
+        <div *ngSwitchCase="'recorrido-chart'">
+            <evince-recorrido-chart-percent-delays
+            [recorridoAAnalizar]="recorridoAAnalizar">
+            </evince-recorrido-chart-percent-delays>
+
+            <evince-recorrido-chart-causes
+            [recorridoAAnalizar]="recorridoAAnalizar">
+            </evince-recorrido-chart-causes>
+        </div>
+        <div *ngSwitchCase="'viajes-chart'">
+            EN VIAJES CHART
+        </div>
+    </div>
+</div>
+
+<div class="right">
+    <div [ngSwitch]="iCurrentListView">
+        <div *ngSwitchDefault>
+            <evince-general-filter 
+            [origenes]="origenes" 
+            [destinos]="destinos" 
+            (showSubscribedEmitter)="updateShowSubscribed($event)"
+            (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
+            (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
+            [origenSeleccionado]="origenSeleccionado"
+            [destinoSeleccionado]="destinoSeleccionado"
+            ></evince-general-filter>
+            <evince-general-list 
+            [iRecorridos]="iRecorridos" 
+            (onClick)="updateSubscription($event)"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
+            (iCurrentChartViewEmitter)="updateiCurrentChartView($event)"
+            (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
+            </evince-general-list>
+        </div>
+        <div *ngSwitchCase="'general-list'">
+            <evince-general-filter 
+            [origenes]="origenes" 
+            [destinos]="destinos" 
+            (showSubscribedEmitter)="updateShowSubscribed($event)"
+            (origenSeleccionadoEmitter)="updateOrigenSeleccionado($event)"
+            (destinoSeleccionadoEmitter)="updateDestinoSeleccionado($event)"
+            [origenSeleccionado]="origenSeleccionado"
+            [destinoSeleccionado]="destinoSeleccionado"
+            ></evince-general-filter>
+            <evince-general-list
+            [iRecorridos]="iRecorridos" 
+            (onClick)="updateSubscription($event)"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
+            (iCurrentChartViewEmitter)="updateiCurrentChartView($event)"
+            (recorridoParaAnalizarEmitter)="updateRecorridoAAnalizar($event)">
+            </evince-general-list>
+        </div>
+        <div *ngSwitchCase="'recorrido-list'">
+            <button mat-button (click)="updateViews('general-list','general-chart')" title="general-list">
+                VOLVER A VISTA GENERAL
+              </button>
+            <evince-recorrido-list 
+            [recorridoAAnalizar]="recorridoAAnalizar"
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
+            (iCurrentChartViewEmitter)="updateiCurrentChartView($event)"
+            (viajesParaAnalizarEmitter)="updateViajesAAnalizar($event)">
+            </evince-recorrido-list>
+        </div>
+        <div *ngSwitchCase="'viajes-list'">
+            <button mat-button (click)="updateViews('recorrido-list','recorrido-chart')" title="recorrido-list">
+                VOLVER A VISTA DE RECORRIDO
+              </button>
+            <evince-viajes-list 
+            [viajesAAnalizar]="viajesAAnalizar"
+            (iCurrentChartViewEmitter)="updateiCurrentChartView($event)"
+            ></evince-viajes-list>
+        </div>
+    </div>
 </div>

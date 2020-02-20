@@ -1,10 +1,6 @@
 <div class="main">
   <div fxLayout fxLayoutAlign="center center">
-
-      <table mat-table [dataSource]="iDataSource" fxFlex="50">
-<!--         <div *ngIf="isChecked; then showSubscriptions"></div>
-        <ng-template #showSubscriptions> -->
-        <!-- <div *ngFor="let element of iDataSource"></div> -->
+      <table mat-table [dataSource]="iRecorridos" fxFlex="50">
         <ng-container matColumnDef="code" >
           <th mat-header-cell *matHeaderCellDef>Code</th>
           <td mat-cell *matCellDef="let element">{{ element.code }}</td>
@@ -33,16 +29,17 @@
         <ng-container matColumnDef="subscription">
           <th mat-header-cell *matHeaderCellDef>Subscription</th>
           <td mat-cell *matCellDef="let element">
-            <mat-slide-toggle color="primary" [checked]="element.subscription" 
-            (change)="changeChecked(element.code)">
+            <mat-slide-toggle color="primary" [checked]="element.subscription"
+            (change)="enviarOnClick(element.id,element.subscription)">
             </mat-slide-toggle>
+            {{element.subscription}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="analyze">
           <th mat-header-cell *matHeaderCellDef>Analyze</th>
           <td mat-cell *matCellDef="let element">
-            <button mat-raised-button color="primary" (click)="analyze(element)">
+            <button mat-raised-button color="primary" (click)="getRecorridoAAnalizar(element.id)">
               Analyze
             </button>
           </td>
@@ -50,7 +47,6 @@
 
     <tr mat-header-row *matHeaderRowDef="iDisplayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: iDisplayedColumns"></tr>
-<!--   </ng-template> -->
   </table>
 </div>
 </div>

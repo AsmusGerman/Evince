@@ -10,6 +10,7 @@ export class AdministratorService {
   private iBaseAdministratorApiUrl: string;
 
   private _routesClient: RouteClient;
+  
   public get RoutesClient() {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
@@ -29,14 +30,72 @@ export class AdministratorService {
 class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
-  get() {
-    return this.iHttpClient.get<Array<Recorrido>>(this.iUrl);
+  getById(recorridoId:number) {
+    return this.iHttpClient.get<Array<any>>(`${this.iUrl}/`+recorridoId);
   }
 
-  subscription(id: number, state: boolean) {
-    return this.iHttpClient.post(`${this.iUrl}/subscription`, {
-      id,
-      state
-    });
+  get(showSubscribed:boolean) {
+    console.log("TRAER SOLO SUSCRITOS?");
+    console.log(showSubscribed);
+    if(!showSubscribed) {
+      console.log("TRAIGO TODOS");
+      //console.log(this.iHttpClient.get<Array<any>>(this.iUrl));
+      return this.iHttpClient.get<Array<any>>(this.iUrl);
+    }
+    else {
+      console.log("TRAIGO SOLO SUSCRITOS, LA URL ES");
+      console.log(`${this.iUrl}/subscribed/`);
+      //console.log(this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`));
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`);
+    }
+  }
+
+  getByOrigenDestino(origen:string,destino:string,showSubscribed:boolean) {
+    console.log("getorigen",origen);
+    console.log("getdestino",destino);
+    var origenValido=origen!=null && origen!="";
+    var destinoValido=destino!=null && destino!="";
+
+    if(!origenValido && !destinoValido){
+      console.log("NI UNO VALIDO");
+      return this.get(showSubscribed);
+    }
+    else{
+      console.log("obteniendo byorigenydestino");
+      if(!showSubscribed) {
+        console.log("showsubscribed es: ",showSubscribed);
+        if(origenValido && !destinoValido){
+          console.log("origen valido, destino no");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origen/`+origen);
+        }
+        else if (!origenValido && destinoValido){
+          console.log("origen no valido, destino si");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/destino/`+destino);
+        }
+        else if (origenValido && destinoValido){
+          console.log("origen valido, destino tambien");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origenydestino/`+origen+'&'+destino);
+        }
+      }
+      else {
+        console.log("showsubscribed es: ",showSubscribed);
+        if(origenValido && !destinoValido){
+          console.log("origen valido, destino no");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origensubscribed/`+origen);
+        }
+        else if (!origenValido && destinoValido){
+          console.log("origen no valido, destino si");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/destinosubscribed/`+destino);
+        }
+        else if (origenValido && destinoValido){
+          console.log("origen valido, destino tambien");
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origenydestinosubscribed/`+origen+'&'+destino);
+        }
+      }
+    }
+  }
+  
+  subscription(rec) {
+    return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);
   }
 }
