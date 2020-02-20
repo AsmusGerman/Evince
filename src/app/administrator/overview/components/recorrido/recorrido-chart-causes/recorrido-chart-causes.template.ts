@@ -3,7 +3,7 @@ export default {
       trigger: 'axis'
   },
     title : {
-      text: 'Recorridos con más tiempo perdido en retrasos',
+      text: 'Causas de retrasos por categoría',
       //subtext: 'subtext'
   },
   // Changes width of X axis labels
@@ -25,9 +25,14 @@ export default {
   ],
   series : [
       {
-          name:'Total en retrasos',
+          name:'serie a',
           type:'bar',
-          data:[]
-      }
+          data:[4,2,3,1,2]
+      },
+      {
+        name:'serie b',
+        type:'bar',
+        data:[7,8,6,9,5]
+    }
   ]
   };

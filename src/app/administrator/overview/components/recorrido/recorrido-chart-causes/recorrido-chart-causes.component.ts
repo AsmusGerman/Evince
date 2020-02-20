@@ -22,7 +22,7 @@ import {
   
     //public iDataSource = Array<any>();
     //@Input('ELEMENT_DATA') iDataSource: Array<any>;
-    @Input() iRecorridos: Array<any>;
+    @Input() recorridoAAnalizar: any;
     public codigos = Array<string>();
     public cantRetrasosPorCodigo = Array<number>();
     private iChart: any;
@@ -30,30 +30,18 @@ import {
     constructor() {}
   
     updateCausasYCantidades() {
-      var causasYCantidades={};
-      for (var recorrido of Object.entries(this.iRecorridos.filter(elem=>elem.subscription))) {
-        for (var retraso of recorrido[1].retrasos) {
-          if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
-            causasYCantidades[retraso.tipo]+=retraso.tiempo;
-          }
-          else {
-            causasYCantidades[retraso.tipo]=retraso.tiempo;
-          }
+      var gruposViaje=[];
+      var ordenViaje=[];
+      for (var viaje of this.recorridoAAnalizar[0].viajes) {
+        if (!ordenViaje.includes(viaje.orden)) {
+          gruposViaje.push([viaje]);
+          ordenViaje.push(viaje.orden);
         }
       }
-      console.log("data");
-      console.log(causasYCantidades);
-      
-      var fullData=[];
-      for (const entrada of Object.entries(causasYCantidades)) {
-        var cantidad:number=Number(entrada[1]);
-        var causa:string=entrada[0];
-        var data={value:cantidad, name:causa};
-        fullData.push(data);
-      }
-      template.series[0].data=fullData;
-      //template.series[0].data=data;
-      
+
+      var dataNombresViajes=[];
+      gruposViaje.forEach(viaje=>dataNombresViajes.push(viaje[0].id));
+      template.yAxis[0].data=dataNombresViajes;
       this.iChart.setOption(template,true);
     }
   
@@ -67,7 +55,6 @@ import {
   
     ngAfterViewInit() {
       this.iChart = echarts.init(this.iChartContainer.nativeElement);
-      this.iChart.setOption(template, true);
       this.iChart.resize({ width: 500, height: 500 });
     }
   }

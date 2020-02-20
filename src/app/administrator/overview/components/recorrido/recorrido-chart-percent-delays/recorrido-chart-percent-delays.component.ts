@@ -35,43 +35,50 @@ import {
         var ordenViaje=[];
         for (var viaje of this.recorridoAAnalizar[0].viajes) {
           if (!ordenViaje.includes(viaje.orden)) {
-            var grupoViaje=[];
             gruposViaje.push([viaje]);
             ordenViaje.push(viaje.orden);
           }
-          //cantRetrasosDeCadaGrupo.push
         }
-        console.log("gruposViaje vale",gruposViaje);
 
         gruposViaje.forEach(grupoViaje=>{
-            console.log("grupoViaje");
-            console.log(grupoViaje[0]);
+            var cantPerdidaRetrasosGrupoViaje=0;
+            var cantViajesConRetrasos=0;
+            var cantViajes=0;
             this.recorridoAAnalizar[0].viajes.forEach(viajeElem => {
-                console.log("viaje del recorrido");
-                console.log(viajeElem);
                 if(grupoViaje[0].orden==viajeElem.orden){
-                    console.log("match ",viajeElem.orden);
-                    console.log("sumo ",viajeElem.retrasos.length," retrasos")
-                    //TODO: SUMAR ACÁ LOS RETRASOS PARA CADA GRUPOVIAJE
+                  cantViajes+=1;
+                  if(viajeElem.retrasos.length>0){
+                  //suma la cant de viajes con retrasos para un grupo viaje
+                  cantViajesConRetrasos+=1;
+                    viajeElem.retrasos.forEach(retraso => {
+                      //suma los tiempos perdidos de cada retraso para ese grupo viaje
+                      cantPerdidaRetrasosGrupoViaje+=retraso.tiempo;
+                    });
                 }
+              }
             })
+            grupoViaje[1]=cantViajesConRetrasos;
+            grupoViaje[2]=cantViajes;
+            grupoViaje[3]=cantPerdidaRetrasosGrupoViaje;
         })
 
-/*         this.recorridoAAnalizar[0].viajes.forEach(viajeElem => {
-            for (var grupoViaje of gruposViaje) {
-                if(viajeElem.orden==grupoViaje[0].orden){
-                    console.log(viajeElem.retrasos.length);
-                }
-            }
-        }); */
+        var dataNombreViajes=[];
+        var dataCantViajesConRetrasos=[];
+        var dataCantViajes=[];
 
+        gruposViaje.forEach(elem=> {
+          dataNombreViajes.push(elem[0].id);
+          //dataCantViajesConRetrasos.push(elem[1]);
+          var porcentaje;
+          porcentaje=(elem[1]*100)/elem[2];
+          dataCantViajesConRetrasos.push(Math.floor(porcentaje*100)/100);
+          dataCantViajes.push(Math.floor((100-porcentaje)*100)/100);
+        });
 
-        var data=[]
-        gruposViaje.forEach(elem=>data.push(elem.id));
-
-        console.log("estoy en recorrido, el recorrido a analizar percentaje es, ",this.recorridoAAnalizar[0]);
         //var data=['cat1yaxiiis', 'cat2yaxis'];
-        template.yAxis.data=data;
+        template.series[0].data=dataCantViajesConRetrasos;
+        template.series[1].data=dataCantViajes;
+        template.yAxis.data=dataNombreViajes;
         console.log("template",template);
         this.iChart.setOption(template,true);
     }

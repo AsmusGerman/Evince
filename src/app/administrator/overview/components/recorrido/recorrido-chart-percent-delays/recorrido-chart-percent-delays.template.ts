@@ -1,12 +1,16 @@
 export default {
-    tooltip: {
+/*     tooltip: {
         trigger: 'axis',
-        axisPointer: {            // 坐标轴指示器，坐标轴触发有效
-            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+        axisPointer: {
+            type: 'shadow'
         }
+    }, */
+    title : {
+        text: '% de ocurrencia de retrasos para cada viaje',
+        //subtext: 'subtext'
     },
     legend: {
-        data: ['legend1','legend2','legend3','legend4','legend5']
+        data: []
     },
     grid: {
         left: '3%',
@@ -19,28 +23,30 @@ export default {
     },
     yAxis: {
         type: 'category',
-        data: [/* 'cat1yaxis', 'cat2yaxis', 'cat3yaxis', 'cat4yaxis', 'cat5yaxis', 'cat6yaxis', 'cat7yaxis' */]
+        data: []
     },
     series: [
         {
-            name: 'serie1',
+            name: '% de este viaje con retrasos',
             type: 'bar',
             stack: 'Total',
             label: {
                 show: true,
-                position: 'insideRight'
+                position: 'insideTopRight',
+                formatter: '{c}%'
             },
-            data: [302, 230]
+            data: []
         },
         {
-            name: 'serie2',
+            name: '% de este viaje sin retrasos',
             type: 'bar',
             stack: 'Total',
             label: {
                 show: true,
-                position: 'insideRight'
+                position: 'insideTopRight',
+                formatter: '{c}%'
             },
-            data: [698,770]
+            data: []
         }
     ]
   };
