@@ -2,22 +2,19 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DriverComponent } from "./driver.component";
 import { Routes, RouterModule } from "@angular/router";
-import { MatExpansionModule } from "@angular/material/expansion";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatInputModule } from "@angular/material/input";
-
-import { MatCardModule } from "@angular/material";
 
 import { MaterialModule } from "../shared/material/material.module";
 import { ResponsiveModule } from "../shared/responsive/responsive.module";
-import { FormsModule } from "@angular/forms";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DataService } from "../core/services/data.service";
-import { DelayComponent } from "./delay/delay.component";
-import { RouteListComponent } from "./route-list/route-list.component";
-import { ReportComponent } from "./report/report.component";
-import { TravelDetailComponent } from './travel-detail/travel-detail.component';
-import { CurrentRouteComponent } from './current-route/current-route.component';
+import { TravelListComponent } from './components/travel/travel-list/travel-list.component';
+import { RouteListComponent } from './components/route/route-list/route-list.component';
+import { CurrentRouteComponent } from './components/route/current-route/current-route.component';
+import { FinishedTravelSummaryComponent } from './components/travel/finished-travel-summary/finished-travel-summary.component';
+import { DelayComponent } from './components/delay/delay.component';
+import { NextTravelCardComponent } from './components/travel/next-travel-card/next-travel-card.component';
+import { CurrentTravelCardComponent } from './components/travel/current-travel-card/current-travel-card.component';
+import { HeaderModule } from '../shared/header/header.module';
 
 const routes: Routes = [
   {
@@ -25,12 +22,24 @@ const routes: Routes = [
     component: DriverComponent
   },
   {
-    path: "delay",
-    component: DelayComponent,
+    path: "travels",
+    component: TravelListComponent,
+    outlet: "driver"
   },
   {
-    path: "report/:id",
-    component: ReportComponent
+    path: "routes",
+    component: RouteListComponent,
+    outlet: "driver"
+  },
+  {
+    path: "current/:id",
+    component: CurrentRouteComponent,
+    outlet: "driver"
+  },
+  {
+    path: "summary/:id",
+    component: FinishedTravelSummaryComponent,
+    outlet: "driver"
   },
   {
     path: "**",
@@ -43,21 +52,19 @@ const routes: Routes = [
     DriverComponent,
     DelayComponent,
     RouteListComponent,
-    ReportComponent,
-    TravelDetailComponent,
-    CurrentRouteComponent
+    CurrentRouteComponent,
+    TravelListComponent,
+    NextTravelCardComponent,
+    CurrentTravelCardComponent,
+    FinishedTravelSummaryComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
     MaterialModule,
     ResponsiveModule,
-    MatInputModule,
-    FormsModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatCardModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HeaderModule
   ],
   providers: [DataService]
 })

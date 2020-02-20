@@ -1,0 +1,45 @@
+<section aria-label="viaje actual">
+  <ng-container
+    *ngIf="iViajeActual.estado == 'actual'; then actual; else proximo"
+  >
+  </ng-container>
+  <ng-template #actual>
+    <evince-current-travel-card
+      [iTerminalOrigen]="iTerminalOrigen"
+      [iTerminalDestino]="iTerminalDestino"
+      [iViajeActual]="iViajeActual"
+    ></evince-current-travel-card>
+  </ng-template>
+  <ng-template #proximo>
+    <evince-next-travel-card
+      [iTerminalOrigen]="iTerminalOrigen"
+      [iTerminalDestino]="iTerminalDestino"
+      [iViajeActual]="iViajeActual"
+    ></evince-next-travel-card>
+  </ng-template>
+</section>
+<section>
+  <mat-divider></mat-divider>
+</section>
+<section fxFlex="auto" aria-label="viajes completos">
+  <cdk-virtual-scroll-viewport itemSize="10">
+    <mat-card
+      *ngFor="let recorrido of iResumenRecorridosFinalizados"
+      class="mat-typography inactive mat-elevation-z4"
+      fxLayout="column"
+      matRipple
+    >
+      <section fxFlex>
+        <span> {{ recorrido.id }} </span>
+        <span>
+          {{ recorrido.origen }} a
+          {{ recorrido.destino }}
+        </span>
+        <span fxFlex="auto"></span>
+      </section>
+      <button class="action" mat-icon-button>
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </mat-card>
+  </cdk-virtual-scroll-viewport>
+</section>

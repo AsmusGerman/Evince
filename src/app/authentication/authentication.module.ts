@@ -25,6 +25,7 @@ import { RegisterHandler } from "./store/handlers/register.handler";
     LoginHandler,
     LogoutHandler,
     RegisterHandler
-  ]
+  ],
+  entryComponents:[ LoginComponent, SigninComponent]
 })
 export class AuthenticationModule {}
