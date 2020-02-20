@@ -22,6 +22,7 @@ import {
     @Input() recorridoAAnalizar: any;
     private viajesAgrupados: Array<any>;
     @Output() iCurrentListViewEmitter = new EventEmitter<string>();
+    @Output() iCurrentChartViewEmitter = new EventEmitter<string>();
     @Output() viajesParaAnalizarEmitter = new EventEmitter<Array<any>>();
 
     public iDisplayedColumns: string[] = ["terminalOrigen","terminalDestino","estado","analyze"];
@@ -30,6 +31,7 @@ import {
 
     getViajesAAnalizar(viaje) {
       //console.log("cambio icurrentlistview");
+      this.iCurrentChartViewEmitter.emit('viajes-chart');
       this.iCurrentListViewEmitter.emit('viajes-list');
       //console.log("emitiendo los viajes ",
       //this.recorridoAAnalizar[0].viajes.filter(v=>v.orden==viaje.orden));

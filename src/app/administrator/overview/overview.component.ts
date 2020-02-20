@@ -30,6 +30,11 @@ export class OverviewComponent implements OnInit {
     console.log("el recorrido a analizar es,",this.recorridoAAnalizar);
     //this.recorridoAAnalizar=rec;
   }
+  
+  updateViews(list,chart) {
+    this.iCurrentListView=list;
+    this.iCurrentChartView=chart;
+  }
 
   updateViajesAAnalizar(viajes){
     this.viajesAAnalizar=viajes;
@@ -43,6 +48,12 @@ export class OverviewComponent implements OnInit {
     this.iCurrentListView=iCurrentListView;
     console.log("actualizo icurrentrecview, ahora es ",iCurrentListView);
     console.log(iCurrentListView);
+  }
+
+  updateiCurrentChartView(iCurrentChartView){
+    this.iCurrentChartView=iCurrentChartView;
+    console.log("actualizo icurrentrecview, ahora es ",iCurrentChartView);
+    console.log(iCurrentChartView);
   }
 
   updateOrigenSeleccionado(origen) {

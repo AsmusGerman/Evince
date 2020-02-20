@@ -21,8 +21,8 @@ import {
     private origen:string; 
     private destino:string;
 
-/*     public iDisplayedColumns: string[] = ["fechaHoraSalidaEstipulada","fechaHoraLlegadaEstipulada","cantPasajeros", "estado","retrasos"];
- */  
+    public iDisplayedColumns: string[] = ["fechaHoraSalidaEstipulada","fechaHoraLlegadaEstipulada","cantPasajeros", "estado","retrasos"];
+  
     constructor() {}
   
 /*     updateViajesAAnalizar(viajes) {

@@ -12,6 +12,7 @@ export class GeneralListComponent implements OnInit {
   @Input () iRecorridos: Array<any>;
   @Output() onClick = new EventEmitter<any>();
   @Output() iCurrentListViewEmitter = new EventEmitter<string>();
+  @Output() iCurrentChartViewEmitter = new EventEmitter<string>();
   @Output() recorridoParaAnalizarEmitter = new EventEmitter<any>();
   constructor(private filterService: FilterService) {}
 
@@ -27,6 +28,8 @@ export class GeneralListComponent implements OnInit {
   getRecorridoAAnalizar(recorridoId) {
     console.log("cambio icurrentrecorridoview");
     this.iCurrentListViewEmitter.emit('recorrido-list');
+    console.log("cambio icurrentChartView");
+    this.iCurrentChartViewEmitter.emit('recorrido-chart');
     console.log("emitiendo el recorrido ", recorridoId);
     this.recorridoParaAnalizarEmitter.emit(recorridoId);
   }

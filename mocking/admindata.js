@@ -37,7 +37,7 @@ module.exports = () => {
     for (let i = 0; i < qr; i++) {
 
       const qv = faker.random.number({ min: 2, max: 3 });
-      const cantDeCadaViaje = faker.random.number({min: 10, max: 15});
+      const cantDeCadaViaje = faker.random.number({min: 4, max: 6});
 
       const ciudades = new Array(qv + 1)
       .fill(null)
@@ -74,7 +74,7 @@ module.exports = () => {
             retrasos: []
           };
 
-          const qret = faker.random.number({ min: 2, max: 4 });
+          const qret = faker.random.number({ min: 0, max: 2 });
           for (let j = 0; j < qret; j++) {
             const retraso = {
                 id: faker.random.alphaNumeric(10).toUpperCase(),
