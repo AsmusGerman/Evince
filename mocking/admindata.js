@@ -31,16 +31,16 @@ module.exports = () => {
     };
 
     //const qr = faker.random.number({ min: 7, max: 10 });
-    const qr=10;
+    const qr=1;
 
 
 
     for (let i = 0; i < qr; i++) {
 
       //const qv = faker.random.number({ min: 2, max: 3 });
-      const qv=5;
+      const qv=2;
       //const cantDeCadaViaje = faker.random.number({min: 12, max: 15});
-      const cantDeCadaViaje = 150;
+      const cantDeCadaViaje = 4;
 
       const ciudades = new Array(qv + 1)
       .fill(null)

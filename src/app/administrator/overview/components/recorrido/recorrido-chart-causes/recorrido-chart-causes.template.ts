@@ -40,15 +40,21 @@ export default {
   ],
   series : [
       {
-          name:'serie a',
+          name:'accidente',
           type:'bar',
-          data:[4,2,3,1,2],
+          data:[1,2],
           label:labelOption
       },
       {
-        name:'serie b',
+        name:'bar',
         type:'bar',
-        data:[7,8,6,9,5],
+        data:[4,5],
+        label:labelOption
+    },
+    {
+        name:'foo',
+        type:'bar',
+        data:[9,8],
         label:labelOption
     }
   ]
