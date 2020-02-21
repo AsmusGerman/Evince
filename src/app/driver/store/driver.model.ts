@@ -13,7 +13,7 @@ export class NextTravel {
 
 export class StartTravel {
   static readonly type = "[Driver] StartTravel";
-  constructor(public payload: { travel: number; route: number }) {}
+  constructor(public payload: { travel: number }) {}
 }
 
 export class StopTravel {

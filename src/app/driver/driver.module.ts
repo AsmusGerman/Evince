@@ -26,6 +26,10 @@ const routes: Routes = [
     children: [
       {
         path: "",
+        redirectTo: "travels"
+      },
+      {
+        path: "travels",
         component: TravelListComponent,
       },
       {
@@ -33,7 +37,7 @@ const routes: Routes = [
         component: RouteListComponent,
       },
       {
-        path: "current/:id",
+        path: "current",
         component: CurrentRouteComponent,
       },
       {

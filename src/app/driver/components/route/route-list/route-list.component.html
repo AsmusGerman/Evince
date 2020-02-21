@@ -5,11 +5,40 @@
     <mat-accordion>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <mat-panel-title> Recorrido #{{ bRecorrido.id }}</mat-panel-title>
+          <mat-panel-title> Recorrido {{ bRecorrido.nombre }}</mat-panel-title>
         </mat-expansion-panel-header>
         <mat-card *ngFor="let viaje of bRecorrido.viajes">
           <mat-card-content>
-            <!-- detalle -->
+            <mat-list>
+              <mat-list-item>
+                <span matLine>{{ viaje.id }} / {{viaje.trayecto.terminalOrigenCodigo}} - {{viaje.trayecto.terminalDestinoCodigo}}</span>
+              </mat-list-item>
+              <mat-list-item>
+                <span matLine>
+                  Sale desde <b> {{ viaje.trayecto.terminalOrigen }} </b>:
+                </span>
+                <span matLine>
+                  <i>
+                    {{
+                      viaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
+                    }}
+                  </i>
+                </span>
+              </mat-list-item>
+              <mat-list-item>
+                <span matLine>
+                  Llega a
+                  <b> {{ viaje.trayecto.terminalDestino }} </b>:
+                </span>
+                <span matLine>
+                  <i>
+                    {{
+                      viaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
+                    }}
+                  </i>
+                </span>
+              </mat-list-item>
+            </mat-list>
           </mat-card-content>
         </mat-card>
       </mat-expansion-panel>

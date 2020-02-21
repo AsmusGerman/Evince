@@ -11,13 +11,13 @@ Output;
 import { Viaje } from "src/app/core/model/viaje";
 import * as moment from "moment";
 import { timer, Subject, Observable } from "rxjs";
-import { takeUntil, repeatWhen, take } from "rxjs/operators";
+import { takeUntil, repeatWhen, take, switchMap } from "rxjs/operators";
 import { CurrentTravelTimerService } from "src/app/driver/services/current-travel-timer.service";
 import { MatBottomSheetRef, MatBottomSheet } from "@angular/material";
 import { DelayComponent } from "../../delay/delay.component";
 import { Store, Select } from "@ngxs/store";
 import { StartTravel, StopTravel } from "src/app/driver/store/driver.model";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Recorrido } from "src/app/core/model/recorrido";
 import { DriverService } from "src/app/core/services/driver.service";
 import { DriverState } from "src/app/driver/store/driver.state";
@@ -33,39 +33,34 @@ export class CurrentRouteComponent implements OnInit {
   @Select(DriverState.CurrentTravel)
   public iViajeActual: Observable<Viaje>;
 
-  public iRecorridoActual: Recorrido;
+  @Select(DriverState.CurrentRoute)
+  public iRecorridoActual: Observable<Recorrido>;
 
   constructor(
-    private iDriverService: DriverService,
     private iCurrentTravelTimerService: CurrentTravelTimerService,
-    private iRoute: ActivatedRoute,
     private iStore: Store,
+    private iRouter: Router,
+    private iRoute: ActivatedRoute,
     private iMatBottomSheet: MatBottomSheet
   ) {}
 
   ngOnInit() {
-    const id = this.iRoute.snapshot.paramMap.get("id");
-    this.iDriverService.RoutesClient.get(Number(id))
-      .pipe(take(1))
-      .subscribe(recorrido => {
-        this.iRecorridoActual = recorrido;
-        const first = this.iRecorridoActual.viajes[0];
-        this.start(first.id);
-      });
-
     this.iCurrentTravelTimerService.Timer.subscribe(
       timer => (this.iTimer = timer)
     );
   }
 
   public stop(travel: number) {
-    this.iStore.dispatch(new StopTravel({ travel }));
+    this.iStore
+      .dispatch(new StopTravel({ travel }))
+      .pipe(switchMap(() => this.iRecorridoActual))
+      .subscribe(() =>
+        this.iRouter.navigate(["../travels"], { relativeTo: this.iRoute })
+      );
   }
 
   public start(travel: number) {
-    this.iStore.dispatch(
-      new StartTravel({ route: this.iRecorridoActual.id, travel })
-    );
+    this.iStore.dispatch(new StartTravel({ travel }));
   }
 
   public delay() {

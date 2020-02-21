@@ -1,43 +1,16 @@
 <evince-header></evince-header>
 <nav mat-tab-nav-bar headerPosition="below">
-  <a
-    mat-tab-link
-    [routerLink]="iTabs.principal.path"
-    routerLinkActive
-    #rla="routerLinkActive"
-    [active]="rla.isActive"
-  >
-    {{ iTabs.principal.label }}
-  </a>
-
-  <a
-    mat-tab-link
-    [routerLink]="iTabs.recorridos.path"
-    routerLinkActive
-    #rla="routerLinkActive"
-    [active]="rla.isActive"
-  >
-    {{ iTabs.recorridos.label }}
-  </a>
-
-  <a
-    mat-tab-link
-    routerLinkActive
-    #rla="routerLinkActive"
-    [active]="rla.isActive"
-    *ngIf="rla.isActive"
-  >
-    {{ iTabs.en_curso.label }}
-  </a>
-
-  <a
-    mat-tab-link
-    routerLinkActive
-    #rla="routerLinkActive"
-    [active]="rla.isActive"
-    *ngIf="rla.isActive"
-  >
-    {{ iTabs.resumen.label }}
-  </a>
+  <ng-container *ngFor="let tab of iTabs">
+    <a
+      *ngIf=" !tab.hide || tab.active"
+      mat-tab-link
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+      [routerLink]="tab.path"
+    >
+      {{ tab.label }}
+    </a>
+  </ng-container>
 </nav>
 <router-outlet></router-outlet>

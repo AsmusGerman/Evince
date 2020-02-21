@@ -27,7 +27,7 @@ export class DriverService {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
         this.iHttpClient,
-        `${this.iBaseDriverApiUrl}/recorridos`
+        this.iBaseDriverApiUrl
       );
     }
     return this._routesClient;
@@ -80,17 +80,16 @@ class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   getAll(): Observable<Array<Recorrido>> {
-    return this.iHttpClient.get<Array<Recorrido>>(this.iUrl);
+    return this.iHttpClient.get<Array<Recorrido>>(`${this.iUrl}/recorridos`);
   }
 
   get(id: number): Observable<Recorrido> {
     const params = new HttpParams().append("route", String(id));
-    return this.iHttpClient.get<Recorrido>(this.iUrl, { params });
+    return this.iHttpClient.get<Recorrido>(`${this.iUrl}/recorridos`, { params });
   }
 
   next(): Observable<Recorrido> {
-    /* return this.iHttpClient.get<Recorrido>(`${this.iUrl}/next`); */
-    return this.getAll().pipe(map(recorridos => recorridos[0]));
+    return this.iHttpClient.get<Recorrido>(`${this.iUrl}/recorrido`);
   }
 }
 

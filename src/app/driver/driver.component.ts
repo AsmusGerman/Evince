@@ -1,50 +1,68 @@
 import { Component, OnInit, Injector } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
 import { DriverService } from "../core/services/driver.service";
 import { Viaje } from "../core/model/viaje";
 import { Recorrido } from "../core/model/recorrido";
 import { NextTravel } from "./store/driver.model";
+import { pipe } from "rxjs";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "evince-driver",
   templateUrl: "./driver.component.html"
 })
 export class DriverComponent implements OnInit {
-  public iRecorridos: Array<Recorrido> = [];
-  public iViajes: Array<Viaje> = [];
-
-  public iRecorrido: Recorrido | null;
-  public iViajeActual: Viaje | null;
-  public iViajeSiguiente: Viaje | null;
-
-  public iTabs = {
-    principal: {
+  public iTabs = [
+    {
       label: "Principal",
-      path: "['/driver/home', { outlets: { driver: ['travels'] } }]"
+      path: "./travels",
+      hide: false,
+      active: true
     },
-    recorridos: {
+    {
       label: "Recorridos",
-      path: "['/driver', { outlets: { driver: ['routes'] } }]"
+      path: "./routes",
+      hide: false,
+      active: false
     },
-    en_curso: {
+    {
       label: "En curso",
-      path: "['/driver', { outlets: { driver: ['current'] } }]"
+      path: "./current",
+      hide: true,
+      active: false
     },
-    resumen: {
+    {
       label: "Resumen",
-      path: "['/driver', { outlets: { driver: ['summary', iViajeId] } }]"
+      path: "./summary",
+      hide: true,
+      active: false
     }
-  };
+  ];
+
+  public iActiveRoute: string;
 
   constructor(
-    private iRoute: ActivatedRoute,
+    private iRouter: Router,
+    private iActivatedRoute: ActivatedRoute,
     private iStore: Store,
     private iDriverService: DriverService
   ) {}
 
   ngOnInit() {
     this.iStore.dispatch(new NextTravel());
+    this.iRouter.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        const route = this.iActivatedRoute.firstChild.routeConfig.path;
+        this.updateNavigationTabs(route);
+      });
+  }
+
+  public updateNavigationTabs(route: string) {
+    this.iTabs.forEach(tab => {
+      tab.active = route.split("/")[0] == tab.path.split("/")[1];
+    });
   }
 }
 //styles: [

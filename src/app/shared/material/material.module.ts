@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 
 //Angular Material Components
-import { MatCheckboxModule } from "@angular/material";
+import { MatCheckboxModule, MatBottomSheetModule } from "@angular/material";
 import { MatButtonModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -36,6 +36,7 @@ import { IconsService } from './services/icons.service';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 
 const features = [
+  MatBottomSheetModule,
   MatCheckboxModule,
   MatCheckboxModule,
   MatButtonModule,

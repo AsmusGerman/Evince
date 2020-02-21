@@ -1,18 +1,24 @@
 <section class="column is-two-thirds-desktop">
   <ng-container *ngIf="iViajeActual | async as viaje">
-    <evince-next-travel-card
-      *ngIf="viaje.estado == 0"
-      (onStartTravelTriggered)="start($event)"
-    ></evince-next-travel-card>
-    <evince-current-travel-card
-      *ngIf="viaje.estado == 1"
-    ></evince-current-travel-card>
+    <div [ngSwitch]="viaje.estado">
+      <evince-next-travel-card
+        *ngSwitchCase="0"
+        (onStartTravelTriggered)="start($event)"
+      ></evince-next-travel-card>
+      <evince-current-travel-card
+        *ngSwitchCase="1"
+        (onShowCurrentRoadMap)="showCurrentRoadmap($event)"
+      ></evince-current-travel-card>
+      <div *ngSwitchDefault>
+        "nada"
+      </div>
+    </div>
   </ng-container>
 </section>
 <section>
   <mat-divider></mat-divider>
 </section>
-<section fxFlex="auto" aria-label="viajes completos">
+<section fxFlex aria-label="viajes completos">
   <cdk-virtual-scroll-viewport itemSize="10">
     <mat-card
       *ngFor="let viaje of iViajesFinalizados | async"
@@ -23,12 +29,13 @@
       <section fxFlex>
         <span> {{ viaje.id }} </span>
         <span>
-          {{ viaje.trayecto.terminalOrigenCodigo }} a
-          {{ viaje.trayecto.terminalDestinoCodigo }}
+          {{ viaje.trayecto.terminalOrigenCodigo }} -{{
+            viaje.trayecto.terminalDestinoCodigo
+          }}
         </span>
         <span fxFlex="auto"></span>
       </section>
-      <button class="action" mat-icon-button>
+      <button class="action" mat-icon-button (click)="showSummary(viaje.id)">
         <mat-icon>keyboard_arrow_right</mat-icon>
       </button>
     </mat-card>

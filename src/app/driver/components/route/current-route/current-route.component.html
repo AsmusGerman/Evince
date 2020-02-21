@@ -1,81 +1,87 @@
-<mat-vertical-stepper [linear]="true">
-  <mat-step *ngFor="let bViaje of iViajes">
-    <ng-template matStepLabel>
-      Viaje: {{ bViaje.id }}
-      <mat-chip *ngIf="bViaje.estado == 'actual'">
-        {{ iTimer }}
-      </mat-chip>
-    </ng-template>
-    <mat-list dense class="static-data">
-      <mat-list-item>
-        <span matLine>
-          Sale desde
-          <b> {{ bViaje.trayecto.terminalOrigen || "origen" }} </b>:
-        </span>
-        <span matLine>
-          <i>
-            {{
-              bViaje.fechaHoraSalidaEstipuladas
-                | date: "EEEE, MMMM d, y, h:mm:ss a"
-            }}
-          </i>
-        </span>
-      </mat-list-item>
-      <mat-list-item>
-        <span matLine>
-          Llega a
-          <b> {{ bViaje.trayecto.terminalDestino || "destino" }} </b>:
-        </span>
-        <span matLine>
-          <i>
-            {{
-              bViaje.fechaHoraSalidaEstipuladas
-                | date: "EEEE, MMMM d, y, h:mm:ss a"
-            }}
-          </i>
-        </span>
-      </mat-list-item>
-    </mat-list>
-    <mat-list dense *ngIf="bViaje.estado == 'detenido'" class="real-data">
-      <mat-list-item>
-        <span matLine>
-          Partió:
-          <i>
-            {{ bViaje.fechaHoraRealSalida | date: "h:mm:ss a" }}
-          </i>
-        </span>
-        <span matLine>
-          Arribó:
-          <i>
-            {{ bViaje.fechaHoraRealLlegada | date: "h:mm:ss a" }}
-          </i>
-        </span>
-      </mat-list-item>
-    </mat-list>
+<ng-container *ngIf="iRecorridoActual | async as recorrido">
+  <mat-vertical-stepper [linear]="true">
+    <mat-step *ngFor="let viaje of recorrido.viajes">
+      <ng-template matStepLabel>
+        {{ viaje.estado == 1 ? "Viaje en curso" : "" }}
+        {{ viaje.trayecto.terminalOrigenCodigo }} -
+        {{ viaje.trayecto.terminalDestinoCodigo }}
+        <mat-chip *ngIf="viaje.estado == 1">
+          {{ iTimer }}
+        </mat-chip>
+      </ng-template>
+      <mat-list dense class="static-data">
+        <mat-list-item>
+          <span matLine>
+            Sale desde
+            <b> {{ viaje.trayecto.terminalOrigen || "origen" }} </b>:
+          </span>
+          <span matLine>
+            <i>
+              {{
+                viaje.fechaHoraSalidaEstipuladas
+                  | date: "EEEE, MMMM d, y, h:mm:ss a"
+              }}
+            </i>
+          </span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matLine>
+            Llega a
+            <b> {{ viaje.trayecto.terminalDestino || "destino" }} </b>:
+          </span>
+          <span matLine>
+            <i>
+              {{
+                viaje.fechaHoraSalidaEstipuladas
+                  | date: "EEEE, MMMM d, y, h:mm:ss a"
+              }}
+            </i>
+          </span>
+        </mat-list-item>
+      </mat-list>
+      <mat-list dense *ngIf="viaje.estado == 2" class="real-data">
+        <mat-list-item>
+          <span matLine>
+            Partió:
+            <i>
+              {{ viaje.fechaHoraRealSalida | date: "h:mm:ss a" }}
+            </i>
+          </span>
+          <span matLine>
+            Arribó:
+            <i>
+              {{ viaje.fechaHoraRealLlegada | date: "h:mm:ss a" }}
+            </i>
+          </span>
+        </mat-list-item>
+      </mat-list>
 
-    <button
-      mat-button
-      color="secondary"
-      *ngIf="bViaje.estado == 'actual'"
-      (click)="delay(bViaje.id)"
-    >
-      Retraso
-    </button>
-    <button
-      mat-button
-      color="warn"
-      *ngIf="bViaje.estado == 'actual'"
-      (click)="stop(bViaje.id)"
-    >
-      Detener
-    </button>
-    <button
-      mat-button
-      color="primary"
-      *ngIf="bViaje.estado == 'pendiente' && bViaje.id == iViajeActualId"
-      (click)="start(bViaje.id)"
-    >
-      Comenzar
-    </button>
-  </mat-step>
-</mat-vertical-stepper>
+      <button
+        mat-button
+        color="secondary"
+        *ngIf="viaje.estado == 1"
+        (click)="delay(viaje.id)"
+      >
+        Retraso
+      </button>
+      <button
+        mat-button
+        color="warn"
+        *ngIf="viaje.estado == 1"
+        (click)="stop(viaje.id)"
+      >
+        Detener
+      </button>
+      <ng-container *ngIf="iViajeActual | async as actual">
+        <button
+          mat-button
+          color="primary"
+          *ngIf="viaje.estado == 0 && viaje.id == actual.id"
+          (click)="start(viaje.id)"
+        >
+          Comenzar
+        </button>
+      </ng-container>
+    </mat-step>
+  </mat-vertical-stepper>
+</ng-container>

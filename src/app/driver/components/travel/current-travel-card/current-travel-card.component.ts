@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Viaje } from "src/app/core/model/viaje";
 import { Select } from "@ngxs/store";
 import { DriverState } from "src/app/driver/store/driver.state";
 import { Observable } from "rxjs";
 import { CurrentTravelTimerService } from "src/app/driver/services/current-travel-timer.service";
-import { Recorrido } from 'src/app/core/model/recorrido';
+import { Recorrido } from "src/app/core/model/recorrido";
 
 @Component({
   selector: "evince-current-travel-card",
@@ -19,9 +19,15 @@ export class CurrentTravelCardComponent implements OnInit {
 
   public iTimer: Observable<string>;
 
+  @Output() onShowCurrentRoadMap = new EventEmitter<any>();
+
   constructor(private iCurrentTravelTimerService: CurrentTravelTimerService) {}
 
   ngOnInit() {
     this.iTimer = this.iCurrentTravelTimerService.Timer;
+  }
+
+  public roadmap(travel: number) {
+    this.onShowCurrentRoadMap.emit({ travel });
   }
 }

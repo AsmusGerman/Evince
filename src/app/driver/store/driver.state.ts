@@ -5,16 +5,11 @@ import {
   NewDelay,
   NextTravel
 } from "./driver.model";
-import {
-  State,
-  Selector,
-  Action,
-  StateContext
-} from "@ngxs/store";
+import { State, Selector, Action, StateContext } from "@ngxs/store";
 import { CurrentTravelTimerService } from "../services/current-travel-timer.service";
 import { DriverService } from "src/app/core/services/driver.service";
 import { zip } from "rxjs";
-import { tap } from "rxjs/operators";
+import { tap, filter, map, switchMap } from "rxjs/operators";
 import { Viaje } from "src/app/core/model/viaje";
 import { Recorrido } from "src/app/core/model/recorrido";
 
@@ -61,39 +56,40 @@ export class DriverState {
 
   @Action(NextTravel)
   nextTravel(ctx: StateContext<DriverStateModel>) {
-    this.iDriverService.RoutesClient.next().subscribe(recorrido => {
-      const viaje = recorrido.viajes.find(v => v.orden == 0);
-      ctx.patchState({ route: recorrido, travel: viaje });
-    });
+    return this.iDriverService.RoutesClient.next().pipe(
+      tap(route => {
+        const travels = route.viajes.sort(v => v.orden);
+        const current = ctx.getState().route;
+        // si no hay recorrido o es un nuevo recorrido
+        if (!current || route.id != current.id) {
+          const travel = travels[0];
+          ctx.patchState({ route, travel });
+        } else {
+          // se filtran los finalizados
+          const travel = travels.filter(v => v.estado != 2)[0];
+          ctx.patchState({ travel });
+        }
+      })
+    );
   }
 
   @Action(StartTravel)
   startTravel(ctx: StateContext<DriverStateModel>, action: StartTravel) {
-    const { travel: travelId, route: routeId } = action.payload;
-
-    const route$ = this.iDriverService.RoutesClient.get(routeId);
-    const travel$ = this.iDriverService.TravelClient.get(travelId);
-
-    // cuando se resuelven ambos, se continua
-    return zip(route$, travel$).pipe(
-      tap(([route, travel]) => {
-        this.iCurrentTravelTimerService.StartTravelTimer();
-        ctx.patchState({
-          travel,
-          route
-        });
-      })
+    const { travel } = action.payload;
+    // se indica el inicio del viaje
+    return this.iDriverService.TravelClient.start({ travel }).pipe(
+      // se obtiene el viaje actualizado
+      switchMap(() => ctx.dispatch(new NextTravel())),
+      tap(() => this.iCurrentTravelTimerService.StartTravelTimer())
     );
   }
 
   @Action(StopTravel)
   stopTravel(ctx: StateContext<DriverStateModel>, action: StopTravel) {
-    const { travel } = action.payload;
-    return this.iDriverService.TravelClient.stop({ travel }).pipe(
-      tap(() => {
-        this.iCurrentTravelTimerService.StopTravelTimer();
-        ctx.setState(defaults);
-      })
+    return this.iDriverService.TravelClient.stop(action.payload).pipe(
+      // se obtiene el viaje actualizado
+      switchMap(() => ctx.dispatch(new NextTravel())),
+      tap(() => this.iCurrentTravelTimerService.StopTravelTimer())
     );
   }
 

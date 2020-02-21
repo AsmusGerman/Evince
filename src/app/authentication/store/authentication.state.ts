@@ -93,7 +93,7 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     const { username, password } = action.payload;
-    return this.iAuthenticationService.login(username, password, true).pipe(
+    return this.iAuthenticationService.login({username, password, remember: false}).pipe(
       tap(({ token, refreshToken, username, rol: role }) => {
         ctx.patchState({
           token,
@@ -107,38 +107,33 @@ export class AuthState {
 
   @Action(Logout)
   logout(ctx: StateContext<AuthStateModel>) {
-    const state = ctx.getState();
-    return this.iAuthenticationService.logout(state.token).pipe(
+    const { token } = ctx.getState();
+    return this.iAuthenticationService.logout({ token }).pipe(
       tap(() => {
         ctx.setState(defaults);
       })
     );
   }
 
-  @Action(GetRole)
-  getRoels(ctx: StateContext<AuthStateModel>) {
-    return this.iAuthenticationService.getRole().pipe(
-      tap(role => {
-        ctx.patchState({
-          role
-        });
-      })
-    );
-  }
-
   @Action(RefreshToken)
   refresh(ctx: StateContext<AuthStateModel>) {
-    const state = ctx.getState();
-    return this.iAuthenticationService.refreshToken(state.refreshToken).pipe(
-      tap(
-        (result: { token: string; tokenRefresh: string; username: string }) => {
-          ctx.patchState({
-            token: result.token,
-            refreshToken: result.tokenRefresh,
-            username: result.username
-          });
-        }
-      )
-    );
+    const { refreshToken, token } = ctx.getState();
+    return this.iAuthenticationService
+      .refreshToken({ token, refreshToken })
+      .pipe(
+        tap(
+          (result: {
+            token: string;
+            tokenRefresh: string;
+            username: string;
+          }) => {
+            ctx.patchState({
+              token: result.token,
+              refreshToken: result.tokenRefresh,
+              username: result.username
+            });
+          }
+        )
+      );
   }
 }
