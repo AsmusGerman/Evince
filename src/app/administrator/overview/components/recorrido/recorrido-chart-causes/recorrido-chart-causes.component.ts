@@ -39,6 +39,15 @@ import {
         }
       }
 
+/*      var gruposViaje=[]; 
+        for (var viaje of this.recorridoAAnalizar[0].viajes) {
+        var motivoRetraso;
+        if (!.includes(viaje.orden)) {
+          gruposViaje.push([viaje]);
+          ordenViaje.push(viaje.orden);
+        }
+      } */
+
       var dataNombresViajes=[];
       gruposViaje.forEach(viaje=>dataNombresViajes.push(viaje[0].id));
       template.yAxis[0].data=dataNombresViajes;
@@ -55,7 +64,7 @@ import {
   
     ngAfterViewInit() {
       this.iChart = echarts.init(this.iChartContainer.nativeElement);
-      this.iChart.resize({ width: 500, height: 500 });
+      this.iChart.resize({ width: 700, height: 500 });
     }
   }
   
