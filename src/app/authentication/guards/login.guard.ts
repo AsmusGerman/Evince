@@ -26,7 +26,7 @@ export class LoginGuard implements CanActivate {
     );
     if (!!isAuthenticated) {
       // redirect corresponding to user roles
-      const role = 2; //this.store.selectSnapshot(AuthState.role);
+      const role = this.store.selectSnapshot(AuthState.role);
       switch (role) {
         case RolUsuario.administrator: {
           this.iAuthenticationResources
@@ -45,9 +45,7 @@ export class LoginGuard implements CanActivate {
           return true;
         }
       }
-    } else {
-      return this.router.parseUrl('home');
     }
-    return false;
+    return this.router.parseUrl('signin');
   }
 }

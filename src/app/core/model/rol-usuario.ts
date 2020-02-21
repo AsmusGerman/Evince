@@ -1,5 +1,3 @@
-import { Enumerable } from "./abstractions/enumberable";
-
 /**
  * El rol de un usuario
  * @enum

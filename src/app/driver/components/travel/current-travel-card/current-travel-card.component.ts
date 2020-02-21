@@ -1,25 +1,27 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Viaje } from 'src/app/core/model/viaje';
+import { Viaje } from "src/app/core/model/viaje";
+import { Select } from "@ngxs/store";
+import { DriverState } from "src/app/driver/store/driver.state";
+import { Observable } from "rxjs";
+import { CurrentTravelTimerService } from "src/app/driver/services/current-travel-timer.service";
+import { Recorrido } from 'src/app/core/model/recorrido';
 
 @Component({
   selector: "evince-current-travel-card",
   templateUrl: "./current-travel-card.component.html"
 })
 export class CurrentTravelCardComponent implements OnInit {
-  /** Nombre de la terminal de origen del recorrido
-   * @property
-   * @returns {string}
-   */
-  @Input() iTerminalOrigen: string;
+  @Select(DriverState.CurrentTravel)
+  public iViajeActual: Observable<Viaje>;
 
-  /** Nombre de la terminal destino del recorrido
-   * @property
-   * @returns {string}
-   */
-  @Input() iTerminalDestino: string;
+  @Select(DriverState.CurrentRoute)
+  public iRecorridoActual: Observable<Recorrido>;
 
-  @Input() iViajeActual: Viaje;
-  constructor() {}
+  public iTimer: Observable<string>;
 
-  ngOnInit() {}
+  constructor(private iCurrentTravelTimerService: CurrentTravelTimerService) {}
+
+  ngOnInit() {
+    this.iTimer = this.iCurrentTravelTimerService.Timer;
+  }
 }

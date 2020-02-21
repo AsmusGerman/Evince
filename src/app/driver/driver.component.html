@@ -1,13 +1,43 @@
-<evince-header [user]="iUser"></evince-header>
-<nav mat-tab-nav-bar>
+<evince-header></evince-header>
+<nav mat-tab-nav-bar headerPosition="below">
   <a
     mat-tab-link
-    *ngFor="let link of iNavLinks"
-    [routerLink]="link.path"
+    [routerLink]="iTabs.principal.path"
     routerLinkActive
     #rla="routerLinkActive"
     [active]="rla.isActive"
-    >{{ link.label }}</a
   >
+    {{ iTabs.principal.label }}
+  </a>
+
+  <a
+    mat-tab-link
+    [routerLink]="iTabs.recorridos.path"
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+  >
+    {{ iTabs.recorridos.label }}
+  </a>
+
+  <a
+    mat-tab-link
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+    *ngIf="rla.isActive"
+  >
+    {{ iTabs.en_curso.label }}
+  </a>
+
+  <a
+    mat-tab-link
+    routerLinkActive
+    #rla="routerLinkActive"
+    [active]="rla.isActive"
+    *ngIf="rla.isActive"
+  >
+    {{ iTabs.resumen.label }}
+  </a>
 </nav>
-<router-outlet name="driver"></router-outlet>
+<router-outlet></router-outlet>

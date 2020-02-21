@@ -4,6 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
 import { map } from "rxjs/operators";
 import { SettingsState } from "src/app/core/store/settings/settings.state";
+import { LoginResponse } from "src/app/core/responses/login.response";
 
 @Injectable()
 export class AuthenticationService {
@@ -30,9 +31,9 @@ export class AuthenticationService {
     username: string,
     password: string,
     remember: boolean
-  ): Observable<any> {
+  ): Observable<LoginResponse> {
     const url = this.store.selectSnapshot(SettingsState.entrypoint);
-    return this.http.post(`${url}/auth/login`, {
+    return this.http.post<LoginResponse>(`${url}/auth/login`, {
       username,
       password,
       remember

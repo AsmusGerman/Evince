@@ -1,5 +1,3 @@
-import { Enumerable } from "./abstractions/enumberable";
-
 /**
  * Representa uno de los estados de un viaje en un momento especifico
  * @enum

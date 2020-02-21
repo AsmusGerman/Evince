@@ -6,7 +6,14 @@ import {
   Register,
   GetRole
 } from "./authentication.model";
-import { Selector, State, Action, StateContext, Actions, NgxsOnInit } from "@ngxs/store";
+import {
+  Selector,
+  State,
+  Action,
+  StateContext,
+  Actions,
+  NgxsOnInit
+} from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { AuthenticationService } from "../services/authentication.service";
 import * as decoder from "jwt-decode";
@@ -49,6 +56,11 @@ export class AuthState {
   }
 
   @Selector()
+  static username(state: AuthStateModel): string | null {
+    return state.username;
+  }
+
+  @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
     return !!state.token;
   }
@@ -82,15 +94,14 @@ export class AuthState {
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     const { username, password } = action.payload;
     return this.iAuthenticationService.login(username, password, true).pipe(
-      tap(
-        (result: { token: string; refreshToken: string }) => {
-          ctx.patchState({
-            token: result.token,
-            refreshToken: result.refreshToken,
-            username
-          });
-        }
-      )
+      tap(({ token, refreshToken, username, rol: role }) => {
+        ctx.patchState({
+          token,
+          refreshToken,
+          username,
+          role
+        });
+      })
     );
   }
 

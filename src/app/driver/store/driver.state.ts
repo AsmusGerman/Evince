@@ -2,14 +2,21 @@ import {
   DriverStateModel,
   StartTravel,
   StopTravel,
-  NewDelay
+  NewDelay,
+  NextTravel
 } from "./driver.model";
-import { State, Selector, Action, StateContext } from "@ngxs/store";
+import {
+  State,
+  Selector,
+  Action,
+  StateContext
+} from "@ngxs/store";
 import { CurrentTravelTimerService } from "../services/current-travel-timer.service";
 import { DriverService } from "src/app/core/services/driver.service";
 import { zip } from "rxjs";
 import { tap } from "rxjs/operators";
 import { Viaje } from "src/app/core/model/viaje";
+import { Recorrido } from "src/app/core/model/recorrido";
 
 const defaults: DriverStateModel = {
   travel: null,
@@ -32,19 +39,32 @@ export class DriverState {
   }
 
   @Selector()
+  static CurrentRoute(state: DriverStateModel): Recorrido {
+    return state.route;
+  }
+
+  @Selector()
   static CurrentRouteFrom(state: DriverStateModel): string | null {
-    if (state.route.trayectos.length > 0)
-      return state.route.trayectos[0].terminalOrigen;
+    if (state.route.viajes.length > 0)
+      return state.route.viajes[0].trayecto.terminalOrigenCodigo;
 
     return;
   }
 
   @Selector()
   static CurrentRouteTo(state: DriverStateModel): string | null {
-    const trayectos = state.route.trayectos;
-    return trayectos.length > 0
-      ? trayectos[trayectos.length - 1].terminalDestino
+    const viajes = state.route.viajes;
+    return viajes.length > 0
+      ? viajes[viajes.length - 1].trayecto.terminalDestinoCodigo
       : null;
+  }
+
+  @Action(NextTravel)
+  nextTravel(ctx: StateContext<DriverStateModel>) {
+    this.iDriverService.RoutesClient.next().subscribe(recorrido => {
+      const viaje = recorrido.viajes.find(v => v.orden == 0);
+      ctx.patchState({ route: recorrido, travel: viaje });
+    });
   }
 
   @Action(StartTravel)
