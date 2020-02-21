@@ -2,11 +2,11 @@ import { Injectable, Inject } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { AuthState } from "../store/authentication.state";
-import { Roles } from "src/app/core/model/roles";
 import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
 import { AuthenticationResources } from "../authentication-resources.token";
 import { Observable } from "rxjs";
 import { first } from "rxjs/operators";
+import { RolUsuario } from 'src/app/core/model/rol-usuario';
 
 @Injectable({
   providedIn: "root"
@@ -28,7 +28,7 @@ export class LoginGuard implements CanActivate {
       // redirect corresponding to user roles
       const role = 2; //this.store.selectSnapshot(AuthState.role);
       switch (role) {
-        case Roles.admin: {
+        case RolUsuario.administrator: {
           this.iAuthenticationResources
             .pipe(first())
             .subscribe(({ login }) =>
@@ -36,7 +36,7 @@ export class LoginGuard implements CanActivate {
             );
           return true;
         }
-        case Roles.driver: {
+        case RolUsuario.chofer: {
           this.iAuthenticationResources
             .pipe(first())
             .subscribe(({ login }) =>

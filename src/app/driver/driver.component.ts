@@ -70,20 +70,39 @@ export class DriverComponent implements OnInit {
   public iViajeActual: Viaje | null;
   public iViajeSiguiente: Viaje | null;
 
+  public iNavLinks = [
+    {
+      label: "Principal",
+      path: "/driver/home"
+    },
+    {
+      label: "Recorridos",
+      path: "['/driver', { outlets: { driver: ['routes'] } }]"
+    },
+    {
+      label: "En curso",
+      path: "['/driver', { outlets: { driver: ['current'] } }]"
+    },
+    {
+      label: "Resumen",
+      path: "['/driver', { outlets: { driver: ['summary', iViajeId] } }]"
+    }
+  ];
+
   constructor(private iRouter: Router, private iDriverService: DriverService) {}
 
   ngOnInit() {
     // se obtienen los recorridos
-    this.iDriverService.RoutesClient.get().subscribe(
+    /* this.iDriverService.RoutesClient.get().subscribe(
       (recorridos: Array<Recorrido>) => {
         this.iRecorridos = recorridos.sort(recorrido => recorrido.orden);
         //se busca el recorrido actual
         this.iRecorrido = this.iRecorridos[0];
         this.getCurrentRouteTravels();
       }
-    );
+    ); */
   }
-
+/* 
   delay(): void {
     this.iRouter.navigate(["driver/delay"]);
   }
@@ -93,9 +112,9 @@ export class DriverComponent implements OnInit {
   }
 
   stop(): void {
-    /*  this.iDriverService.TravelClient.stop({
-      travel: this.iCurrentTravel.id
-    }).subscribe(() => this.iDriverService.RoutesClient.get()); */
+    //this.iDriverService.TravelClient.stop({
+    //  travel: this.iCurrentTravel.id
+    //}).subscribe(() => this.iDriverService.RoutesClient.get());
 
     this.iViajeActual.estado = "detenido";
     this.iViajeActual.fechaHoraRealLlegada = new Date().toLocaleString();
@@ -108,10 +127,10 @@ export class DriverComponent implements OnInit {
     }
   }
 
-  start(pViajeId: string) {
-    /*  this.iDriverService.TravelClient.start({
-      travel: pTravelId
-    }).subscribe(() => this.iDriverService.RoutesClient.get()); */
+  start(pViajeId: number) {
+    //this.iDriverService.TravelClient.start({
+    //  travel: pTravelId
+    //}).subscribe(() => this.iDriverService.RoutesClient.get());
 
     try {
       if (this.iViajes.length === 0) {
@@ -172,5 +191,5 @@ export class DriverComponent implements OnInit {
     } catch (error) {
       console.log(error);
     }
-  }
+  } */
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/app/core/model/user';
+import { Usuario } from 'src/app/core/model/usuario';
 
 @Component({
   selector: 'evince-user-list',
@@ -10,7 +10,7 @@ export class UserListComponent implements OnInit {
 
   constructor() { }
 
-  private iUserList: Array<User>;
+  private iUserList: Array<Usuario>;
 
   ngOnInit() {
   }

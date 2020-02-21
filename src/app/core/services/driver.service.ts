@@ -4,6 +4,7 @@ import { Store } from "@ngxs/store";
 import { SettingsState } from "../store/settings/settings.state";
 import { Recorrido } from "../model/recorrido";
 import { Viaje } from "../model/viaje";
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class DriverService {
@@ -52,8 +53,8 @@ class DelayClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   push(body: {
-    travel: string;
-    type: string;
+    travel: number;
+    type: number;
     timestamp: string;
     description: string;
   }) {
@@ -64,8 +65,8 @@ class DelayClient {
     return this.iHttpClient.post(this.iUrl, body);
   }
 
-  get(travel: string) {
-    const params = new HttpParams().append("travel", travel);
+  get(id: number) {
+    const params = new HttpParams().append("travel", String(id));
     this.iHttpClient.get(this.iUrl, { params });
   }
 
@@ -77,24 +78,29 @@ class DelayClient {
 class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
-  get() {
+  getAll(): Observable<Array<Recorrido>> {
     return this.iHttpClient.get<Array<Recorrido>>(this.iUrl);
+  }
+
+  get(id: number): Observable<Recorrido> {
+    const params = new HttpParams().append("route", String(id));
+    return this.iHttpClient.get<Recorrido>(this.iUrl, { params });
   }
 }
 
 class TravelClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
-  stop(body: { travel: string }) {
+  stop(body: { travel: number }) {
     return this.iHttpClient.put(`${this.iUrl}/stop`, body);
   }
 
-  start(body: { travel: string }) {
+  start(body: { travel: number }) {
     return this.iHttpClient.put(`${this.iUrl}/start`, body);
   }
 
-  get(travel: string) {
-    const params = new HttpParams().append("travel", travel);
-    return this.iHttpClient.get<Viaje>(`${this.iUrl}`, { params });
+  get(id: number) {
+    const params = new HttpParams().append("travel", String(id));
+    return this.iHttpClient.get<Viaje>(this.iUrl, { params });
   }
 }

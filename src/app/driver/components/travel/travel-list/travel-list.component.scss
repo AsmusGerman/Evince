@@ -1,0 +1,44 @@
+:host {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mat-card {
+  margin: 1rem;
+  padding-right: 2.5rem;
+}
+
+.action {
+  top: 50%;
+  right: 0;
+  position: absolute;
+  transform: translate(0%, -50%);
+}
+
+.active {
+  background-image: linear-gradient(120deg, #84fab0 25%, #8fd3f4 100%);
+  transform: translate(0.75rem, 0px);
+  &:before {
+    content: "";
+    width: 1px;
+    height: 90%;
+    position: absolute;
+    top: 50%;
+    left: -0.75rem;
+    border-left: 6px dotted #cfd9df;
+    transform: translate(0px, -50%);
+  }
+}
+
+.inactive {
+  background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  overflow-x: hidden;
+}
+.cdk-virtual-scroll-content-wrapper {
+  max-width: 100%;
+}

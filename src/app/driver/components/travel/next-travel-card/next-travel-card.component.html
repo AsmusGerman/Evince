@@ -1,0 +1,27 @@
+<mat-card
+  class="mat-typography next mat-elevation-z6"
+  fxLayout="column"
+  matRipple
+>
+  <section fxFlex>
+    <span> {{ iViajeActual.id }} </span>
+    <span> {{ iTerminalOrigen }} a {{ iTerminalDestino }} </span>
+  </section>
+  <section fxLayout="column">
+    <section fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+      <span>{{ iTerminalOrigen }}</span>
+      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+      <span>{{ iTerminalDestino }}</span>
+    </section>
+    <section fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
+      <span>Próxma terminal:</span>
+      <span>{{ iViajeActual.trayecto.terminalDestino }}</span>
+      <span>{{
+        iViajeActual.fechaHoraLlegadaEstipuladas | date: "d/M/y, h:mm a"
+      }}</span>
+    </section>
+  </section>
+  <button class="action" mat-icon-button (click)="start()">
+    <mat-icon>play_circle_outline</mat-icon>
+  </button>
+</mat-card>
