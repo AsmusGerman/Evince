@@ -11,8 +11,8 @@ import { Recorrido } from "src/app/core/model/recorrido";
   templateUrl: "./current-travel-card.component.html"
 })
 export class CurrentTravelCardComponent implements OnInit {
-  @Select(DriverState.CurrentTravel)
-  public iViajeActual: Observable<Viaje>;
+  @Input()
+  public iViajeActual: Viaje;
 
   @Select(DriverState.CurrentRoute)
   public iRecorridoActual: Observable<Recorrido>;
@@ -27,7 +27,7 @@ export class CurrentTravelCardComponent implements OnInit {
     this.iTimer = this.iCurrentTravelTimerService.Timer;
   }
 
-  public roadmap(travel: number) {
-    this.onShowCurrentRoadMap.emit({ travel });
+  public roadmap() {
+    this.onShowCurrentRoadMap.emit({ travel: this.iViajeActual.id });
   }
 }

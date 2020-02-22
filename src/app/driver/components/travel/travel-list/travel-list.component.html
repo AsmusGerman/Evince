@@ -1,28 +1,31 @@
-<section class="column is-two-thirds-desktop">
+<section class="slot top">
   <ng-container *ngIf="iViajeActual | async as viaje">
     <div [ngSwitch]="viaje.estado">
       <evince-next-travel-card
         *ngSwitchCase="0"
+        [iViajeActual]="viaje"
         (onStartTravelTriggered)="start($event)"
       ></evince-next-travel-card>
       <evince-current-travel-card
         *ngSwitchCase="1"
+        [iViajeActual]="viaje"
         (onShowCurrentRoadMap)="showCurrentRoadmap($event)"
       ></evince-current-travel-card>
       <div *ngSwitchDefault>
-        "nada"
+        <mat-card class="mat-typography" matRipple>
+          <mat-card-content>
+            Por ahora no hay próximos viajes programados
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </ng-container>
 </section>
-<section>
-  <mat-divider></mat-divider>
-</section>
-<section fxFlex aria-label="viajes completos">
+<section class="slot bottom">
   <cdk-virtual-scroll-viewport itemSize="10">
     <mat-card
       *ngFor="let viaje of iViajesFinalizados | async"
-      class="mat-typography inactive mat-elevation-z4"
+      class="finnished mat-typography mat-elevation-z4"
       fxLayout="column"
       matRipple
     >

@@ -17,24 +17,28 @@ export class DriverComponent implements OnInit {
     {
       label: "Principal",
       path: "./travels",
+      icon: "layers",
       hide: false,
       active: true
     },
     {
       label: "Recorridos",
       path: "./routes",
+      icon: "departure_board",
       hide: false,
       active: false
     },
     {
       label: "En curso",
       path: "./current",
+      icon: "navigation",
       hide: true,
       active: false
     },
     {
       label: "Resumen",
       path: "./summary",
+      icon: "description",
       hide: true,
       active: false
     }

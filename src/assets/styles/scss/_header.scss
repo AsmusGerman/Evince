@@ -1,7 +1,11 @@
+.brand {
+  letter-spacing: 0.5rem;
+  opacity: 0.5;
+}
 .mat-button-wrapper {
-    display: flex !important;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    padding: 0 !important;
-  }
+  display: flex !important;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0 !important;
+}

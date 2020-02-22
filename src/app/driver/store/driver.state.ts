@@ -60,13 +60,12 @@ export class DriverState {
       tap(route => {
         const travels = route.viajes.sort(v => v.orden);
         const current = ctx.getState().route;
+        // se filtran los finalizados
+        const travel = travels.filter(v => v.estado != 2)[0];
         // si no hay recorrido o es un nuevo recorrido
         if (!current || route.id != current.id) {
-          const travel = travels[0];
           ctx.patchState({ route, travel });
         } else {
-          // se filtran los finalizados
-          const travel = travels.filter(v => v.estado != 2)[0];
           ctx.patchState({ travel });
         }
       })

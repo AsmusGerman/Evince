@@ -10,8 +10,8 @@ import {
 Output;
 import { Viaje } from "src/app/core/model/viaje";
 import * as moment from "moment";
-import { timer, Subject, Observable } from "rxjs";
-import { takeUntil, repeatWhen, take, switchMap } from "rxjs/operators";
+import { timer, Subject, Observable, iif, of } from "rxjs";
+import { takeUntil, repeatWhen, take, switchMap, tap } from "rxjs/operators";
 import { CurrentTravelTimerService } from "src/app/driver/services/current-travel-timer.service";
 import { MatBottomSheetRef, MatBottomSheet } from "@angular/material";
 import { DelayComponent } from "../../delay/delay.component";
@@ -50,13 +50,16 @@ export class CurrentRouteComponent implements OnInit {
     );
   }
 
-  public stop(travel: number) {
+  public stop(travel: number, isLast: boolean) {
     this.iStore
       .dispatch(new StopTravel({ travel }))
-      .pipe(switchMap(() => this.iRecorridoActual))
-      .subscribe(() =>
-        this.iRouter.navigate(["../travels"], { relativeTo: this.iRoute })
-      );
+      .pipe(
+        tap(() => {
+          if (isLast === true)
+            this.iRouter.navigate(["../travels"], { relativeTo: this.iRoute });
+        })
+      )
+      .subscribe();
   }
 
   public start(travel: number) {

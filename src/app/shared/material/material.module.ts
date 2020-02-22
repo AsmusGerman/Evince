@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 
 //Angular Material Components
-import { MatCheckboxModule, MatBottomSheetModule } from "@angular/material";
+import { MatCheckboxModule, MatBottomSheetModule, MatRippleModule } from "@angular/material";
 import { MatButtonModule } from "@angular/material";
 import { MatInputModule } from "@angular/material/input";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -34,6 +34,7 @@ import { MatPaginatorModule } from "@angular/material/paginator";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconsService } from './services/icons.service';
 import {ScrollingModule} from '@angular/cdk/scrolling';
+import { CdkStepperModule } from '@angular/cdk/stepper';
 
 const features = [
   MatBottomSheetModule,
@@ -69,7 +70,9 @@ const features = [
   MatSortModule,
   MatPaginatorModule,
   FlexLayoutModule,
-  ScrollingModule
+  ScrollingModule,
+  MatRippleModule,
+  CdkStepperModule
 ];
 
 @NgModule({

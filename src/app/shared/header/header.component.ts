@@ -32,8 +32,9 @@ export class HeaderComponent implements OnInit {
       .split(" ")
       .reduce((initials, word) => (initials += word[0]), "")
       .toUpperCase();
-
-    const canvas = document.createElement("canvas");
+      
+    return name;
+    /* const canvas = document.createElement("canvas");
     canvas.style.display = "none";
     canvas.width = 32;
     canvas.height = 32;
@@ -41,11 +42,11 @@ export class HeaderComponent implements OnInit {
     const context = canvas.getContext("2d");
     context.fillStyle = "transparent";
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.font = "16px Arial";
+    context.font = "16px Roboto";
     context.fillStyle = "#fff";
 
     context.fillText(name, name.length > 1 ? 3 : 10, 21.5);
 
-    return canvas.toDataURL();
+    return canvas.toDataURL(); */
   }
 }

@@ -1,19 +1,17 @@
 <mat-card
   class="mat-typography next mat-elevation-z6"
   fxLayout="column"
-  matRipple
-  *ngIf="iViajeActual | async as viaje"
 >
   <mat-card-header fxLayoutAlign="flex-start flex-end">
     <mat-card-subtitle>
       Proximo viaje
     </mat-card-subtitle>
     <mat-card-title>
-      {{ viaje.trayecto.terminalOrigenCodigo }} -
-      {{ viaje.trayecto.terminalDestinoCodigo }}
+      {{ iViajeActual.trayecto.terminalOrigenCodigo }} -
+      {{ iViajeActual.trayecto.terminalDestinoCodigo }}
     </mat-card-title>
     <section fxFlex fxLayout="row" fxLayoutAlign="flex-end center">
-      <button mat-stroked-button (click)="start(viaje.id)">
+      <button mat-stroked-button (click)="start(iViajeActual.id)">
         Comenzar
         <mat-icon>play_circle_outline</mat-icon>
       </button>
@@ -29,14 +27,22 @@
     >
       <ng-container *ngFor="let bViaje of recorrido.viajes; last as isLast">
         <small>{{ bViaje.trayecto.terminalOrigenCodigo }}</small>
-        <mat-progress-bar mode="determinate" [value]="bViaje.orden <= viaje.orden ? 100 : 0 "></mat-progress-bar>
-        <small *ngIf="isLast">{{ bViaje.trayecto.terminalDestinoCodigo }}</small>
+        <mat-progress-bar
+          mode="determinate"
+          [value]="bViaje.orden <= iViajeActual.orden ? 100 : 0"
+        ></mat-progress-bar>
+        <small *ngIf="isLast">{{
+          bViaje.trayecto.terminalDestinoCodigo
+        }}</small>
       </ng-container>
     </section>
     <section fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-      <span>Próxma terminal: {{ viaje.trayecto.terminalDestinoCodigo }}</span>
+      <span
+        >Próxma terminal:
+        {{ iViajeActual.trayecto.terminalDestinoCodigo }}</span
+      >
       <span>{{
-        viaje.fechaHoraLlegadaEstipuladas | date: "d/M/y, h:mm a"
+        iViajeActual.fechaHoraLlegadaEstipuladas | date: "d/M/y, h:mm a"
       }}</span>
     </section>
   </mat-card-content>

@@ -1,16 +1,19 @@
 <evince-header></evince-header>
-<nav mat-tab-nav-bar headerPosition="below">
+<router-outlet></router-outlet>
+<nav mat-tab-nav-bar mat-align-tabs="center">
   <ng-container *ngFor="let tab of iTabs">
+    
     <a
-      *ngIf=" !tab.hide || tab.active"
+      *ngIf="!tab.hide || tab.active"
       mat-tab-link
       routerLinkActive
       #rla="routerLinkActive"
       [active]="rla.isActive"
       [routerLink]="tab.path"
+      class="boxed"
     >
-      {{ tab.label }}
+      <mat-icon>{{tab.icon}}</mat-icon>
+      <span>{{ tab.label }}</span>
     </a>
   </ng-container>
 </nav>
-<router-outlet></router-outlet>

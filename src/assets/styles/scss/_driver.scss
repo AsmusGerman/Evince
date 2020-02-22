@@ -1,30 +1,80 @@
 .evince-ui {
+  evince-driver {
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    grid-template-columns: 1fr;
+
+    .mat-tab-nav-bar {
+      a.boxed {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0.5rem;
+      }
+    }
+  }
+
   evince-travel-list {
-    .mat-card-header {
-      .mat-card-header-text {
-        margin: 0;
-        .mat-card-subtitle,
-        .mat-card-title {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 0.25fr 1fr;
+    grid-template-columns: 1fr;
+
+    .mat-card {
+      margin: 1rem;
+
+      .mat-card-header {
+        .mat-card-header-text {
           margin: 0;
+          .mat-card-subtitle,
+          .mat-card-title {
+            margin: 0;
+          }
         }
       }
 
-      button .mat-icon {
-        margin-left: 0.5rem;
+      &.current,
+      &.next {
+        .mat-card-content {
+          margin: 0;
+          section {
+            margin-bottom: 1rem;
+
+            &.progress {
+              margin: 1rem;
+            }
+          }
+
+          .mat-progress-bar {
+            margin: 0 0.5rem;
+          }
+        }
+      }
+
+      .action {
+        top: 50%;
+        right: 0;
+        position: absolute;
+        transform: translate(0%, -50%);
       }
     }
 
-    .mat-card-content {
-      margin: 0;
-      section {
-        margin-bottom: 1rem;
+    .slot {
+      display: flex;
+      flex-direction: column;
 
-        &.progress {
-          margin: 1rem;
+      /* &.top {  } */
+
+      &.bottom {
+        .cdk-virtual-scroll-viewport {
+          flex: 1;
+          overflow-x: hidden;
         }
-      }
-      .mat-progress-bar {
-        margin: 0 0.5rem;
+
+        .cdk-virtual-scroll-content-wrapper {
+          max-width: 100%;
+        }
       }
     }
   }

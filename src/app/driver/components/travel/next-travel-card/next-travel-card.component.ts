@@ -10,8 +10,8 @@ import { Observable, zip } from "rxjs";
   templateUrl: "./next-travel-card.component.html"
 })
 export class NextTravelCardComponent implements OnInit {
-  @Select(DriverState.CurrentTravel)
-  public iViajeActual: Observable<Viaje>;
+  @Input()
+  public iViajeActual: Viaje;
 
   @Select(DriverState.CurrentRoute)
   public iRecorridoActual: Observable<Recorrido>;
