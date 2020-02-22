@@ -4,7 +4,8 @@ import { Store } from "@ngxs/store";
 import { SettingsState } from "../store/settings/settings.state";
 import { Recorrido } from "../model/recorrido";
 import { Viaje } from "../model/viaje";
-import { Observable } from 'rxjs';
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class DriverService {
@@ -26,7 +27,7 @@ export class DriverService {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
         this.iHttpClient,
-        `${this.iBaseDriverApiUrl}/recorridos`
+        this.iBaseDriverApiUrl
       );
     }
     return this._routesClient;
@@ -79,12 +80,16 @@ class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   getAll(): Observable<Array<Recorrido>> {
-    return this.iHttpClient.get<Array<Recorrido>>(this.iUrl);
+    return this.iHttpClient.get<Array<Recorrido>>(`${this.iUrl}/recorridos`);
   }
 
   get(id: number): Observable<Recorrido> {
     const params = new HttpParams().append("route", String(id));
-    return this.iHttpClient.get<Recorrido>(this.iUrl, { params });
+    return this.iHttpClient.get<Recorrido>(`${this.iUrl}/recorridos`, { params });
+  }
+
+  next(): Observable<Recorrido> {
+    return this.iHttpClient.get<Recorrido>(`${this.iUrl}/recorrido`);
   }
 }
 
@@ -102,5 +107,18 @@ class TravelClient {
   get(id: number) {
     const params = new HttpParams().append("travel", String(id));
     return this.iHttpClient.get<Viaje>(this.iUrl, { params });
+  }
+
+  getAll() {
+    return this.iHttpClient.get<Viaje>(this.iUrl);
+  }
+
+  lasts(amount: number = null) {
+    const params = !!amount
+      ? new HttpParams().append("amount", String(amount))
+      : undefined;
+    return this.iHttpClient.get<Array<Viaje>>(`${this.iUrl}/ultimos`, {
+      params
+    });
   }
 }

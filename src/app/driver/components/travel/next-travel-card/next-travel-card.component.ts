@@ -1,24 +1,20 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { Viaje } from 'src/app/core/model/viaje';
+import { Viaje } from "src/app/core/model/viaje";
+import { Recorrido } from "src/app/core/model/recorrido";
+import { Select } from "@ngxs/store";
+import { DriverState } from "src/app/driver/store/driver.state";
+import { Observable, zip } from "rxjs";
 
 @Component({
   selector: "evince-next-travel-card",
   templateUrl: "./next-travel-card.component.html"
 })
 export class NextTravelCardComponent implements OnInit {
-  /** Nombre de la terminal de origen del recorrido
-   * @property
-   * @returns {string}
-   */
-  @Input() iTerminalOrigen: string;
+  @Select(DriverState.CurrentTravel)
+  public iViajeActual: Observable<Viaje>;
 
-  /** Nombre de la terminal destino del recorrido
-   * @property
-   * @returns {string}
-   */
-  @Input() iTerminalDestino: string;
-
-  @Input() iViajeActual: Viaje;
+  @Select(DriverState.CurrentRoute)
+  public iRecorridoActual: Observable<Recorrido>;
 
   @Output() onStartTravelTriggered = new EventEmitter<number>();
 
@@ -26,7 +22,7 @@ export class NextTravelCardComponent implements OnInit {
 
   ngOnInit() {}
 
-  public start() {
-    this.onStartTravelTriggered.emit(this.iViajeActual.id);
+  public start($event) {
+    this.onStartTravelTriggered.emit($event);
   }
 }

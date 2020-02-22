@@ -1,20 +1,26 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { Router } from '@angular/router';
+import { AuthState } from 'src/app/authentication/store/authentication.state';
+import { Select } from '@ngxs/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: "evince-header",
-  templateUrl: "./header.component.html",
-  styleUrls: ["./header.component.scss"]
+  templateUrl: "./header.component.html"
 })
 export class HeaderComponent implements OnInit {
   
-  @Input("user") iUser: string;
+  @Select(AuthState.username)
+  public User$: Observable<string>;
   public Avatar: string;
 
   constructor(private iRouter: Router) {}
 
   ngOnInit() {
-    this.Avatar = this.avatarize(this.iUser || "A");
+    this.User$.subscribe(username => {
+      this.Avatar = this.avatarize(username);
+    })
+    
   }
 
   logout() {

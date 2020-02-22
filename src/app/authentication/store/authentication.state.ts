@@ -6,7 +6,14 @@ import {
   Register,
   GetRole
 } from "./authentication.model";
-import { Selector, State, Action, StateContext, Actions, NgxsOnInit } from "@ngxs/store";
+import {
+  Selector,
+  State,
+  Action,
+  StateContext,
+  Actions,
+  NgxsOnInit
+} from "@ngxs/store";
 import { tap } from "rxjs/operators";
 import { AuthenticationService } from "../services/authentication.service";
 import * as decoder from "jwt-decode";
@@ -49,6 +56,11 @@ export class AuthState {
   }
 
   @Selector()
+  static username(state: AuthStateModel): string | null {
+    return state.username;
+  }
+
+  @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
     return !!state.token;
   }
@@ -81,53 +93,47 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     const { username, password } = action.payload;
-    return this.iAuthenticationService.login(username, password, true).pipe(
-      tap(
-        (result: { token: string; refreshToken: string }) => {
-          ctx.patchState({
-            token: result.token,
-            refreshToken: result.refreshToken,
-            username
-          });
-        }
-      )
-    );
-  }
-
-  @Action(Logout)
-  logout(ctx: StateContext<AuthStateModel>) {
-    const state = ctx.getState();
-    return this.iAuthenticationService.logout(state.token).pipe(
-      tap(() => {
-        ctx.setState(defaults);
-      })
-    );
-  }
-
-  @Action(GetRole)
-  getRoels(ctx: StateContext<AuthStateModel>) {
-    return this.iAuthenticationService.getRole().pipe(
-      tap(role => {
+    return this.iAuthenticationService.login({username, password, remember: false}).pipe(
+      tap(({ token, refreshToken, username, rol: role }) => {
         ctx.patchState({
+          token,
+          refreshToken,
+          username,
           role
         });
       })
     );
   }
 
+  @Action(Logout)
+  logout(ctx: StateContext<AuthStateModel>) {
+    const { token } = ctx.getState();
+    return this.iAuthenticationService.logout({ token }).pipe(
+      tap(() => {
+        ctx.setState(defaults);
+      })
+    );
+  }
+
   @Action(RefreshToken)
   refresh(ctx: StateContext<AuthStateModel>) {
-    const state = ctx.getState();
-    return this.iAuthenticationService.refreshToken(state.refreshToken).pipe(
-      tap(
-        (result: { token: string; tokenRefresh: string; username: string }) => {
-          ctx.patchState({
-            token: result.token,
-            refreshToken: result.tokenRefresh,
-            username: result.username
-          });
-        }
-      )
-    );
+    const { refreshToken, token } = ctx.getState();
+    return this.iAuthenticationService
+      .refreshToken({ token, refreshToken })
+      .pipe(
+        tap(
+          (result: {
+            token: string;
+            tokenRefresh: string;
+            username: string;
+          }) => {
+            ctx.patchState({
+              token: result.token,
+              refreshToken: result.tokenRefresh,
+              username: result.username
+            });
+          }
+        )
+      );
   }
 }

@@ -1,13 +1,16 @@
-<evince-header [user]="iUser"></evince-header>
-<nav mat-tab-nav-bar>
-  <a
-    mat-tab-link
-    *ngFor="let link of iNavLinks"
-    [routerLink]="link.path"
-    routerLinkActive
-    #rla="routerLinkActive"
-    [active]="rla.isActive"
-    >{{ link.label }}</a
-  >
+<evince-header></evince-header>
+<nav mat-tab-nav-bar headerPosition="below">
+  <ng-container *ngFor="let tab of iTabs">
+    <a
+      *ngIf=" !tab.hide || tab.active"
+      mat-tab-link
+      routerLinkActive
+      #rla="routerLinkActive"
+      [active]="rla.isActive"
+      [routerLink]="tab.path"
+    >
+      {{ tab.label }}
+    </a>
+  </ng-container>
 </nav>
-<router-outlet name="driver"></router-outlet>
+<router-outlet></router-outlet>

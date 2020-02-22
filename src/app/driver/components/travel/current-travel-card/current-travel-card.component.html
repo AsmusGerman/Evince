@@ -2,28 +2,47 @@
   class="mat-typography active mat-elevation-z6"
   fxLayout="column"
   matRipple
+  *ngIf="iViajeActual | async as viaje"
 >
-  <section fxFlex>
-    <span> {{ iViajeActual.id }} </span>
-    <span> {{ iTerminalOrigen }} a {{ iTerminalDestino }} </span>
-    <span fxFlex="auto"></span>
-    <!-- <span>{{ iTimer }} </span> -->
-  </section>
-  <section fxLayout="column">
-    <section fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-      <span>{{ iTerminalOrigen }}</span>
-      <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
-      <span>{{ iTerminalDestino }}</span>
+  <mat-card-header fxLayoutAlign="flex-start flex-end">
+    <mat-card-subtitle>
+      Viaje en curso
+    </mat-card-subtitle>
+    <mat-card-title>
+      {{ viaje.trayecto.terminalOrigenCodigo }} -
+      {{ viaje.trayecto.terminalDestinoCodigo }}
+    </mat-card-title>
+    <section fxFlex fxLayout="row" fxLayoutAlign="flex-end center">
+      <mat-chip-list>
+        <mat-chip>
+          <span>{{ iTimer | async }}</span>
+          <mat-icon>play_circle_outline</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+    </section>
+  </mat-card-header>
+  <mat-card-content fxLayout="column">
+    <section
+      class="progress"
+      fxLayout="row"
+      fxLayoutAlign="space-between center"
+      fxFlex
+      *ngIf="iRecorridoActual | async as recorrido"
+    >
+      <ng-container *ngFor="let bViaje of recorrido.viajes; last as isLast">
+        <small>{{ bViaje.trayecto.terminalOrigenCodigo }}</small>
+        <mat-progress-bar mode="determinate" [value]="bViaje.orden <= viaje.orden ? 100 : 0 "></mat-progress-bar>
+        <small *ngIf="isLast">{{ bViaje.trayecto.terminalDestinoCodigo }}</small>
+      </ng-container>
     </section>
     <section fxLayout="row" fxLayoutAlign="space-between center" fxFlex>
-      <span>Próxma terminal:</span>
-      <span>{{ iViajeActual.trayecto.terminalDestino }}</span>
+      <span>Próxma terminal: {{ viaje.trayecto.terminalDestinoCodigo }}</span>
       <span>{{
-        iViajeActual.fechaHoraLlegadaEstipuladas | date: "d/M/y, h:mm a"
+        viaje.fechaHoraLlegadaEstipuladas | date: "d/M/y, h:mm a"
       }}</span>
     </section>
-  </section>
-  <button class="action" mat-icon-button>
+  </mat-card-content>
+  <button class="action" mat-icon-button (click)="roadmap(viaje.id)">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
 </mat-card>

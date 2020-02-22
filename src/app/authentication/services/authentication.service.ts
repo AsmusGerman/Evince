@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { Store } from "@ngxs/store";
-import { map } from "rxjs/operators";
 import { SettingsState } from "src/app/core/store/settings/settings.state";
+import { LoginResponse } from "src/app/core/responses/login.response";
 
 @Injectable()
 export class AuthenticationService {
@@ -26,37 +26,22 @@ export class AuthenticationService {
     });
   }
 
-  public login(
-    username: string,
-    password: string,
-    remember: boolean
-  ): Observable<any> {
+  public login(body: {
+    username: string;
+    password: string;
+    remember: boolean;
+  }): Observable<LoginResponse> {
     const url = this.store.selectSnapshot(SettingsState.entrypoint);
-    return this.http.post(`${url}/auth/login`, {
-      username,
-      password,
-      remember
-    });
+    return this.http.post<LoginResponse>(`${url}/auth/login`, body);
   }
 
-  public logout(token: string) {
+  public logout(body: { token: string }) {
     const url = this.store.selectSnapshot(SettingsState.entrypoint);
-    return this.http.post(`${url}/auth/logout`, {
-      token
-    });
+    return this.http.post(`${url}/auth/logout`, body);
   }
 
-  public getRole() {
+  public refreshToken(body: { token; refreshToken }) {
     const url = this.store.selectSnapshot(SettingsState.entrypoint);
-    return this.http
-      .get<{ id: number; name: string }>(`${url}/auth/role`)
-      .pipe(map(role => role.id));
-  }
-
-  public refreshToken(refreshToken: string) {
-    const url = this.store.selectSnapshot(SettingsState.entrypoint);
-    return this.http.post(url, {
-      refreshToken
-    });
+    return this.http.post(url, body);
   }
 }

@@ -6,9 +6,14 @@ export interface DriverStateModel {
   route: Recorrido | null;
 }
 
+export class NextTravel {
+  static readonly type = "[Driver] NextTravel";
+  constructor() {}
+}
+
 export class StartTravel {
   static readonly type = "[Driver] StartTravel";
-  constructor(public payload: { travel: number; route: number }) {}
+  constructor(public payload: { travel: number }) {}
 }
 
 export class StopTravel {
