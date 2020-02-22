@@ -20,8 +20,6 @@ import {
       HTMLDivElement
     >;
   
-    //public iDataSource = Array<any>();
-    //@Input('ELEMENT_DATA') iDataSource: Array<any>;
     @Input() recorridoAAnalizar: any;
     public codigos = Array<string>();
     public cantRetrasosPorCodigo = Array<number>();
@@ -29,28 +27,22 @@ import {
   
     constructor() {}
   
-/*     tiempoPerdidoEnCadaTipoRetraso(orden,tiposRetrasos,gruposViaje) {
-      gruposViaje. */
-
-/*       var dataRetraso=[];
-      tiposRetrasos.forEach(retraso=>{
-        var cant=0;
-        this.recorridoAAnalizar[0].viajes.filter(viajeFilter=>viajeFilter.orden==orden)
-        .forEach(viaje=>{
-
-          viaje.retrasos.forEach(retrasoViaje=>{
-            if(retrasoViaje.tipo==retraso){
-              cant+=retrasoViaje.tiempo;
-            }
-          });
-
+    tiempoPerdidoEnCadaTipoRetraso(causa,gruposViaje) {
+      var dataRetraso=[];
+      for (var viajeOrden of gruposViaje){
+      var cant=0;
+      this.recorridoAAnalizar[0].viajes.filter(viajeFilter=>viajeFilter.orden==viajeOrden[0].orden)
+      .forEach(viaje=>{
+        viaje.retrasos.forEach(retrasoViaje=>{
+          if(retrasoViaje.tipo==causa){
+            cant+=retrasoViaje.tiempo;
+          }
         });
-        dataRetraso.push(cant);
       });
-
-      console.log(dataRetraso);
-      return dataRetraso; */
-    //}
+      dataRetraso.push(cant);
+      }
+      return [causa,dataRetraso];
+    }
 
     updateCausasYCantidades() {
       var gruposViaje=[];
@@ -71,18 +63,19 @@ import {
       var dataNombresViajes=[];
       gruposViaje.forEach(viaje=>{
         dataNombresViajes.push(viaje[0].id);
-        console.log("el orden es",viaje[0].orden);
-        //console.log("tiempo perdido en cada tipo retraso");
-        //this.tiempoPerdidoEnCadaTipoRetraso(viaje[0].orden,causasRetrasos);
-
       });
 
-      causasRetrasos.forEach(causa=>{
-        var serie = this.tiempoPerdidoEnCadaTipoRetraso(causa,gruposViaje);
+      var series=[];
+       causasRetrasos.forEach(causa=>{
+         series.push(this.tiempoPerdidoEnCadaTipoRetraso(causa,gruposViaje));
       });
-      
-      this.tiempoPerdidoEnCadaTipoRetraso(viaje[0].orden,causasRetrasos,gruposViaje);
 
+      for(var i=0; i<series.length; i++){
+        //series[i][0] nombre de la serie
+        //series[i][1] array de data
+        template.series[i].name=series[i][0];
+        template.series[i].data=series[i][1];
+      }
       template.yAxis[0].data=dataNombresViajes;
       this.iChart.setOption(template,true);
     }
@@ -91,7 +84,6 @@ import {
     }
   
     ngOnChanges() {
-      //this.sort();
       this.updateCausasYCantidades();
     }
   
