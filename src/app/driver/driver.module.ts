@@ -72,6 +72,7 @@ const routes: Routes = [
     ResponsiveModule,
     HeaderModule
   ],
-  providers: [DataService, CurrentTravelTimerService]
+  providers: [DataService, CurrentTravelTimerService],
+  entryComponents: [DelayComponent]
 })
 export class DriverModule {}

@@ -1,46 +1,50 @@
-  <div
-    *ngFor="let bRecorrido of iRecorridos"
-    class="item animated lightSpeedIn"
-  >
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title> Recorrido {{ bRecorrido.nombre }}</mat-panel-title>
-        </mat-expansion-panel-header>
-        <mat-card *ngFor="let viaje of bRecorrido.viajes">
-          <mat-card-content>
-            <mat-list>
-              <mat-list-item>
-                <span matLine>{{ viaje.id }} / {{viaje.trayecto.terminalOrigenCodigo}} - {{viaje.trayecto.terminalDestinoCodigo}}</span>
-              </mat-list-item>
-              <mat-list-item>
-                <span matLine>
-                  Sale desde <b> {{ viaje.trayecto.terminalOrigen }} </b>:
-                </span>
-                <span matLine>
-                  <i>
-                    {{
-                      viaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
-                    }}
-                  </i>
-                </span>
-              </mat-list-item>
-              <mat-list-item>
-                <span matLine>
-                  Llega a
-                  <b> {{ viaje.trayecto.terminalDestino }} </b>:
-                </span>
-                <span matLine>
-                  <i>
-                    {{
-                      viaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
-                    }}
-                  </i>
-                </span>
-              </mat-list-item>
-            </mat-list>
-          </mat-card-content>
-        </mat-card>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </div>
+<cdk-virtual-scroll-viewport
+  itemSize="10"
+  *ngIf="iRecorridos | async as recorridos"
+>
+  <mat-card *ngFor="let recorrido of recorridos">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-chip-avatar>{{ recorrido.id }}</mat-chip-avatar>
+        <!-- <small>{{ recorrido.nombre }}</small> -->
+      </mat-card-title>
+      <mat-card-subtitle>
+        <small>
+          {{ recorrido.nombre }}
+        </small>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content *ngIf="recorrido.viajes.length > 0">
+      <mat-list dense *ngIf="recorrido.viajes[0] as viaje">
+        <mat-list-item>
+          <span matLine>
+            Sale desde
+            <b> {{ viaje.trayecto.terminalOrigen || "origen" }} </b>:
+          </span>
+          <span matLine>
+            <i>
+              {{
+                viaje.fechaHoraSalidaEstipuladas
+                  | date: "EEEE, MMMM d, y, h:mm:ss a"
+              }}
+            </i>
+          </span>
+        </mat-list-item>
+        <mat-list-item>
+          <span matLine>
+            Llega a
+            <b> {{ viaje.trayecto.terminalDestino || "destino" }} </b>:
+          </span>
+          <span matLine>
+            <i>
+              {{
+                viaje.fechaHoraSalidaEstipuladas
+                  | date: "EEEE, MMMM d, y, h:mm:ss a"
+              }}
+            </i>
+          </span>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</cdk-virtual-scroll-viewport>

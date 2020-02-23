@@ -23,5 +23,5 @@ export class StopTravel {
 
 export class NewDelay {
   static readonly type = "[Driver] NewDelay";
-  constructor(public payload: { type: number, timestamp: string, description: string }) {}
+  constructor(public payload: { type: number, time: string, description: string }) {}
 }

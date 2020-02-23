@@ -63,11 +63,7 @@ export class DriverState {
         // se filtran los finalizados
         const travel = travels.filter(v => v.estado != 2)[0];
         // si no hay recorrido o es un nuevo recorrido
-        if (!current || route.id != current.id) {
-          ctx.patchState({ route, travel });
-        } else {
-          ctx.patchState({ travel });
-        }
+        ctx.patchState({ route, travel });
       })
     );
   }

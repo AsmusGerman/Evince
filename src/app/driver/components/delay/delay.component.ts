@@ -12,6 +12,8 @@ import { DriverService } from "src/app/core/services/driver.service";
 import { DriverState } from "../../store/driver.state";
 import { NewDelay } from "../../store/driver.model";
 import { MatBottomSheetRef } from "@angular/material";
+import { map } from "rxjs/operators";
+import * as moment from "moment";
 
 @Component({
   selector: "evince-delay",
@@ -19,7 +21,7 @@ import { MatBottomSheetRef } from "@angular/material";
 })
 export class DelayComponent implements OnInit {
   public iFormGroup: FormGroup;
-  public iDelayTypes: Array<string> = [];
+  public iDelayTypes: { key: number; value: string }[];
 
   @Select(DriverState.CurrentTravel)
   public iViajeActual: Observable<Viaje>;
@@ -32,16 +34,18 @@ export class DelayComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.iDriverService.DelayClient.types().subscribe(
-      delays => (this.iDelayTypes = delays)
-    );
+    this.iDriverService.DelayClient.types()
+      .pipe(
+        map(delays => delays.map((delay, idx) => ({ key: idx, value: delay })))
+      )
+      .subscribe(delays => {
+        this.iDelayTypes = delays;
+      });
 
     this.iFormGroup = this.iFormBuilder.group({
       type: new FormControl("", [Validators.required]),
-      timestamp: new FormControl("", [
-        Validators.required,
-        Validators.pattern(/^(0[0-9]|1[0-2]):[0-5][0-9]$/gm)
-      ]),
+      hours: new FormControl("", [Validators.required]),
+      minutes: new FormControl("", [Validators.required]),
       description: new FormControl("", [
         Validators.maxLength(350),
         Validators.minLength(0)
@@ -49,8 +53,9 @@ export class DelayComponent implements OnInit {
     });
   }
 
-  public onSubmit({ type, timestamp, description }) {
-    this.iStore.dispatch(new NewDelay({ type, timestamp, description }));
+  public onSubmit({ type, hours, minutes, description }) {
+    const time = moment(`${hours}:${minutes}`, "HH:mm").format("HH:mm");
+    this.iStore.dispatch(new NewDelay({ type, time, description }));
     this.close();
   }
 

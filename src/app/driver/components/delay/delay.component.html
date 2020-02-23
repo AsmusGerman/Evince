@@ -1,20 +1,41 @@
-<form (ngSubmit)="onSubmit(iFormGroup.value)" [formGroup]="iFormGroup">
+<h4>Nuevo retraso</h4>
+<form
+  (ngSubmit)="onSubmit(iFormGroup.value)"
+  [formGroup]="iFormGroup"
+  class="form"
+>
   <mat-form-field>
     <mat-label>Tipo</mat-label>
     <mat-select formControlName="type">
       <mat-option>-</mat-option>
-      <mat-option
-        *ngFor="let bDelayType of iDelayTypes; let i = index"
-        value="i"
-      >
-        {{ bDelayType }}
+      <mat-option *ngFor="let delay of iDelayTypes" [value]="delay.key">
+        {{ delay.value }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field [hintLabel]="'utilice el formato HH:mm'">
+  <mat-form-field>
     <mat-label>Tiempo</mat-label>
-    <input matInput type="text" formControlName="timestamp" />
+    <div fxLayout="row">
+      <input
+        class="time"
+        matInput
+        type="number"
+        max="24"
+        min="0"
+        formControlName="hours"
+      />
+      :
+      <input
+        class="time"
+        matInput
+        type="number"
+        max="59"
+        min="0"
+        formControlName="minutes"
+      />
+    </div>
   </mat-form-field>
+
   <mat-form-field>
     <mat-label>Descripción</mat-label>
     <textarea
@@ -24,11 +45,9 @@
       minlength="0"
     ></textarea>
   </mat-form-field>
-
-  <button data-test="button-cancel" mat-button type="button" (click)="cancel()">
+  <button data-test="button-cancel" mat-button type="button" (click)="close()">
     Cancelar
   </button>
-
   <button
     data-test="button-create"
     mat-raised-button

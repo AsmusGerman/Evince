@@ -56,11 +56,15 @@ class DelayClient {
   push(body: {
     travel: number;
     type: number;
-    timestamp: string;
+    time: string;
     description: string;
   }) {
-    if (!body.type || !body.timestamp) {
-      throw new Error("los parámetros no pueden ser indefinidos");
+    if (body.type === undefined) {
+      throw new Error("el tipo de retraso no puede ser indefinido");
+    }
+
+    if(body.time === undefined) {
+      throw new Error("el tiempo de retraso no puede ser indefinido");
     }
 
     return this.iHttpClient.post(this.iUrl, body);
