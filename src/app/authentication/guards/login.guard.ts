@@ -5,7 +5,7 @@ import { AuthState } from "../store/authentication.state";
 import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
 import { AuthenticationResources } from "../authentication-resources.token";
 import { Observable } from "rxjs";
-import { first } from "rxjs/operators";
+import { first, tap } from "rxjs/operators";
 import { RolUsuario } from 'src/app/core/model/rol-usuario';
 
 @Injectable({
@@ -25,24 +25,16 @@ export class LoginGuard implements CanActivate {
       AuthState.isAuthenticated
     );
     if (!!isAuthenticated) {
-      // redirect corresponding to user roles
       const role = this.store.selectSnapshot(AuthState.role);
-      switch (role) {
-        case RolUsuario.administrator: {
-          this.iAuthenticationResources
-            .pipe(first())
-            .subscribe(({ login }) =>
-              this.iSnackbarService.success(login.success)
-            );
-          return true;
-        }
-        case RolUsuario.chofer: {
-          this.iAuthenticationResources
-            .pipe(first())
-            .subscribe(({ login }) =>
-              this.iSnackbarService.success(login.success)
-            );
-          return true;
+      if(role != undefined) {
+        // redirect corresponding to user roles
+        switch (role) {
+          case RolUsuario.chofer: {
+            return this.router.parseUrl('driver');
+          }
+          default: {
+            return this.router.parseUrl('administrator');
+          }
         }
       }
     }
