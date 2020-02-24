@@ -13,7 +13,11 @@
             <ng-container matColumnDef="cantPasajeros">
                 <th mat-header-cell *matHeaderCellDef>Cant. Pasajeros</th>
                 <td mat-cell *matCellDef="let element">{{ element.cantPasajeros }}</td>
-              </ng-container>
+            </ng-container>
+            <ng-container matColumnDef="cantButacasColectivo">
+              <th mat-header-cell *matHeaderCellDef>Cant. total butacas</th>
+              <td mat-cell *matCellDef="let element">{{ element.cantButacasColectivo }}</td>
+            </ng-container>
             <ng-container matColumnDef="estado">
               <th mat-header-cell *matHeaderCellDef>Estado</th>
               <td mat-cell *matCellDef="let element">{{ element.estado }}</td>
@@ -22,7 +26,7 @@
             <ng-container matColumnDef="retrasos">
                 <th mat-header-cell *matHeaderCellDef>Ver retrasos</th>
                 <td mat-cell *matCellDef="let element">
-                  <button mat-raised-button color="primary" (click)="verRetrasosViaje(element)">
+                  <button mat-raised-button color="primary" (click)="retrasoAAnalizar(element)">
                     Ver retrasos viaje
                   </button>
                 </td>

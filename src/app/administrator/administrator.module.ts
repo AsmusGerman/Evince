@@ -18,6 +18,8 @@ import { RecorridoListComponent } from './overview/components/recorrido/recorrid
 import { RecorridoChartPercentDelaysComponent } from './overview/components/recorrido/recorrido-chart-percent-delays/recorrido-chart-percent-delays.component';
 import { RecorridoChartCausesComponent } from './overview/components/recorrido/recorrido-chart-causes/recorrido-chart-causes.component';
 import { ViajesListComponent } from './overview/components/viajes/viajes-list/viajes-list.component';
+import { ViajesChartCompareComponent } from './overview/components/viajes/viajes-chart/viajes-chart-compare.component';
+import { RetrasoListComponent } from './overview/components/retraso/retraso-list/retraso-list.component';
 
 const routes: Routes = [
   {
@@ -40,7 +42,9 @@ const routes: Routes = [
     RecorridoListComponent,
     ViajesListComponent,
     RecorridoChartPercentDelaysComponent,
-    RecorridoChartCausesComponent
+    RecorridoChartCausesComponent,
+    ViajesChartCompareComponent,
+    RetrasoListComponent
   ],
   imports: [
     CommonModule,

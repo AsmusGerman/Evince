@@ -30,30 +30,16 @@ export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
   constructor(private filterService: FilterService) {}
 
   sort() {
-    //console.log("en sort, los recorridos son", this.iRecorridos);
     this.iRecorridos.sort((rec1, rec2) => {
-      //console.log(rec1.retrasos);
-      //console.log(rec1.viajes[0].retrasos);
       var cantRetRec1=0;
       var cantRetRec2=0;
       for (var retraso of rec1.retrasos) {
         cantRetRec1+=retraso.tiempo;
       }
-/*       for(var viaje of rec1.viajes){
-        for (var retraso of viaje.retrasos){
-          cantRetRec1+=retraso.tiempo;
-        }
-      } */
 
       for (var retraso of rec2.retrasos) {
         cantRetRec2+=retraso.tiempo;
       }
-
-/*       for(var viaje of rec2.viajes){
-        for (var retraso of viaje.retrasos){
-          cantRetRec2+=retraso.tiempo;
-        }
-      } */
 
       if (cantRetRec1 > cantRetRec2) {
           return 1;
@@ -76,11 +62,7 @@ export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
       for (var retraso of recorrido[1].retrasos) {
         sum+=retraso.tiempo;
       }
-/*       for (var viaje of recorrido[1].viajes) {
-        for (var retraso of viaje.retrasos){
-          sum+=retraso.tiempo;
-        }
-      } */
+      sum=sum/60;
       cantRetrasos.push(sum);
     }
     template.yAxis[0].data=codigos;
@@ -92,7 +74,6 @@ export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
   }
 
   ngOnChanges() {
-    //console.log("enonchanges del primer reporte", this.iRecorridos);
     this.sort();
     this.updateCodigosYCantRetrasos();
   }

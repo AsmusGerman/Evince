@@ -18,7 +18,9 @@
             </evince-recorrido-chart-causes>
         </div>
         <div *ngSwitchCase="'viajes-chart'">
-            EN VIAJES CHART
+            <evince-viajes-chart-compare
+            [viajesAAnalizar]="viajesAAnalizar">
+        </evince-viajes-chart-compare>
         </div>
     </div>
 </div>
@@ -79,7 +81,17 @@
             <evince-viajes-list 
             [viajesAAnalizar]="viajesAAnalizar"
             (iCurrentChartViewEmitter)="updateiCurrentChartView($event)"
-            ></evince-viajes-list>
+            (iCurrentListViewEmitter)="updateiCurrentListView($event)"
+            (retrasosParaAnalizarEmitter)="updateRetrasosAAnalizar($event)">
+        </evince-viajes-list>
+        </div>
+        <div *ngSwitchCase="'retraso-list'">
+            <button mat-button (click)="updateViews('viajes-list','viajes-chart')" title="retraso-list">
+                VOLVER A VISTA DE VIAJES
+              </button>
+            <evince-retraso-list 
+            [retrasosAAnalizar]="retrasosAAnalizar"
+            ></evince-retraso-list>
         </div>
     </div>
 </div>

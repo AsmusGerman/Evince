@@ -30,13 +30,10 @@ import {
     constructor() {}
 
     getViajesAAnalizar(viaje) {
-      //console.log("cambio icurrentlistview");
       this.iCurrentChartViewEmitter.emit('viajes-chart');
       this.iCurrentListViewEmitter.emit('viajes-list');
-      //console.log("emitiendo los viajes ",
-      //this.recorridoAAnalizar[0].viajes.filter(v=>v.orden==viaje.orden));
       this.viajesParaAnalizarEmitter
-      .emit(this.recorridoAAnalizar[0].viajes.filter(v=>v.orden==viaje.orden));
+      .emit(this.recorridoAAnalizar.viajes.filter(v=>v.orden==viaje.orden));
     }
 
     ngOnInit() {
@@ -46,7 +43,7 @@ import {
     ngOnChanges() {
       var grupoViaje=[];
       var ordenViaje=[];
-      for (var viaje of this.recorridoAAnalizar[0].viajes) {
+      for (var viaje of this.recorridoAAnalizar.viajes) {
         if (!ordenViaje.includes(viaje.orden)) {
           grupoViaje.push(viaje);
           ordenViaje.push(viaje.orden);
