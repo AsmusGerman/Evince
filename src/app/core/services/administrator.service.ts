@@ -15,7 +15,7 @@ export class AdministratorService {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
         this.iHttpClient,
-        `${this.iBaseAdministratorApiUrl}/recorridos`
+        `${this.iBaseAdministratorApiUrl}`
       );
     }
     return this._routesClient;
@@ -31,71 +31,53 @@ class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
   getById(recorridoId:number) {
-    return this.iHttpClient.get<Array<any>>(`${this.iUrl}/`+recorridoId);
+    return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/`+recorridoId);
   }
 
   get(showSubscribed:boolean) {
-    console.log("TRAER SOLO SUSCRITOS?");
-    console.log(showSubscribed);
     if(!showSubscribed) {
-      console.log("TRAIGO TODOS");
-      //console.log(this.iHttpClient.get<Array<any>>(this.iUrl));
-      return this.iHttpClient.get<Array<any>>(this.iUrl);
+      return this.iHttpClient.get<Array<any>>(this.iUrl+'/recorridos/');
     }
     else {
-      console.log("TRAIGO SOLO SUSCRITOS, LA URL ES");
-      console.log(`${this.iUrl}/subscribed/`);
-      //console.log(this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`));
-      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/subscribed/`);
+      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/subscribed/`);
     }
   }
 
-  getByOrigenDestino(origen:string,destino:string,showSubscribed:boolean) {
-    console.log("getorigen",origen);
-    console.log("getdestino",destino);
-    var origenValido=origen!=null && origen!="";
-    var destinoValido=destino!=null && destino!="";
+  getByOrigenDestino(origen:number,destino:number,showSubscribed:boolean) {
+    var origenValido=origen!=null && origen!=0;
+    var destinoValido=destino!=null && destino!=0;
 
     if(!origenValido && !destinoValido){
-      console.log("NI UNO VALIDO");
       return this.get(showSubscribed);
     }
     else{
-      console.log("obteniendo byorigenydestino");
       if(!showSubscribed) {
-        console.log("showsubscribed es: ",showSubscribed);
         if(origenValido && !destinoValido){
-          console.log("origen valido, destino no");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origen/`+origen);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origen/`+origen);
         }
         else if (!origenValido && destinoValido){
-          console.log("origen no valido, destino si");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/destino/`+destino);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/destino/`+destino);
         }
         else if (origenValido && destinoValido){
-          console.log("origen valido, destino tambien");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origenydestino/`+origen+'&'+destino);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origenydestino/`+origen+'&'+destino);
         }
       }
       else {
-        console.log("showsubscribed es: ",showSubscribed);
         if(origenValido && !destinoValido){
-          console.log("origen valido, destino no");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origensubscribed/`+origen);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origensuscribed/`+origen);
         }
         else if (!origenValido && destinoValido){
-          console.log("origen no valido, destino si");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/destinosubscribed/`+destino);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/destinosuscribed/`+destino);
         }
         else if (origenValido && destinoValido){
-          console.log("origen valido, destino tambien");
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/origenydestinosubscribed/`+origen+'&'+destino);
+          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origenydestinosuscribed/`+origen+'&'+destino);
         }
       }
     }
   }
   
   subscription(rec) {
-    return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);
+    //return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);
+    return this.iHttpClient.post(`${this.iUrl}/update/`+rec.id, rec);
   }
 }

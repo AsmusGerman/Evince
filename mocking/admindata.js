@@ -31,7 +31,7 @@ module.exports = () => {
     };
 
     //const qr = faker.random.number({ min: 7, max: 10 });
-    const qr=1;
+    const qr=10;
 
 
 
@@ -40,7 +40,7 @@ module.exports = () => {
       //const qv = faker.random.number({ min: 2, max: 3 });
       const qv=2;
       //const cantDeCadaViaje = faker.random.number({min: 12, max: 15});
-      const cantDeCadaViaje = 4;
+      const cantDeCadaViaje = 100;
 
       const ciudades = new Array(qv + 1)
       .fill(null)
@@ -60,9 +60,12 @@ module.exports = () => {
       for (let cant=0; cant < cantDeCadaViaje; cant++) {
         for (let j = 0; j < qv; j++) {
           const salida = faker.date.future(0);
+          cantButacasColectivo=faker.random.number({min:40,max:50});
           const viaje = {
             id: faker.random.alphaNumeric(10).toUpperCase(),
-            cantPasajeros: faker.random.number(50),
+            cantButacasColectivo: cantButacasColectivo,
+            //cantPasajeros: faker.random.number(50),
+            cantPasajeros: faker.random.number({min:15,max:cantButacasColectivo}),
             fechaHoraSalidaEstipuladas: salida.toLocaleString(),
             fechaHoraLlegadaEstipuladas: faker.date
               .future(0, salida)

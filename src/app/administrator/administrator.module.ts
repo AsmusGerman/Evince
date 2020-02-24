@@ -5,19 +5,21 @@ import { RouterModule, Routes } from "@angular/router";
 import { MaterialModule } from "../shared/material/material.module";
 import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { OverviewComponent } from "./overview/overview.component";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { TimeComparativeReportComponent } from "./time-comparative-report/time-comparative-report.component";
-import { GeneralListComponent } from "./overview/components/general/general-list/general-list.component";
-import { GeneralFilterComponent } from "./overview/components/general/general-filter/general-filter.component";
-import { GeneralChartTopDelaysComponent } from "./overview/components/general/general-chart-top-delays/general-chart-top-delays.component";
-import { GeneralChartTopCausesComponent } from "./overview/components/general/general-chart-top-causes/general-chart-top-causes.component";
-import { RecorridoListComponent } from "./overview/components/recorrido/recorrido-list/recorrido-list.component";
-import { RecorridoChartPercentDelaysComponent } from "./overview/components/recorrido/recorrido-chart-percent-delays/recorrido-chart-percent-delays.component";
-import { RecorridoChartCausesComponent } from "./overview/components/recorrido/recorrido-chart-causes/recorrido-chart-causes.component";
-import { ViajesListComponent } from "./overview/components/viajes/viajes-list/viajes-list.component";
 import { HeaderModule } from '../shared/header/header.module';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { SignupComponent } from '../authentication/components/signup/signup.component';
+import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
+import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
+import { GeneralListComponent } from './overview/components/general/general-list/general-list.component';
+import { GeneralFilterComponent } from './overview/components/general/general-filter/general-filter.component';
+import { GeneralChartTopDelaysComponent } from './overview/components/general/general-chart-top-delays/general-chart-top-delays.component';
+import { GeneralChartTopCausesComponent } from './overview/components/general/general-chart-top-causes/general-chart-top-causes.component';
+import { RecorridoListComponent } from './overview/components/recorrido/recorrido-list/recorrido-list.component';
+import { RecorridoChartPercentDelaysComponent } from './overview/components/recorrido/recorrido-chart-percent-delays/recorrido-chart-percent-delays.component';
+import { RecorridoChartCausesComponent } from './overview/components/recorrido/recorrido-chart-causes/recorrido-chart-causes.component';
+import { ViajesListComponent } from './overview/components/viajes/viajes-list/viajes-list.component';
+import { ViajesChartCompareComponent } from './overview/components/viajes/viajes-chart/viajes-chart-compare.component';
+import { RetrasoListComponent } from './overview/components/retraso/retraso-list/retraso-list.component';
 
 const routes: Routes = [
   {
@@ -56,7 +58,9 @@ const routes: Routes = [
     RecorridoListComponent,
     ViajesListComponent,
     RecorridoChartPercentDelaysComponent,
-    RecorridoChartCausesComponent
+    RecorridoChartCausesComponent,
+    ViajesChartCompareComponent,
+    RetrasoListComponent
   ],
   imports: [
     CommonModule,

@@ -1,11 +1,18 @@
 export default {
     tooltip: {
       trigger: "item",
-      formatter: "{a} <br/> {b} : {c} ({d}%)"
+      formatter: function(data){
+        var v = data.data;
+        var decimalTime = v['value'];
+        decimalTime = decimalTime * 60 * 60;
+        var hours = Math.floor((decimalTime / (60 * 60)));
+        decimalTime = decimalTime - (hours * 60 * 60);
+        var minutes = Math.floor((decimalTime / 60));
+        return v['name']+': '+hours+' hs y '+minutes+' min';
+    }
     },
     title : {
         text: 'Causas más comunes de retrasos (según tiempo perdido)',
-        //subtext: 'subtext'
     },
     series: [
       {

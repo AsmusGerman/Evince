@@ -3,13 +3,13 @@
     "/administrator/recorridos/subscribed":"/recorridos?subscription=true",
     "/administrator/recorridos/:id":"/recorridos?id=:id",
     "/administrator/recorridos/origen/:origen":"/recorridos?origen=:origen",
-    "/administrator/recorridos/origensubscribed/:origen":"/recorridos?origen=:origen&subscription=true",
+    "/administrator/recorridos/origensuscribed/:origen":"/recorridos?origen=:origen&subscription=true",
     "/administrator/recorridos/destino/:destino":"/recorridos?destino=:destino",
-    "/administrator/recorridos/destinosubscribed/:destino":"/recorridos?destino=:destino&subscription=true",
+    "/administrator/recorridos/destinosuscribed/:destino":"/recorridos?destino=:destino&subscription=true",
     "/administrator/recorridos/origenydestino/:origen&:destino":
         "/recorridos?origen=:origen&destino=:destino",
-    "/administrator/recorridos/origenydestinosubscribed/:origen&:destino":
+    "/administrator/recorridos/origenydestinosuscribed/:origen&:destino":
         "/recorridos?origen=:origen&destino=:destino&subscription=true",
-    "/administrator/recorridos/update/:id": "/recorridos/:id"
+    "/administrator/update/:id": "/recorridos/:id"
 }
   

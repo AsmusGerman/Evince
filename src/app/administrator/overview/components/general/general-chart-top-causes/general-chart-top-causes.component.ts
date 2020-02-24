@@ -20,8 +20,6 @@ import {
       HTMLDivElement
     >;
   
-    //public iDataSource = Array<any>();
-    //@Input('ELEMENT_DATA') iDataSource: Array<any>;
     @Input() iRecorridos: Array<any>;
     public codigos = Array<string>();
     public cantRetrasosPorCodigo = Array<number>();
@@ -40,29 +38,16 @@ import {
             causasYCantidades[retraso.tipo]=retraso.tiempo;
           }
         }
-/*         for (var viaje of recorrido[1].viajes) {
-          for (var retraso of viaje.retrasos) {
-            if (Object.keys(causasYCantidades).includes(retraso.tipo)) {
-              causasYCantidades[retraso.tipo]+=retraso.tiempo;
-            }
-            else {
-              causasYCantidades[retraso.tipo]=retraso.tiempo;
-            }
-          }
-        } */
       }
-      console.log("data");
-      console.log(causasYCantidades);
       
       var fullData=[];
       for (const entrada of Object.entries(causasYCantidades)) {
         var cantidad:number=Number(entrada[1]);
         var causa:string=entrada[0];
-        var data={value:cantidad, name:causa};
+        var data={value:cantidad/60, name:causa};
         fullData.push(data);
       }
       template.series[0].data=fullData;
-      //template.series[0].data=data;
       
       this.iChart.setOption(template,true);
     }

@@ -20,8 +20,6 @@ import {
       HTMLDivElement
     >;
   
-    //public iDataSource = Array<any>();
-    //@Input('ELEMENT_DATA') iDataSource: Array<any>;
     @Input() recorridoAAnalizar: any;
     public codigos = Array<string>();
     public cantRetrasosPorCodigo = Array<number>();
@@ -33,7 +31,7 @@ import {
         var gruposViaje=[];
         var cantRetrasosDeCadaGrupo=[];
         var ordenViaje=[];
-        for (var viaje of this.recorridoAAnalizar[0].viajes) {
+        for (var viaje of this.recorridoAAnalizar.viajes) {
           if (!ordenViaje.includes(viaje.orden)) {
             gruposViaje.push([viaje]);
             ordenViaje.push(viaje.orden);
@@ -44,7 +42,7 @@ import {
             var cantPerdidaRetrasosGrupoViaje=0;
             var cantViajesConRetrasos=0;
             var cantViajes=0;
-            this.recorridoAAnalizar[0].viajes.forEach(viajeElem => {
+            this.recorridoAAnalizar.viajes.forEach(viajeElem => {
                 if(grupoViaje[0].orden==viajeElem.orden){
                   cantViajes+=1;
                   if(viajeElem.retrasos.length>0){
@@ -67,7 +65,7 @@ import {
         var dataCantViajes=[];
 
         gruposViaje.forEach(elem=> {
-          dataNombreViajes.push(elem[0].id);
+          dataNombreViajes.push(elem[0].nombreCorto);
           //dataCantViajesConRetrasos.push(elem[1]);
           var porcentaje;
           porcentaje=(elem[1]*100)/elem[2];
@@ -79,7 +77,6 @@ import {
         template.series[0].data=dataCantViajesConRetrasos;
         template.series[1].data=dataCantViajes;
         template.yAxis.data=dataNombreViajes;
-        console.log("template",template);
         this.iChart.setOption(template,true);
     }
   
@@ -92,6 +89,7 @@ import {
   
     ngAfterViewInit() {
       this.iChart = echarts.init(this.iChartContainer.nativeElement);
+      this.iChart.setOption(template, true);
       this.iChart.resize({ width: 500, height: 500 });
     }
   }

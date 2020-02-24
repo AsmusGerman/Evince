@@ -1,21 +1,24 @@
-var labelOption = {
-    show: true,
-    //rotate: 90,
-    align: 'left',
-    formatter: '{c}  {name|{a}}',
-    verticalAlign: 'middle',
-    position: 'insideLeft',
-    distance: 15,
-    rich: {
-        name: {
-            textBorderColor: '#fff'
-        }
-    }
-};
-
 export default {
     tooltip : {
-      trigger: 'axis'
+      trigger: 'axis',
+      formatter: function(data){
+        var tooltipText=data[0].name;
+        for (var i=0;i<data.length;i++){
+          var v = data[i];
+          var decimalTime = v.value;
+          decimalTime = decimalTime * 60 * 60;
+          var hours = Math.floor((decimalTime / (60 * 60)));
+          decimalTime = decimalTime - (hours * 60 * 60);
+          var minutes = Math.floor((decimalTime / 60));
+          tooltipText+='<br>';
+          tooltipText+=v.seriesName+': ';
+          if(hours>0){
+            tooltipText+=hours+' hs y ';
+          }
+          tooltipText+=minutes+' min';
+      }
+      return tooltipText;
+    }
   },
     title : {
       text: 'Causas de retrasos por viaje',
@@ -36,26 +39,6 @@ export default {
         type: 'category',
         axisTick: {show: false},
         data: []
-    }
-  ],
-  series : [
-      {
-          name:'accidente',
-          type:'bar',
-          data:[1,2],
-          label:labelOption
-      },
-      {
-        name:'bar',
-        type:'bar',
-        data:[4,5],
-        label:labelOption
-    },
-    {
-        name:'foo',
-        type:'bar',
-        data:[9,8],
-        label:labelOption
     }
   ]
 };

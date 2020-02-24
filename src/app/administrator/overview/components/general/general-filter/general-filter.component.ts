@@ -9,15 +9,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class GeneralFilterComponent implements OnInit {
 
-  @Input () origenes: Array<string>;
-  @Input () destinos: Array<string>;
+  @Input () origenes: Array<{}>;
+  @Input () destinos: Array<{}>;
   @Input () origenSeleccionado: string;
   @Input () destinoSeleccionado: string;
   @Input () showSubscribed;
   @Output() showSubscribedEmitter = new EventEmitter<any>();
-  @Output() origenSeleccionadoEmitter = new EventEmitter<string>();
-  @Output() destinoSeleccionadoEmitter = new EventEmitter<string>();
+  @Output() origenSeleccionadoEmitter = new EventEmitter<number>();
+  @Output() destinoSeleccionadoEmitter = new EventEmitter<number>();
   
+  private origenesDesc: Array<string>;
+  private destinosDesc: Array<string>;
+
   public form:FormGroup;
   origenControl:FormControl;
   destinoControl:FormControl;
@@ -34,21 +37,36 @@ export class GeneralFilterComponent implements OnInit {
 
   showSubscribedChange(){
     this.showSubscribed ? this.showSubscribed=false : this.showSubscribed=true;
-    console.log("voy a enviar "+this.showSubscribed+"desde el filtro");
     this.showSubscribedEmitter.emit(this.showSubscribed);
   }
 
   //TODO: control de duplicados en selectores de origen y destino
   //TODO: poner una pequenia cruz (o similar) al lado de cada selector para limpiarlo
   changeOrigen(origen: string) {
-    this.origenSeleccionadoEmitter.emit(origen);
+    var terminalOrigen = this.origenes.find(elem=>elem['origenDesc']==origen);
+    this.origenSeleccionadoEmitter.emit(terminalOrigen['origenId']);
   }
 
   changeDestino(destino: string) {
-    this.destinoSeleccionadoEmitter.emit(destino);
+    var terminalDestino = this.destinos.find(elem=>elem['destinoDesc']==destino);
+    this.destinoSeleccionadoEmitter.emit(terminalDestino['destinoId']);
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnChanges() {
+    var origenesDesc=[];
+    this.origenes.forEach(origen=>{
+      origenesDesc.push(origen['origenDesc']);
+      });
+    this.origenesDesc=origenesDesc;
+
+    var destinosDesc=[];
+    this.destinos.forEach(destino=>{
+      destinosDesc.push(destino['destinoDesc']);
+      });
+    this.destinosDesc=destinosDesc;
+    }
+  
+
+  ngOnInit() {}
+
 }

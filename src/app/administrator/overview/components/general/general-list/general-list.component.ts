@@ -26,11 +26,8 @@ export class GeneralListComponent implements OnInit {
   }
 
   getRecorridoAAnalizar(recorridoId) {
-    console.log("cambio icurrentrecorridoview");
     this.iCurrentListViewEmitter.emit('recorrido-list');
-    console.log("cambio icurrentChartView");
     this.iCurrentChartViewEmitter.emit('recorrido-chart');
-    console.log("emitiendo el recorrido ", recorridoId);
     this.recorridoParaAnalizarEmitter.emit(recorridoId);
   }
 
