@@ -26,7 +26,7 @@
   evince-travel-list {
     height: 100%;
     display: grid;
-    grid-template-rows: 0.25fr 1fr;
+    grid-template-rows: 0.25fr 15px 1fr;
     grid-template-columns: 1fr;
 
     .mat-card {
@@ -68,11 +68,18 @@
       }
     }
 
-    .slot {
+    section {
       display: flex;
       flex-direction: column;
 
-      /* &.top {  } */
+      &.divider {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 1rem;
+        text-align: center;
+        text-transform: uppercase;
+      }
 
       &.bottom {
         .cdk-virtual-scroll-viewport {

@@ -50,7 +50,7 @@ export class AuthState {
 
   @Selector()
   static isAuthenticated(state: AuthStateModel): boolean {
-    return !!state.token;
+    return !!state.token && !!state.username;
   }
 
   @Selector()

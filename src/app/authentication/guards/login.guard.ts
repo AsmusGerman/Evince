@@ -1,26 +1,25 @@
-import { Injectable, Inject } from "@angular/core";
+import { Injectable } from "@angular/core";
 import { CanActivate, Router } from "@angular/router";
 import { Store } from "@ngxs/store";
 import { AuthState } from "../store/authentication.state";
-import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
-import { AuthenticationResources } from "../authentication-resources.token";
-import { Observable } from "rxjs";
-import { first, tap, map, take } from "rxjs/operators";
-import { RolUsuario } from "src/app/core/model/rol-usuario";
+import { map, tap } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class LoginGuard implements CanActivate {
-  constructor(private store: Store) {}
+  constructor(private iStore: Store, private iRouter: Router) {}
 
   canActivate() {
-    return this.store
-      .select(AuthState.isAuthenticated)
-      .pipe(map(isAuthenticated => !!isAuthenticated));
+    return this.iStore.select(AuthState.isAuthenticated).pipe(
+      map(isAuthenticated => !!isAuthenticated),
+      tap(isAuthenticated => {
+        if (!isAuthenticated) {
+          localStorage.clear();
+          sessionStorage.clear();
+          this.iRouter.navigate(["signin"]);
+        }
+      })
+    );
   }
 }
-
-/* 
-
-    return role != undefined; */
