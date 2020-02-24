@@ -64,7 +64,9 @@ export class DriverState {
         // se filtran los finalizados
         const travel = travels.filter(v => v.estado != 2)[0];
         if (travel.estado == EstadoViaje.actual) {
-          this.iCurrentTravelTimerService.StartTravelTimer(travel.fechaHoraRealSalida);
+          this.iCurrentTravelTimerService.StartTravelTimer(
+            travel.fechaHoraRealSalida
+          );
         }
 
         ctx.patchState({ route, travel });
@@ -101,6 +103,6 @@ export class DriverState {
     return this.iDriverService.DelayClient.push({
       ...action.payload,
       travel
-    });
+    }).pipe(tap(() => ctx.dispatch(new NextTravel())));
   }
 }

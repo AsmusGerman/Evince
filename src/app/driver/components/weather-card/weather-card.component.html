@@ -1,0 +1,30 @@
+<ng-container *ngIf="iInformacionClimatica | async as clima">
+  <mat-card
+    class="mat-typography"
+    fxLayout="row"
+    fxLayoutAlign="space-evenly center"
+    [ngClass]="{ day: clima.dia, night: !clima.dia }"
+  >
+    <mat-card-header>
+      <mat-card-title fxLayout="column">
+        <section fxFlex>
+          <span>{{ clima.clima }}</span>
+          <small>{{ clima.temperatura }}</small>
+        </section>
+      </mat-card-title>
+      <mat-card-subtitle>{{ clima.ciudad }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-chip-list fxLayout="column">
+        <mat-chip [selectable]="false">
+          <mat-icon>opacity</mat-icon>
+          {{ clima.humedad }}
+        </mat-chip>
+        <mat-chip [selectable]="false">
+          <mat-icon>waves</mat-icon>
+          {{ clima.viento }}
+        </mat-chip>
+      </mat-chip-list>
+    </mat-card-content>
+  </mat-card>
+</ng-container>

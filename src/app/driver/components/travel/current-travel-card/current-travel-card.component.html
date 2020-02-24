@@ -14,7 +14,7 @@
     </mat-card-title>
     <section fxFlex fxLayout="row" fxLayoutAlign="flex-end center">
       <mat-chip-list>
-        <mat-chip>
+        <mat-chip [selectable]="false">
           <span>{{ iTimer | async }}</span>
           <mat-icon>play_circle_outline</mat-icon>
         </mat-chip>
