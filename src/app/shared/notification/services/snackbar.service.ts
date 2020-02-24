@@ -6,57 +6,55 @@ import { SnackbarComponent } from "../snackbar/snackbar.component";
 export class SnackbarService {
   constructor(private iMatSnackbar: MatSnackBar) {}
 
-  public success(data: {
-    title: string | null;
-    message: string | null;
-    icon: string | null;
-  }) {
+  public success(data: { title: string; message: string; icon: string }) {
     this.show({
-      title: data.title || "Éxito",
-      message: data.message || "",
-      icon: data.icon || "success"
+      title: data.title,
+      message: data.message,
+      icon: data.icon,
+      class: "success"
     });
   }
 
-  public info(data: {
-    title: string | null;
-    message: string | null;
-    icon: string | null;
-  }) {
+  public info(data: { title: string; message: string; icon: string }) {
     this.show({
-      title: data.title || "Información",
-      message: data.message || "",
-      icon: data.icon || "info"
+      title: data.title,
+      message: data.message,
+      icon: data.icon,
+      class: "info"
     });
   }
 
-  public warn(data: {
-    title: string | null;
-    message: string | null;
-    icon: string | null;
-  }) {
+  public warn(data: { title: string; message: string; icon: string }) {
     this.show({
-      title: data.title || "Advertencia",
-      message: data.message || "",
-      icon: data.icon || "warn"
+      title: data.title,
+      message: data.message,
+      icon: data.icon,
+      class: "warn"
     });
   }
 
-  public error(data: {
-    title: string | null;
-    message: string | null;
-    icon: string | null;
-  }) {
+  public danger(data: { title: string; message: string; icon: string }) {
     this.show({
-      title: data.title || "Error",
-      message: data.message || "",
-      icon: data.icon || "error"
+      title: data.title,
+      message: data.message,
+      icon: data.icon,
+      class: "danger"
     });
   }
 
-  private show(data) {
+  public confirm(data: { title: string; message: string; icon: string }) {
+    this.show({
+      title: data.title,
+      message: data.message,
+      icon: data.icon,
+      class: "info"
+    });
+  }
+
+  private show(data: { title; message; icon; class }) {
     this.iMatSnackbar.openFromComponent(SnackbarComponent, {
-      data,
+      data: { title: data.title, message: data.message, icon: data.icon },
+      panelClass: data.class,
       duration: 10000
     });
   }

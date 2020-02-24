@@ -3,8 +3,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from "@angular/material";
 
 @Component({
   selector: "evince-snackbar",
-  templateUrl: "./snackbar.component.html",
-  styleUrls: ["./snackbar.component.scss"]
+  templateUrl: "./snackbar.component.html"
 })
 export class SnackbarComponent {
   constructor(

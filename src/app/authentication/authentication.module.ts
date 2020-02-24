@@ -17,6 +17,7 @@ import { ReactiveFormsModule } from "@angular/forms";
     NgxsModule.forFeature([AuthState])
   ],
   providers: [AuthenticationService],
-  entryComponents: [SigninComponent, SignupComponent]
+  entryComponents: [SigninComponent, SignupComponent],
+  exports: [SigninComponent, SignupComponent]
 })
 export class AuthenticationModule {}

@@ -4,8 +4,7 @@ import { Recorrido } from "src/app/core/model/recorrido";
 
 @Component({
   selector: "evince-overview",
-  templateUrl: "./overview.component.html",
-  styleUrls: ["./overview.component.scss"]
+  templateUrl: "./overview.component.html"
 })
 export class OverviewComponent implements OnInit {
 

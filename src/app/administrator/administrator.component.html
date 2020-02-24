@@ -1,51 +1,5 @@
-<!-- main toolbar -->
- <mat-toolbar color="primary">
-  <span>Evince</span>
-  <span class="spacer"></span>
-  <ul class="controls">
-    <li class="control">
-      <mat-icon class="icon">notification_important</mat-icon>
-    </li>
-    <li class="control">
-      <button mat-button [matMenuTriggerFor]="logoutMenu">
-        <mat-icon class="icon">account_circle</mat-icon>
-        <small>user</small>
-      </button>
-      <mat-menu #logoutMenu="matMenu">
-        <button mat-menu-item>logout</button>
-      </mat-menu>
-    </li>
-  </ul>
+<evince-header></evince-header>
+<mat-toolbar>
+  <a *ngFor="let page of pages" mat-button [routerLink]="page.path">{{ page.label }}</a>
 </mat-toolbar>
-
-<!-- secondary toolbar -->
- <mat-toolbar>
-  <ul class="controls">
-    <li class="control">
-      <button mat-button (click)="iCurrentView = 'overview'" title="overview">
-        overview
-      </button>
-    </li>
-    <li class="control">
-      <button mat-button (click)="iCurrentView = 'security'" title="security">
-        security
-      </button>
-    </li>
-    <li class="control">
-      <button mat-button (click)="iCurrentView = 'settings'" title="settings">
-        settings
-      </button>
-    </li>
-  </ul>
-</mat-toolbar>
-
-<div [ngSwitch]="iCurrentView">
-  <div *ngSwitchDefault><evince-overview></evince-overview></div>
-  <div *ngSwitchCase="'overview'"><evince-overview></evince-overview></div>
-  <div *ngSwitchCase="'security'"><evince-security></evince-security></div>
-  <div *ngSwitchCase="'settings'"><evince-settings></evince-settings></div>
-</div>
-
-
-  <!-- <evince-top-delay-report></evince-top-delay-report>  -->
- <!-- <evince-overview></evince-overview> -->
+<router-outlet></router-outlet>

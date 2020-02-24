@@ -7,6 +7,7 @@ import { AuthState } from "../../store/authentication.state";
 import { RolUsuario } from "src/app/core/model/rol-usuario";
 import { tap, switchMap } from "rxjs/operators";
 import { from } from "rxjs";
+import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
 
 @Component({
   selector: "evince-signin",
@@ -18,7 +19,8 @@ export class SigninComponent implements OnInit {
   constructor(
     private iStore: Store,
     private iRouter: Router,
-    private iActions: Actions
+    private iActions: Actions,
+    private iNotificationService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -34,8 +36,16 @@ export class SigninComponent implements OnInit {
         [RolUsuario.consultante]: "administrator"
       };
 
-      const role = this.iStore.selectSnapshot(AuthState.role);
+      const { username, role } = this.iStore.selectSnapshot(AuthState);
       this.iRouter.navigate([routes[role] || "signin"]);
+
+      const data = {
+        title: "",
+        message: `Bienvenido ${username}`,
+        icon: ""
+      };
+
+      this.iNotificationService.success(data);
     });
   }
 
