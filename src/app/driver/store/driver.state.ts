@@ -12,6 +12,7 @@ import { zip } from "rxjs";
 import { tap, filter, map, switchMap } from "rxjs/operators";
 import { Viaje } from "src/app/core/model/viaje";
 import { Recorrido } from "src/app/core/model/recorrido";
+import { EstadoViaje } from "src/app/core/model/estado-viaje";
 
 const defaults: DriverStateModel = {
   travel: null,
@@ -59,10 +60,13 @@ export class DriverState {
     return this.iDriverService.RoutesClient.next().pipe(
       tap(route => {
         const travels = route.viajes.sort(v => v.orden);
-        const current = ctx.getState().route;
+
         // se filtran los finalizados
         const travel = travels.filter(v => v.estado != 2)[0];
-        // si no hay recorrido o es un nuevo recorrido
+        if (travel.estado == EstadoViaje.actual) {
+          this.iCurrentTravelTimerService.StartTravelTimer(travel.fechaHoraRealSalida);
+        }
+
         ctx.patchState({ route, travel });
       })
     );
@@ -75,7 +79,10 @@ export class DriverState {
     return this.iDriverService.TravelClient.start({ travel }).pipe(
       // se obtiene el viaje actualizado
       switchMap(() => ctx.dispatch(new NextTravel())),
-      tap(() => this.iCurrentTravelTimerService.StartTravelTimer())
+      tap(() => {
+        const time = ctx.getState().travel.fechaHoraRealSalida;
+        this.iCurrentTravelTimerService.StartTravelTimer(time);
+      })
     );
   }
 
