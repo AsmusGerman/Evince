@@ -1,15 +1,14 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { Router } from '@angular/router';
-import { AuthState } from 'src/app/authentication/store/authentication.state';
-import { Select } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Router } from "@angular/router";
+import { AuthState } from "src/app/authentication/store/authentication.state";
+import { Select } from "@ngxs/store";
+import { Observable } from "rxjs";
 
 @Component({
   selector: "evince-header",
   templateUrl: "./header.component.html"
 })
 export class HeaderComponent implements OnInit {
-  
   @Select(AuthState.username)
   public User$: Observable<string>;
   public Avatar: string;
@@ -19,8 +18,7 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.User$.subscribe(username => {
       this.Avatar = this.avatarize(username);
-    })
-    
+    });
   }
 
   logout() {
@@ -32,21 +30,7 @@ export class HeaderComponent implements OnInit {
       .split(" ")
       .reduce((initials, word) => (initials += word[0]), "")
       .toUpperCase();
-      
+
     return name;
-    /* const canvas = document.createElement("canvas");
-    canvas.style.display = "none";
-    canvas.width = 32;
-    canvas.height = 32;
-
-    const context = canvas.getContext("2d");
-    context.fillStyle = "transparent";
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.font = "16px Roboto";
-    context.fillStyle = "#fff";
-
-    context.fillText(name, name.length > 1 ? 3 : 10, 21.5);
-
-    return canvas.toDataURL(); */
   }
 }

@@ -18,6 +18,7 @@ import { CurrentTravelCardComponent } from "./components/travel/current-travel-c
 import { HeaderModule } from "../shared/header/header.module";
 import { DriverState } from "./store/driver.state";
 import { CurrentTravelTimerService } from "./services/current-travel-timer.service";
+import { WeatherCardComponent } from './components/weather-card/weather-card.component';
 
 const routes: Routes = [
   {
@@ -30,19 +31,19 @@ const routes: Routes = [
       },
       {
         path: "travels",
-        component: TravelListComponent,
+        component: TravelListComponent
       },
       {
         path: "routes",
-        component: RouteListComponent,
+        component: RouteListComponent
       },
       {
         path: "current",
-        component: CurrentRouteComponent,
+        component: CurrentRouteComponent
       },
       {
         path: "summary/:id",
-        component: FinishedTravelSummaryComponent,
+        component: FinishedTravelSummaryComponent
       }
     ]
   },
@@ -61,7 +62,8 @@ const routes: Routes = [
     TravelListComponent,
     NextTravelCardComponent,
     CurrentTravelCardComponent,
-    FinishedTravelSummaryComponent
+    FinishedTravelSummaryComponent,
+    WeatherCardComponent
   ],
   imports: [
     CommonModule,

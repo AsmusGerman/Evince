@@ -9,7 +9,6 @@ import { SecurityComponent } from "./security/security.component";
 import { SettingsComponent } from "./settings/settings.component";
 import { FormsModule,ReactiveFormsModule  } from '@angular/forms';
 import { TimeComparativeReportComponent } from './time-comparative-report/time-comparative-report.component';
-import { LoginGuard } from '../authentication/guards/login.guard';
 import { GeneralListComponent } from './overview/components/general/general-list/general-list.component';
 import { GeneralFilterComponent } from './overview/components/general/general-filter/general-filter.component';
 import { GeneralChartTopDelaysComponent } from './overview/components/general/general-chart-top-delays/general-chart-top-delays.component';

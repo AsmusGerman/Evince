@@ -15,10 +15,18 @@
     }
   }
 
+  evince-travel-list,
+  evince-current-route,
+  evince-route-list,
+  evince-finished-travel-summary,
+  evince-route-list {
+    width: 100vw;
+  }
+
   evince-travel-list {
     height: 100%;
     display: grid;
-    grid-template-rows: 0.25fr 1fr;
+    grid-template-rows: 0.25fr 0.15fr 15px 1fr;
     grid-template-columns: 1fr;
 
     .mat-card {
@@ -39,7 +47,9 @@
         .mat-card-content {
           margin: 0;
           section {
-            margin-bottom: 1rem;
+            &:not(:last-child) {
+              margin-bottom: 1rem;
+            }
 
             &.progress {
               margin: 1rem;
@@ -60,11 +70,26 @@
       }
     }
 
-    .slot {
+    section {
       display: flex;
       flex-direction: column;
 
-      /* &.top {  } */
+      &.divider {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .line {
+          flex: 1;
+          margin: 0 1rem;
+        }
+
+        .text {
+          text-transform: uppercase;
+          color: rgba(0, 0, 0, 0.54);
+        }
+      }
 
       &.bottom {
         .cdk-virtual-scroll-viewport {
@@ -75,10 +100,15 @@
         .cdk-virtual-scroll-content-wrapper {
           max-width: 100%;
         }
+
+        .finnished {
+          opacity: 0.8;
+        }
       }
     }
   }
 
+  evince-current-route,
   evince-route-list {
     display: flex;
     .cdk-virtual-scroll-viewport {
@@ -89,7 +119,10 @@
     .cdk-virtual-scroll-content-wrapper {
       max-width: 100%;
     }
+  }
 
+  evince-finished-travel-summary,
+  evince-route-list {
     .mat-card {
       margin: 1rem;
 
@@ -105,6 +138,61 @@
             display: flex;
           }
         }
+      }
+    }
+  }
+
+  evince-route-list {
+    .mat-card-title {
+      display: flex;
+      font-size: initial;
+      text-align: justify;
+      word-break: break-word;
+    }
+  }
+
+  evince-finished-travel-summary {
+    .detail {
+      padding: 1rem;
+      section {
+        &:not(:first-child) {
+          padding-top: 0.5rem;
+        }
+        p:not(:first-child) {
+          padding-left: 1rem;
+        }
+      }
+    }
+  }
+
+  evince-weather-card {
+    .mat-card {
+      &.day {
+        background-image: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+      }
+      &.night {
+        background-image: linear-gradient(
+          to bottom,
+          #505285 0%,
+          #585e92 12%,
+          #65689f 25%,
+          #7474b0 37%,
+          #7e7ebb 50%,
+          #8389c7 62%,
+          #9795d4 75%,
+          #a2a1dc 87%,
+          #b5aee4 100%
+        );
+      }
+    }
+
+    .mat-chip-list-wrapper {
+      display: flex;
+      flex-direction: column;
+
+      .mat-chip {
+        background: transparent;
+        border: 1px solid;
       }
     }
   }

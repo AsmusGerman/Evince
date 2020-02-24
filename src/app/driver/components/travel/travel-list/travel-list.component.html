@@ -1,4 +1,4 @@
-<section class="slot top">
+<section>
   <ng-container *ngIf="iViajeActual | async as viaje">
     <div [ngSwitch]="viaje.estado">
       <evince-next-travel-card
@@ -21,26 +21,34 @@
     </div>
   </ng-container>
 </section>
-<section class="slot bottom">
-  <cdk-virtual-scroll-viewport itemSize="10">
-    <mat-card
-      *ngFor="let viaje of iViajesFinalizados | async"
-      class="finnished mat-typography mat-elevation-z4"
-      fxLayout="column"
-      matRipple
-    >
-      <section fxFlex>
-        <span> {{ viaje.id }} </span>
-        <span>
-          {{ viaje.trayecto.terminalOrigenCodigo }} -{{
-            viaje.trayecto.terminalDestinoCodigo
-          }}
-        </span>
-        <span fxFlex="auto"></span>
-      </section>
-      <button class="action" mat-icon-button (click)="showSummary(viaje.id)">
-        <mat-icon>keyboard_arrow_right</mat-icon>
-      </button>
-    </mat-card>
-  </cdk-virtual-scroll-viewport>
-</section>
+<evince-weather-card></evince-weather-card>
+<ng-container *ngIf="iViajesFinalizados | async as finalizados">
+  <section *ngIf="finalizados.length > 0" class="divider">
+    <div class="line"><mat-divider></mat-divider></div>
+    <div class="text mat-typography">Viajes finalizados</div>
+    <div class="line"><mat-divider></mat-divider></div>
+  </section>
+  <section class="bottom">
+    <cdk-virtual-scroll-viewport itemSize="10">
+      <mat-card
+        *ngFor="let viaje of finalizados"
+        class="finnished mat-typography mat-elevation-z2"
+        fxLayout="column"
+        matRipple
+        (click)="showSummary(viaje.id)"
+      >
+        <section fxFlex>
+          <span>
+            {{ viaje.trayecto.terminalOrigenCodigo }} -{{
+              viaje.trayecto.terminalDestinoCodigo
+            }}
+          </span>
+          <span fxFlex="auto"></span>
+        </section>
+        <!-- <button class="action" mat-icon-button ">
+        </button> -->
+        <mat-icon class="action">keyboard_arrow_right</mat-icon>
+      </mat-card>
+    </cdk-virtual-scroll-viewport>
+  </section>
+</ng-container>

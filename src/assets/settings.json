@@ -1,3 +1,8 @@
  {
-     "entrypoint": ""
+     "entrypoint": "",
+     "weather": {
+         "entrypoint": "",
+         "key": ""
+     },
+     "icons":  [{"weather":["cloud", "night", "rainy", "snowy", "storm", "sun"]} ]
  }

@@ -1,30 +1,53 @@
-<mat-list *ngIf="!!iViaje">
-  <mat-list-item>
-    <span matLine>Viaje: {{ iViaje.id }}</span>
-  </mat-list-item>
-  <mat-list-item>
-    <span matLine>
-      Sale desde <b> {{ iViaje.trayecto.terminalOrigen }} </b>:
-    </span>
-    <span matLine>
-      <i>
-        {{
-          iViaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
-        }}
-      </i>
-    </span>
-  </mat-list-item>
-  <mat-list-item>
-    <span matLine>
-      Llega a
-      <b> {{ iViaje.trayecto.terminalDestino }} </b>:
-    </span>
-    <span matLine>
-      <i>
-        {{
-          iViaje.fechaHoraSalidaEstipuladas | date: "EEEE, MMMM d, y, h:mm:ss a"
-        }}
-      </i>
-    </span>
-  </mat-list-item>
-</mat-list>
+<mat-card *ngIf="iViaje | async as viaje">
+  <mat-card-header>
+    <mat-card-title>
+      <mat-card-title>
+        {{ viaje.id }} {{ viaje.trayecto.terminalOrigenCodigo }} -
+        {{ viaje.trayecto.terminalDestinoCodigo }}
+      </mat-card-title>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="detail">
+    <section>
+      <p>
+        Salió desde
+        <b> {{ viaje.trayecto.terminalOrigen }} </b>
+        el
+        <b>{{ viaje.fechaHoraRealSalida | date: "d/MM/y" }}</b>
+      </p>
+      <p>
+        Planificado para partir a las
+        <b>{{ viaje.fechaHoraSalidaEstipuladas | date: "h:mm a" }}</b>
+      </p>
+      <p>
+        Partió a las
+        <b>{{ viaje.fechaHoraRealSalida | date: "h:mm a" }}</b>
+      </p>
+    </section>
+    <section>
+      <p>
+        Llegó a
+        <b> {{ viaje.trayecto.terminalDestino }} </b>
+        el
+        <b>{{ viaje.fechaHoraRealLlegada | date: "d/MM/y" }}</b>
+      </p>
+      <p>
+        Planificado para arribar a las
+        <b>{{ viaje.fechaHoraLlegadaEstipuladas | date: "h:mm a" }}</b>
+      </p>
+      <p>
+        Arribó a las
+        <b>{{ viaje.fechaHoraRealLlegada | date: "h:mm a" }}</b>
+      </p>
+    </section>
+    <section *ngIf="viaje.retrasos.length > 0">
+      <mat-card-subtitle>Retrasos</mat-card-subtitle>
+      <mat-list dense>
+        <mat-list-item *ngFor="let retraso of viaje.retrasos; index as idx">
+          <span matListAvatar>{{ idx }}</span>
+          <span matLine> {{ retraso.tipo }} : {{ retraso.tiempo }} </span>
+        </mat-list-item>
+      </mat-list>
+    </section>
+  </mat-card-content>
+</mat-card>
