@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Subject, Observable, timer } from "rxjs";
-import { takeUntil, repeatWhen, map } from "rxjs/operators";
+import { takeUntil, repeatWhen, map, share } from "rxjs/operators";
 import * as moment from "moment";
 
 @Injectable()

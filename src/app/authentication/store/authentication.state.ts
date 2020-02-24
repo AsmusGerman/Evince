@@ -17,9 +17,6 @@ import {
 import { tap } from "rxjs/operators";
 import { AuthenticationService } from "../services/authentication.service";
 import * as decoder from "jwt-decode";
-import { LoginHandler } from "./handlers/login.handler";
-import { LogoutHandler } from "./handlers/logout.handler";
-import { RegisterHandler } from "./handlers/register.handler";
 
 const defaults: AuthStateModel = {
   token: null,
@@ -34,16 +31,7 @@ const defaults: AuthStateModel = {
   defaults
 })
 export class AuthState {
-  constructor(
-    private iLoginHandler: LoginHandler,
-    private iLogoutHandler: LogoutHandler,
-    private iRegisterHandler: RegisterHandler,
-    private iAuthenticationService: AuthenticationService
-  ) {
-    this.iLoginHandler.initialize();
-    this.iLogoutHandler.initialize();
-    this.iRegisterHandler.initialize();
-  }
+  constructor(private iAuthenticationService: AuthenticationService) {}
 
   @Selector()
   static role(state: AuthStateModel): number | null {
@@ -93,16 +81,18 @@ export class AuthState {
   @Action(Login)
   login(ctx: StateContext<AuthStateModel>, action: Login) {
     const { username, password } = action.payload;
-    return this.iAuthenticationService.login({username, password, remember: false}).pipe(
-      tap(({ token, refreshToken, username, rol: role }) => {
-        ctx.patchState({
-          token,
-          refreshToken,
-          username,
-          role
-        });
-      })
-    );
+    return this.iAuthenticationService
+      .login({ username, password, remember: false })
+      .pipe(
+        tap(({ token, refreshToken, username, rol: role }) => {
+          ctx.patchState({
+            token,
+            refreshToken,
+            username,
+            role
+          });
+        })
+      );
   }
 
   @Action(Logout)

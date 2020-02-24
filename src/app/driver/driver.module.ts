@@ -30,19 +30,19 @@ const routes: Routes = [
       },
       {
         path: "travels",
-        component: TravelListComponent,
+        component: TravelListComponent
       },
       {
         path: "routes",
-        component: RouteListComponent,
+        component: RouteListComponent
       },
       {
         path: "current",
-        component: CurrentRouteComponent,
+        component: CurrentRouteComponent
       },
       {
         path: "summary/:id",
-        component: FinishedTravelSummaryComponent,
+        component: FinishedTravelSummaryComponent
       }
     ]
   },

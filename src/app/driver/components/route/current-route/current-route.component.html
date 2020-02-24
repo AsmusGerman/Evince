@@ -1,6 +1,12 @@
-<ng-container *ngIf="iRecorridoActual | async as recorrido">
+<cdk-virtual-scroll-viewport
+  itemSize="10"
+  *ngIf="iRecorridoActual | async as recorrido"
+>
   <mat-vertical-stepper [linear]="true">
-    <mat-step *ngFor="let viaje of recorrido.viajes; last as isLast" [completed]="viaje.estado == 2">
+    <mat-step
+      *ngFor="let viaje of recorrido.viajes; last as isLast"
+      [completed]="viaje.estado == 2"
+    >
       <ng-template matStepLabel>
         {{ viaje.trayecto.terminalOrigenCodigo }} -
         {{ viaje.trayecto.terminalDestinoCodigo }}
@@ -71,14 +77,14 @@
       >
         Detener
       </button>
-        <button
-          mat-button
-          color="primary"
-          *ngIf="viaje.estado == 0"
-          (click)="start(viaje.id)"
-        >
-          Comenzar
-        </button>
+      <button
+        mat-button
+        color="primary"
+        *ngIf="viaje.estado == 0"
+        (click)="start(viaje.id)"
+      >
+        Comenzar
+      </button>
     </mat-step>
   </mat-vertical-stepper>
-</ng-container>
+</cdk-virtual-scroll-viewport>

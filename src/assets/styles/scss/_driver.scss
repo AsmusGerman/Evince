@@ -15,6 +15,14 @@
     }
   }
 
+  evince-travel-list,
+  evince-current-route,
+  evince-route-list,
+  evince-finished-travel-summary,
+  evince-route-list {
+    width: 100vw;
+  }
+
   evince-travel-list {
     height: 100%;
     display: grid;
@@ -79,6 +87,7 @@
     }
   }
 
+  evince-current-route,
   evince-route-list {
     display: flex;
     .cdk-virtual-scroll-viewport {
@@ -89,7 +98,10 @@
     .cdk-virtual-scroll-content-wrapper {
       max-width: 100%;
     }
+  }
 
+  evince-finished-travel-summary,
+  evince-route-list {
     .mat-card {
       margin: 1rem;
 
@@ -104,6 +116,20 @@
           .mat-card-title {
             display: flex;
           }
+        }
+      }
+    }
+  }
+
+  evince-finished-travel-summary {
+    .detail {
+      padding: 1rem;
+      section {
+        &:not(:first-child) {
+          padding-top: 0.5rem;
+        }
+        p:not(:first-child) {
+          padding-left: 1rem;
         }
       }
     }

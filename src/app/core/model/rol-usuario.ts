@@ -4,5 +4,6 @@
  */
 export enum RolUsuario {
  "administrator" = 1,
- "chofer" = 2
+ "chofer" = 2,
+ "consultante" = 3
 }
