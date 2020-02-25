@@ -6,7 +6,7 @@
       <mat-label>From</mat-label>
       <mat-select [(ngModel)]='origenSeleccionado' name="origenSeleccionado" formControlName="origenControl"
       (selectionChange)="changeOrigen(origenSeleccionado)">
-        <mat-option *ngFor="let origenSeleccionado of origenes" [(value)]="origenSeleccionado">
+        <mat-option *ngFor="let origenSeleccionado of origenesDesc" [(value)]="origenSeleccionado">
           {{origenSeleccionado}}
         </mat-option>
       </mat-select>
@@ -16,7 +16,7 @@
       <mat-label>To</mat-label>
       <mat-select [(ngModel)]='destinoSeleccionado' name="destinoSeleccionado" formControlName="destinoControl"
       (selectionChange)="changeDestino(destinoSeleccionado)">
-        <mat-option *ngFor="let destinoSeleccionado of destinos" [(value)]="destinoSeleccionado">
+        <mat-option *ngFor="let destinoSeleccionado of destinosDesc" [(value)]="destinoSeleccionado">
           {{destinoSeleccionado}}
         </mat-option>
       </mat-select>

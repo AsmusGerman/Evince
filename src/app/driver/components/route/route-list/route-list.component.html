@@ -5,13 +5,17 @@
   <mat-card *ngFor="let recorrido of recorridos">
     <mat-card-header>
       <mat-card-title>
-        <mat-chip-avatar>{{ recorrido.id }}</mat-chip-avatar>
-        <!-- <small>{{ recorrido.nombre }}</small> -->
+        {{ recorrido.descripcion }}
       </mat-card-title>
       <mat-card-subtitle>
-        <small>
-          {{ recorrido.nombre }}
-        </small>
+        <mat-chip-list>
+          <mat-chip>
+            {{ recorrido.id }}
+          </mat-chip>
+          <mat-basic-chip>
+            {{ recorrido.nombre }}
+          </mat-basic-chip>
+        </mat-chip-list>
       </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content *ngIf="recorrido.viajes.length > 0">

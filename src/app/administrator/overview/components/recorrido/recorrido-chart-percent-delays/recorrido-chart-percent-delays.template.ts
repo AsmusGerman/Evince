@@ -1,13 +1,12 @@
 export default {
-/*     tooltip: {
+     tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'shadow'
         }
-    }, */
+    },
     title : {
         text: '% de ocurrencia de retrasos para cada viaje',
-        //subtext: 'subtext'
     },
     legend: {
         data: []

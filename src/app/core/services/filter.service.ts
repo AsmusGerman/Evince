@@ -197,7 +197,6 @@ export class FilterService {
       this.currentDataSubj.next(this.ELEMENT_DATA.filter(elem=>
         elem.origen.toLowerCase().includes(this.searchFilterSubj.value.toLowerCase()) || 
           elem.destino.toLowerCase().includes(this.searchFilterSubj.value.toLowerCase())));
-      console.log(this.searchFilterSubj.value);
     }
 
     changeOrigen(origen) {

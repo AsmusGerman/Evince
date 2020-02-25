@@ -19,7 +19,6 @@ import { Store, Select } from "@ngxs/store";
 import { StartTravel, StopTravel } from "src/app/driver/store/driver.model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Recorrido } from "src/app/core/model/recorrido";
-import { DriverService } from "src/app/core/services/driver.service";
 import { DriverState } from "src/app/driver/store/driver.state";
 
 @Component({

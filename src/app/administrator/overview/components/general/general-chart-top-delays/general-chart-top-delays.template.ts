@@ -1,12 +1,19 @@
 export default {
   tooltip : {
-    trigger: 'axis'
-},
+    trigger: 'axis',
+    formatter: function(data){
+        var v = data[0];
+        var decimalTime = v.value;
+        decimalTime = decimalTime * 60 * 60;
+        var hours = Math.floor((decimalTime / (60 * 60)));
+        decimalTime = decimalTime - (hours * 60 * 60);
+        var minutes = Math.floor((decimalTime / 60));
+        return v.seriesName+': '+hours+' hs y '+minutes+' min';
+}
+  },
   title : {
     text: 'Recorridos con más tiempo perdido en retrasos',
-    //subtext: 'subtext'
 },
-// Changes width of X axis labels
 grid: {
 x: 175
 },
@@ -27,6 +34,21 @@ series : [
     {
         name:'Total en retrasos',
         type:'bar',
+        label : {
+            normal: {
+                show: true,
+                position: 'inside',
+                formatter: function(data){
+                    var decimalTime = data.value;
+                    decimalTime = decimalTime * 60 * 60;
+                    var hours = Math.floor((decimalTime / (60 * 60)));
+                    decimalTime = decimalTime - (hours * 60 * 60);
+                    var minutes = Math.floor((decimalTime / 60));
+            
+                    return hours+' hs y '+minutes+' min';
+                }
+            }
+        },
         data:[]
     }
 ]
