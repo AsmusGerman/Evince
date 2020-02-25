@@ -13,16 +13,6 @@ export class AdministratorComponent implements OnInit {
       label: "Principal",
       path: "./overview",
       icon: "layers"
-    },
-    {
-      label: "Usuarios y Seguridad",
-      path: "./security",
-      icon: "security"
-    },
-    {
-      label: "Configuraciones",
-      path: "./settings",
-      icon: "settings"
     }
   ];
 

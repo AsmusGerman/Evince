@@ -10,7 +10,7 @@ export class AdministratorService {
   private iBaseAdministratorApiUrl: string;
 
   private _routesClient: RouteClient;
-  
+
   public get RoutesClient() {
     if (!this._routesClient) {
       this._routesClient = new RouteClient(
@@ -30,54 +30,66 @@ export class AdministratorService {
 class RouteClient {
   constructor(private iHttpClient: HttpClient, private iUrl: string) {}
 
-  getById(recorridoId:number) {
-    return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/`+recorridoId);
+  getById(recorridoId: number) {
+    return this.iHttpClient.get<any>(
+      `${this.iUrl}/recorridos/` + recorridoId
+    );
   }
 
-  get(showSubscribed:boolean) {
-    if(!showSubscribed) {
-      return this.iHttpClient.get<Array<any>>(this.iUrl+'/recorridos/');
-    }
-    else {
-      return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/subscribed/`);
+  get(showSubscribed: boolean = true) {
+    if (!showSubscribed) {
+      return this.iHttpClient.get<Array<any>>(this.iUrl + "/recorridos/");
+    } else {
+      return this.iHttpClient.get<Array<any>>(
+        `${this.iUrl}/recorridos/subscribed/`
+      );
     }
   }
 
-  getByOrigenDestino(origen:number,destino:number,showSubscribed:boolean) {
-    var origenValido=origen!=null && origen!=0;
-    var destinoValido=destino!=null && destino!=0;
+  getByOrigenDestino(origen: number, destino: number, showSubscribed: boolean) {
+    var origenValido = origen != null && origen != 0;
+    var destinoValido = destino != null && destino != 0;
 
-    if(!origenValido && !destinoValido){
+    if (!origenValido && !destinoValido) {
       return this.get(showSubscribed);
-    }
-    else{
-      if(!showSubscribed) {
-        if(origenValido && !destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origen/`+origen);
+    } else {
+      if (!showSubscribed) {
+        if (origenValido && !destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/origen/` + origen
+          );
+        } else if (!origenValido && destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/destino/` + destino
+          );
+        } else if (origenValido && destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/origenydestino/` + origen + "&" + destino
+          );
         }
-        else if (!origenValido && destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/destino/`+destino);
-        }
-        else if (origenValido && destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origenydestino/`+origen+'&'+destino);
-        }
-      }
-      else {
-        if(origenValido && !destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origensuscribed/`+origen);
-        }
-        else if (!origenValido && destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/destinosuscribed/`+destino);
-        }
-        else if (origenValido && destinoValido){
-          return this.iHttpClient.get<Array<any>>(`${this.iUrl}/recorridos/origenydestinosuscribed/`+origen+'&'+destino);
+      } else {
+        if (origenValido && !destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/origensuscribed/` + origen
+          );
+        } else if (!origenValido && destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/destinosuscribed/` + destino
+          );
+        } else if (origenValido && destinoValido) {
+          return this.iHttpClient.get<Array<any>>(
+            `${this.iUrl}/recorridos/origenydestinosuscribed/` +
+              origen +
+              "&" +
+              destino
+          );
         }
       }
     }
   }
-  
+
   subscription(rec) {
     //return this.iHttpClient.put(`${this.iUrl}/update/`+rec.id, rec);
-    return this.iHttpClient.post(`${this.iUrl}/update/`+rec.id, rec);
+    return this.iHttpClient.post(`${this.iUrl}/update/` + rec.id, rec);
   }
 }

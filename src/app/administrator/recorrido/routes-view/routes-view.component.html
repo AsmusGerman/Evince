@@ -1,0 +1,32 @@
+<section class="navigation">
+  <button mat-icon-button (click)="return()">
+    <mat-icon>keyboard_arrow_left </mat-icon>
+    Volver
+  </button>
+</section>
+<section class="view" *ngIf="!!iRecorrido">
+  <section class="charts">
+    <mat-card>
+      <mat-card-content>
+        <evince-recorrido-chart-percent-delays
+          [recorridoAAnalizar]="iRecorrido"
+        >
+        </evince-recorrido-chart-percent-delays>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-content>
+        <evince-recorrido-chart-causes [recorridoAAnalizar]="iRecorrido">
+        </evince-recorrido-chart-causes>
+      </mat-card-content>
+    </mat-card>
+  </section>
+  <section class="list">
+    <evince-recorrido-list
+      [iRecorrido]="iRecorrido"
+      (onAnalysisRequested)="analyze($event)"
+    >
+    </evince-recorrido-list>
+  </section>
+</section>

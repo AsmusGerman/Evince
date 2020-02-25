@@ -7,6 +7,7 @@ import { AuthState } from "./store/authentication.state";
 import { SignupComponent } from "./components/signup/signup.component";
 import { AuthenticationService } from "./services/authentication.service";
 import { ReactiveFormsModule } from "@angular/forms";
+import { NotificationModule } from '../shared/notification/notification.module';
 
 @NgModule({
   declarations: [SigninComponent, SignupComponent],
@@ -14,7 +15,8 @@ import { ReactiveFormsModule } from "@angular/forms";
     CommonModule,
     ReactiveFormsModule,
     MaterialModule,
-    NgxsModule.forFeature([AuthState])
+    NgxsModule.forFeature([AuthState]),
+    NotificationModule
   ],
   providers: [AuthenticationService],
   entryComponents: [SigninComponent, SignupComponent],

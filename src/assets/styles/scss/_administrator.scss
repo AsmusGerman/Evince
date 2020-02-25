@@ -1,0 +1,98 @@
+.evince-ui {
+  evince-administrator {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  evince-general-view {
+    flex: 1;
+    display: grid;
+    grid-template-areas:
+      "filters"
+      "view";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+
+    .filters {
+      grid-area: filters;
+    }
+
+    .view {
+      grid-area: view;
+      display: flex;
+      flex-direction: row;
+      .charts {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+      }
+      .list {
+        flex: 1;
+      }
+    }
+
+    evince-general-list {
+      flex: 1;
+      display: flex;
+      height: 100%;
+      .table-container {
+        flex: 1;
+        max-height: 600px;
+        overflow: hidden;
+        overflow-y: auto;
+      }
+      table {
+        width: 100%;
+      }
+
+      .mat-column-code,
+      .mat-column-last,
+      .mat-column-state {
+        max-width: 3rem;
+      }
+
+      .mat-column-origen,
+      .mat-column-destino {
+        max-width: 6rem;
+      }
+    }
+
+    evince-general-filter {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+    }
+  }
+
+  evince-routes-view,
+  evince-travels-view,
+  evince-delays-view {
+    flex: 1;
+    display: grid;
+    grid-template-areas:
+      "navigation"
+      "view";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+
+    .navigation {
+      grid-area: navigation;
+    }
+
+    .view {
+      grid-area: view;
+      display: flex;
+      flex-direction: row;
+      .charts {
+        flex: 0.5;
+        display: flex;
+        flex-direction: column;
+      }
+      .list {
+        flex: 1;
+      }
+    }
+  }
+}

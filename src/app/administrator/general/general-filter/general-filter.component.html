@@ -1,0 +1,27 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Origen</mat-label>
+    <mat-select formControlName="origen">
+      <mat-option *ngFor="let origen of origenes" [value]="origen">
+        {{ origen.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Destino</mat-label>
+    <mat-select formControlName="destino">
+      <mat-option *ngFor="let destino of destinos" [value]="destino">
+        {{ destino.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-slide-toggle
+    [checked]="true"
+    formControlName="suscripto"
+    color="primary"
+  >
+    Suscripciones
+  </mat-slide-toggle>
+</form>

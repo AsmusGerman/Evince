@@ -1,0 +1,32 @@
+<section class="filters">
+  <evince-general-filter
+    [iRecorridos]="iRecorridos"
+    (onFilterChanges)="handleFilterChanges($event)"
+  ></evince-general-filter>
+</section>
+<section class="view" *ngIf="!!iRecorridos">
+  <section class="charts">
+    <mat-card>
+      <mat-card-content>
+        <evince-general-chart-top-causes
+          [iRecorridos]="iRecorridos"
+        ></evince-general-chart-top-causes>
+      </mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content>
+        <evince-general-chart-top-delays
+          [iRecorridos]="iRecorridos"
+        ></evince-general-chart-top-delays>
+      </mat-card-content>
+    </mat-card>
+  </section>
+  <section class="list">
+    <evince-general-list
+      [iRecorridos]="iRecorridos"
+      (onSubscriptionChanges)="updateSubscription($event)"
+      (onAnalysisRequested)="analyze($event)"
+    >
+    </evince-general-list>
+  </section>
+</section>
