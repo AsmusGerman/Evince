@@ -87,35 +87,34 @@ export class RoutesChartCausesComponent implements OnInit, OnChanges {
     causasRetrasos.forEach(causa => {
       arraySeries.push(this.tiempoPerdidoEnCadaTipoRetraso(causa, gruposViaje));
     });
-
-    var labelOption = {
-      show: true,
-      rotate: 45,
-      align: "left",
-      formatter: function(data) {
-        var tooltipText = "";
-        var v = data;
-        var decimalTime = v.value;
-        decimalTime = decimalTime * 60 * 60;
-        var hours = Math.floor(decimalTime / (60 * 60));
-        decimalTime = decimalTime - hours * 60 * 60;
-        var minutes = Math.floor(decimalTime / 60);
-        tooltipText += v.seriesName + ": ";
-        if (hours > 0) {
-          tooltipText += hours + " hs y ";
+      var labelOption = {
+        show: true,
+        align: 'left',
+         formatter: function(data) {
+          var tooltipText="";
+          var v = data;
+          var decimalTime = v.value;
+          decimalTime = decimalTime * 60 * 60;
+          var hours = Math.floor((decimalTime / (60 * 60)));
+          decimalTime = decimalTime - (hours * 60 * 60);
+          var minutes = Math.floor((decimalTime / 60));
+          tooltipText+=v.seriesName+': ';
+          if(hours>0){
+            tooltipText+=hours+' hs y ';
+          }
+          tooltipText+=minutes+' min';
+          return tooltipText;
+        },
+        verticalAlign: 'middle',
+        position: 'insideLeft',
+        distance: 15,
+        rich: {
+            name: {
+                textBorderColor: '#fff'
+            }
         }
-        tooltipText += minutes + " min";
-        return tooltipText;
-      },
-      verticalAlign: "middle",
-      position: "insideLeft",
-      distance: 15,
-      rich: {
-        name: {
-          textBorderColor: "#fff"
-        }
-      }
-    };
+      
+      };
 
     template["series"] = [];
 

@@ -65,23 +65,27 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
     var periodos = [];
     var arraysPorcentajes = [];
     this.viajesAAnalizar.forEach(viaje => {
-      var porcentaje = (viaje.cantPasajeros * 100) / viaje.cantButacasColectivo;
+      var porcentaje = Number(((viaje.cantPasajeros * 100) / viaje.cantButacasColectivo).toFixed(2));
       var fecha = moment(viaje.fechaHoraSalidaEstipuladas, "YYYY/MM/DD");
       var periodo;
       if (frecuencia == "Mensual") {
-        periodo = fecha.format("MMMM") + "/" + fecha.format("YYYY");
+        periodo = fecha.format("MMMM") + "\n" + fecha.format("YYYY");
       } else if (frecuencia == "Anual") {
         periodo = fecha.format("YYYY");
       }
 
       if (!periodos.includes(periodo)) {
         periodos.push(periodo);
-        arraysPorcentajes.push([(Math.floor(porcentaje) * 100) / 100]);
+        arraysPorcentajes.push([porcentaje]);
+
       } else {
         var indexPeriodos = periodos.findIndex(peri => peri == periodo);
+        //var array=[];
+        //array.push(porcentaje);
+        //console.log("voy a insertar en el array ",array);
         arraysPorcentajes[indexPeriodos].push(
-          (Math.floor(porcentaje) * 100) / 100
-        );
+          (porcentaje)
+          );
       }
     });
 
@@ -91,7 +95,7 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
       subArray.forEach(valor => {
         sum += valor;
       });
-      arraysPorcentajes[i] = sum / subArray.length;
+      arraysPorcentajes[i] = (sum / subArray.length).toFixed(2);
     }
     template.series[0].data = arraysPorcentajes;
     template.series[1].data = arraysPorcentajes;

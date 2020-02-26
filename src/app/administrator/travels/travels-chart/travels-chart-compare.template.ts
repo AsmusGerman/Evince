@@ -2,12 +2,17 @@ var spirit =
   "https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/15328337051547464164-256.png";
 var maxData = 100;
 export default {
-  /*     tooltip: {
+     tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'shadow'
+        },
+        formatter: function (data){
+          console.log(data[0]);
+          var v = data[0];
+          return v.name+': '+v.data+'%';
         }
-    }, */
+    },
   /* title: {
         text:"Porcentaje de ocupación de colectivos"
     }, */
@@ -53,7 +58,7 @@ export default {
       symbolSize: 20,
       symbolBoundingData: maxData,
       data: [],
-      markLine: {
+      /* markLine: {
         symbol: "none",
         label: {
           formatter: "max: {c} %",
@@ -71,7 +76,7 @@ export default {
             type: "max"
           }
         ]
-      },
+      }, */
       z: 10
     },
     {
