@@ -24,11 +24,11 @@ export class SignupComponent implements OnInit {
   public roles: any[] = [
     {
       id: 1,
-      name: "administrator"
+      name: "Administrador"
     },
     {
       id: 2,
-      name: "driver"
+      name: "Chofer"
     }
   ];
 
