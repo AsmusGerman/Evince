@@ -10,5 +10,17 @@ export class DelaysListComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.iRetrasos.forEach(ret=>{
+      var minutes=ret.tiempo;
+      var tooltipText="";
+      if(minutes>=60){
+        var hours = Math.floor(minutes/60);
+        tooltipText+=hours+' hs y ';
+        minutes=minutes%60
+      }
+      tooltipText+=minutes+' minutos';
+      ret.tiempo=tooltipText;
+    });
+  }
 }
