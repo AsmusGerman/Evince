@@ -87,7 +87,7 @@ export class RoutesChartCausesComponent implements OnInit, OnChanges {
     causasRetrasos.forEach(causa => {
       arraySeries.push(this.tiempoPerdidoEnCadaTipoRetraso(causa, gruposViaje));
     });
-      var labelOption = {
+/*       var labelOption = {
         show: true,
         align: 'left',
          formatter: function(data) {
@@ -114,7 +114,7 @@ export class RoutesChartCausesComponent implements OnInit, OnChanges {
             }
         }
       
-      };
+      }; */
 
     template["series"] = [];
 
@@ -124,7 +124,7 @@ export class RoutesChartCausesComponent implements OnInit, OnChanges {
       var serie = {
         name: arraySeries[i][0],
         data: arraySeries[i][1],
-        label: labelOption,
+        //label: labelOption,
         type: "bar"
       };
       template["series"].push(serie);

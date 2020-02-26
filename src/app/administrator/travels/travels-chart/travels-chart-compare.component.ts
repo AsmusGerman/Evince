@@ -80,9 +80,6 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
 
       } else {
         var indexPeriodos = periodos.findIndex(peri => peri == periodo);
-        //var array=[];
-        //array.push(porcentaje);
-        //console.log("voy a insertar en el array ",array);
         arraysPorcentajes[indexPeriodos].push(
           (porcentaje)
           );
