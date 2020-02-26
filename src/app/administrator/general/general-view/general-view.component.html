@@ -14,11 +14,19 @@
             Retrasos más comunes
           </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-          <evince-general-chart-top-causes
-            class="chart"
-            [iRecorridos]="iRecorridosFiltrados"
-          ></evince-general-chart-top-causes>
+        <mat-card-content
+          [ngClass]="{
+            'is-empty': iRecorridosFiltrados.length == 0
+          }"
+        >
+          <ng-container
+            *ngIf="iRecorridosFiltrados.length > 0; else emptychart"
+          >
+            <evince-general-chart-top-causes
+              class="chart"
+              [iRecorridos]="iRecorridosFiltrados"
+            ></evince-general-chart-top-causes>
+          </ng-container>
         </mat-card-content>
       </mat-card>
       <mat-card>
@@ -27,25 +35,54 @@
             Recorridos más retrasados
           </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-          <evince-general-chart-top-delays
-            class="chart"
-            [iRecorridos]="iRecorridosFiltrados"
-          ></evince-general-chart-top-delays>
+        <mat-card-content
+          [ngClass]="{
+            'is-empty': iRecorridosFiltrados.length == 0
+          }"
+        >
+          <ng-container
+            *ngIf="iRecorridosFiltrados.length > 0; else emptychart"
+          >
+            <evince-general-chart-top-delays
+              class="chart"
+              [iRecorridos]="iRecorridosFiltrados"
+            ></evince-general-chart-top-delays>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </section>
     <section class="list column">
       <mat-card>
-        <mat-card-content>
-          <evince-general-list
-            [iRecorridos]="iRecorridosFiltrados"
-            (onSubscriptionChanges)="updateSubscription($event)"
-            (onAnalysisRequested)="analyze($event)"
-          >
-          </evince-general-list>
+        <mat-card-content
+          [ngClass]="{
+            'is-empty': iRecorridosFiltrados.length == 0
+          }"
+        >
+          <ng-container *ngIf="iRecorridosFiltrados.length > 0; else emptylist">
+            <evince-general-list
+              [iRecorridos]="iRecorridosFiltrados"
+              (onSubscriptionChanges)="updateSubscription($event)"
+              (onAnalysisRequested)="analyze($event)"
+            >
+            </evince-general-list>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </section>
   </section>
 </section>
+<ng-template #emptychart>
+  <mat-chip-list *ngIf="iResources" class="emptychart">
+    <mat-basic-chip>
+      <span>{{ iResources.emptychart }}</span>
+    </mat-basic-chip>
+  </mat-chip-list>
+</ng-template>
+
+<ng-template #emptylist>
+  <mat-chip-list *ngIf="iResources" class="emptylist">
+    <mat-basic-chip>
+      <span>{{ iResources.emptylist }}</span>
+    </mat-basic-chip>
+  </mat-chip-list>
+</ng-template>

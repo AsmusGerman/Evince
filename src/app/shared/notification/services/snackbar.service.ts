@@ -6,56 +6,39 @@ import { SnackbarComponent } from "../snackbar/snackbar.component";
 export class SnackbarService {
   constructor(private iMatSnackbar: MatSnackBar) {}
 
-  public success(data: { title: string; message: string; icon: string }) {
+  public success(data: { message: string }) {
     this.show({
-      title: data.title,
       message: data.message,
-      icon: data.icon,
       class: "success"
     });
   }
 
-  public info(data: { title: string; message: string; icon: string }) {
+  public info(data: { message: string }) {
     this.show({
-      title: data.title,
       message: data.message,
-      icon: data.icon,
       class: "info"
     });
   }
 
-  public warn(data: { title: string; message: string; icon: string }) {
+  public warn(data: { message: string }) {
     this.show({
-      title: data.title,
       message: data.message,
-      icon: data.icon,
       class: "warn"
     });
   }
 
-  public danger(data: { title: string; message: string; icon: string }) {
+  public danger(data: { message: string }) {
     this.show({
-      title: data.title,
       message: data.message,
-      icon: data.icon,
       class: "danger"
     });
   }
 
-  public confirm(data: { title: string; message: string; icon: string }) {
-    this.show({
-      title: data.title,
-      message: data.message,
-      icon: data.icon,
-      class: "info"
-    });
-  }
-
-  private show(data: { title; message; icon; class }) {
+  private show(data: { message; class }) {
     this.iMatSnackbar.openFromComponent(SnackbarComponent, {
-      data: { title: data.title, message: data.message, icon: data.icon },
+      data: { message: data.message },
       panelClass: data.class,
-      duration: 500
+      duration: 1000
     });
   }
 }

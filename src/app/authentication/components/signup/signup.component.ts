@@ -1,10 +1,18 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
-import { Store } from "@ngxs/store";
+import {
+  Store,
+  Actions,
+  ofActionSuccessful,
+  ofActionErrored
+} from "@ngxs/store";
 import { Register } from "../../store/authentication.model";
 import { Router } from "@angular/router";
-import { switchMap } from "rxjs/operators";
+import { switchMap, map } from "rxjs/operators";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { Resources } from "src/app/core/resources.token";
+import { Observable } from "rxjs";
+import { SnackbarService } from "src/app/shared/notification/services/snackbar.service";
 
 @Component({
   selector: "evince-signup",
@@ -27,7 +35,10 @@ export class SignupComponent implements OnInit {
   constructor(
     private store: Store,
     private router: Router,
-    public iDialogReg: MatDialogRef<SignupComponent>
+    public iDialogReg: MatDialogRef<SignupComponent>,
+    private iActions: Actions,
+    @Inject(Resources) private iResources: Observable<any>,
+    private iNotificationService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -38,6 +49,31 @@ export class SignupComponent implements OnInit {
       lastname: new FormControl("", [Validators.required]),
       role: new FormControl("", [Validators.required])
     });
+
+    this.iActions
+      .pipe(ofActionSuccessful(Register))
+      .pipe(
+        switchMap(() => this.iResources),
+        map(resources => resources.signup.success)
+      )
+      .subscribe(message => {
+        this.close();
+        this.iNotificationService.success({
+          message
+        });
+      });
+
+    this.iActions
+      .pipe(ofActionErrored(Register))
+      .pipe(
+        switchMap(() => this.iResources),
+        map(resources => resources.signup.fail)
+      )
+      .subscribe(message => {
+        this.iNotificationService.danger({
+          message
+        });
+      });
   }
 
   public submit() {
@@ -47,16 +83,7 @@ export class SignupComponent implements OnInit {
         .dispatch(
           new Register({ username, password, name, lastname, role: role.id })
         )
-        .pipe(
-          // return the response
-          switchMap(() =>
-            this.store.select(store => store.authentication.registered)
-          )
-        )
-        .subscribe(registered => {
-          console.log(`usuario ${!!registered ? "" : "no"} registrado`);
-          this.close();
-        });
+        .subscribe();
     }
   }
 

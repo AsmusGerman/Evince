@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { AdministratorService } from "src/app/core/services/administrator.service";
-import { switchMap, repeatWhen, filter } from "rxjs/operators";
-import { Subject, BehaviorSubject, empty, ReplaySubject } from "rxjs";
+import { switchMap, repeatWhen, filter, map } from "rxjs/operators";
+import { Observable, ReplaySubject } from "rxjs";
 import { Router, ActivatedRoute } from "@angular/router";
+import { Resources } from "src/app/core/resources.token";
 
 @Component({
   selector: "evince-general-view",
@@ -16,20 +17,27 @@ export class GeneralViewComponent implements OnInit {
 
   private iRunFilter$ = new ReplaySubject<any>(1);
 
+  public iResources: any;
+
   constructor(
     private iAdministratorService: AdministratorService,
     private iRouter: Router,
-    private iActivatedRoute: ActivatedRoute
+    private iActivatedRoute: ActivatedRoute,
+    @Inject(Resources) private iResources$: Observable<any>
   ) {}
 
   ngOnInit() {
-    
-    this.iAdministratorService.RoutesClient.get(false).subscribe(
-      recorridos => (this.iRecorridos = recorridos)
-    );
+    this.iResources$
+      .pipe(map(resources => resources.administrator.general))
+      .subscribe(resources => {
+        this.iResources = resources;
+      });
 
-    this.iAdministratorService.RoutesClient.get(true).subscribe(
-      recorridos => (this.iRecorridosFiltrados = recorridos)
+    this.iAdministratorService.RoutesClient.get(false).subscribe(
+      recorridos => {
+        this.iRecorridos = Array.from(recorridos);
+        this.iRecorridosFiltrados = this.iRecorridos.filter(recorrido => recorrido.subscription);
+      }
     );
 
     this.iRunFilter$

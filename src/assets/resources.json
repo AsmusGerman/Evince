@@ -1,0 +1,27 @@
+{
+  "signin": {
+    "success": "👋👋 Bienvenido",
+    "fail": "🤷‍♀️ No pudimos identificarte..."
+  },
+  "signup": {
+    "success": "👌👌 Usuario registrado",
+    "fail": "💥 Opps.. problemas... volvé a intentarlo"
+  },
+  "administrator": {
+    "general": {
+      "emptychart": "📡📡 No hay información que procesar... 💡 suscribase al menos en un recorrido para visualizar el gráfico",
+      "emptylist": "🔦📄 🤷‍♂️ No encontramos ningun recorrido que se corresponda con los filtros aplicados... 💁‍♂️ verifique si está suscripto a algun recorrido"
+    },
+    "routes": {
+      "emptychart": "🚧🚧 El recorrido seleccionado no tiene datos necesarios para construir el gráfico",
+      "emptylist": "🤷‍♂️ No encontramos ningún viaje en el recorrido seleccionado"
+    },
+    "travels": {
+      "emptychart": "🚧🚧 El recorrido seleccionado no tiene datos necesarios para construir el gráfico",
+      "emptylist": "🤷‍♂️ No encontramos ningún viaje en el recorrido seleccionado"
+    },
+    "delays": {
+      "emptylist": "🤷‍♂️ No encontramos ningún retraso en el viaje seleccionado"
+    }
+  }
+}

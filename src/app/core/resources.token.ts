@@ -1,7 +1,6 @@
 import { InjectionToken } from "@angular/core";
 import { from, Observable } from "rxjs";
 import { map, share } from "rxjs/operators";
-import { environment } from 'src/environments/environment';
 
 export const Resources = new InjectionToken<Observable<any>>(
   "RESOURCES",
@@ -11,7 +10,7 @@ export const Resources = new InjectionToken<Observable<any>>(
         import(
           /* webpackInclude: /\.json$/ */
           /* webpackChunkName: "authentication-resources" */
-          environment.resources
+          "src/assets/resources.json"
         )
       ).pipe(
         map(json => json.default),

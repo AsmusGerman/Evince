@@ -11,10 +11,20 @@
   <section class="columns is-1 is-desktop">
     <section class="list column is-half">
       <mat-card>
-        <mat-card-content>
-          <evince-delays-list [iRetrasos]="iRetrasos"></evince-delays-list>
+        <mat-card-content [ngClass]="{ 'is-empty': iRetrasos.lenght == 0 }">
+          <ng-container *ngIf="iRetrasos.length > 0; else emptylist">
+            <evince-delays-list [iRetrasos]="iRetrasos"></evince-delays-list>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </section>
   </section>
 </section>
+
+<ng-template #emptylist>
+  <mat-chip-list *ngIf="iResources" class="emptylist">
+    <mat-basic-chip>
+      <span>{{ iResources.emptylist }}</span>
+    </mat-basic-chip>
+  </mat-chip-list>
+</ng-template>

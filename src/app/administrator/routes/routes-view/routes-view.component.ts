@@ -1,6 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AdministratorService } from "src/app/core/services/administrator.service";
+import { Resources } from "src/app/core/resources.token";
+import { Observable } from "rxjs";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "evince-routes-view",
@@ -11,13 +14,22 @@ export class RoutesViewComponent implements OnInit {
   public iOrigen: string;
   public iDestino: string;
 
+  public iResources: any;
+
   constructor(
     private iAdministratorService: AdministratorService,
     private iRouter: Router,
-    private iActivatedRoute: ActivatedRoute
+    private iActivatedRoute: ActivatedRoute,
+    @Inject(Resources) private iResources$: Observable<any>
   ) {}
 
   ngOnInit() {
+    this.iResources$
+      .pipe(map(resources => resources.administrator.routes))
+      .subscribe(resources => {
+        this.iResources = resources;
+      });
+
     const id = this.iActivatedRoute.snapshot.paramMap.get("id");
     this.iAdministratorService.RoutesClient.getById(Number(id)).subscribe(
       recorrido => {

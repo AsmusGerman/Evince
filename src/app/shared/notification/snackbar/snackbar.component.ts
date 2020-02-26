@@ -10,8 +10,6 @@ export class SnackbarComponent {
     public iMatSnackbarRef: MatSnackBarRef<SnackbarComponent>,
     @Inject(MAT_SNACK_BAR_DATA)
     public iData: {
-      title: string;
-      icon: string;
       message: string;
     }
   ) {}

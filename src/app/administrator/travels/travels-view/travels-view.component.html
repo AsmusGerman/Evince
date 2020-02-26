@@ -16,25 +16,44 @@
             Porcentaje de ocupación de colectivos
           </mat-card-subtitle>
         </mat-card-header>
-        <mat-card-content>
-          <evince-travels-chart-compare
-            class="chart is-one"
-            [viajesAAnalizar]="iViajes"
-          >
-          </evince-travels-chart-compare>
+        <mat-card-content [ngClass]="{ 'is-empty': iViajes.length == 0 }">
+          <ng-container *ngIf="iViajes.length > 0; else emptychart">
+            <evince-travels-chart-compare
+              class="chart is-one"
+              [viajesAAnalizar]="iViajes"
+            >
+            </evince-travels-chart-compare>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </section>
     <section class="list column">
       <mat-card>
-        <mat-card-content>
-          <evince-travels-list
-            [iViajes]="iViajes"
-            (onAnalysisRequested)="analyze($event)"
-          >
-          </evince-travels-list>
+        <mat-card-content [ngClass]="{ 'is-empty': iViajes.length == 0 }">
+          <ng-container *ngIf="iViajes.length > 0; else emptylist">
+            <evince-travels-list
+              [iViajes]="iViajes"
+              (onAnalysisRequested)="analyze($event)"
+            >
+            </evince-travels-list>
+          </ng-container>
         </mat-card-content>
       </mat-card>
     </section>
   </section>
 </section>
+<ng-template #emptychart>
+  <mat-chip-list *ngIf="iResources" class="emptychart">
+    <mat-basic-chip>
+      <span>{{ iResources.emptychart }}</span>
+    </mat-basic-chip>
+  </mat-chip-list>
+</ng-template>
+
+<ng-template #emptylist>
+  <mat-chip-list *ngIf="iResources" class="emptylist">
+    <mat-basic-chip>
+      <span>{{ iResources.emptylist }}</span>
+    </mat-basic-chip>
+  </mat-chip-list>
+</ng-template>

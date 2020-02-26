@@ -1,7 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Inject } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AdministratorService } from "src/app/core/services/administrator.service";
 import { map, tap } from "rxjs/operators";
+import { Observable } from "rxjs";
+import { Resources } from "src/app/core/resources.token";
 
 @Component({
   selector: "evince-delays-view",
@@ -12,13 +14,22 @@ export class DelaysViewComponent implements OnInit {
   public iOrigen: string;
   public iDestino: string;
 
+  public iResources: any;
+
   constructor(
     private iRouter: Router,
     private iActivatedRoute: ActivatedRoute,
-    private iAdministratorService: AdministratorService
+    private iAdministratorService: AdministratorService,
+    @Inject(Resources) private iResources$: Observable<any>
   ) {}
 
   ngOnInit() {
+    this.iResources$
+      .pipe(map(resources => resources.administrator.delays))
+      .subscribe(resources => {
+        this.iResources = resources;
+      });
+
     const route = this.iActivatedRoute.snapshot.paramMap.get("route");
     const travel = this.iActivatedRoute.snapshot.paramMap.get("travel");
 

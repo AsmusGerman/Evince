@@ -1,10 +1,6 @@
 evince-snackbar {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    .content {
-        flex: 1;
-        text-align: left;
-    }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }

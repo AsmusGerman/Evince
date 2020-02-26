@@ -32,7 +32,6 @@ import { MatTableModule } from "@angular/material/table";
 import { MatSortModule } from "@angular/material/sort";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { IconsService } from './services/icons.service';
 import {ScrollingModule} from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 
@@ -77,7 +76,6 @@ const features = [
 
 @NgModule({
   imports: [features],
-  exports: [features],
-  providers: [IconsService]
+  exports: [features]
 })
 export class MaterialModule { }
