@@ -75,7 +75,6 @@ import {
 
       var labelOption = {
         show: true,
-        rotate: 45,
         align: 'left',
          formatter: function(data) {
           var tooltipText="";
