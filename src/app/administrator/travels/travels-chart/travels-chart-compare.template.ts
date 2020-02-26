@@ -8,7 +8,6 @@ export default {
             type: 'shadow'
         },
         formatter: function (data){
-          console.log(data[0]);
           var v = data[0];
           return v.name+': '+v.data+'%';
         }
