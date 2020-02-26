@@ -15,16 +15,16 @@
       <mat-card-subtitle>{{ clima.ciudad }}</mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
-      <mat-chip-list fxLayout="column">
-        <mat-chip [selectable]="false">
-          💧💧
-          {{ clima.humedad }}
-        </mat-chip>
-        <mat-chip [selectable]="false">
-          🌫🌫
-          {{ clima.viento }}
-        </mat-chip>
-      </mat-chip-list>
+      <section fxLayout="column">
+        <article fxLayout="row">
+          <span>💧</span>
+          <span fxFlex="auto"> {{ clima.humedad }} </span>
+        </article>
+        <article fxLayout="row">
+          <span>💨</span>
+          <span fxFlex="auto"> {{ clima.viento }}</span>
+        </article>
+      </section>
     </mat-card-content>
   </mat-card>
 </ng-container>

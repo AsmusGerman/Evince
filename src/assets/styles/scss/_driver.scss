@@ -189,11 +189,7 @@
     .mat-chip-list-wrapper {
       display: flex;
       flex-direction: column;
-
-      .mat-chip {
-        background: transparent;
-        border: 1px solid;
-      }
+      align-items: stretch;
     }
   }
 }
