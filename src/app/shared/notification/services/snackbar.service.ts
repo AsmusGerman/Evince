@@ -55,7 +55,7 @@ export class SnackbarService {
     this.iMatSnackbar.openFromComponent(SnackbarComponent, {
       data: { title: data.title, message: data.message, icon: data.icon },
       panelClass: data.class,
-      duration: 10000
+      duration: 500
     });
   }
 }

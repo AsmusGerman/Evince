@@ -1,0 +1,19 @@
+<form [formGroup]="form">
+  <mat-form-field>
+    <mat-label>Frecuencia</mat-label>
+    <mat-select
+      [(ngModel)]="frecuenciaSeleccionada"
+      name="frecuenciaSeleccionada"
+      formControlName="frecuenciaControl"
+      (selectionChange)="ngOnChanges(frecuenciaSeleccionada)"
+    >
+      <mat-option
+        *ngFor="let frecuenciaSeleccionada of frecuencias"
+        [(value)]="frecuenciaSeleccionada"
+      >
+        {{ frecuenciaSeleccionada }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</form>
+<div #chart class="echart"></div>

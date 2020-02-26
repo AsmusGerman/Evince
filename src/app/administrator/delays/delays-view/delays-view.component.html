@@ -1,0 +1,16 @@
+<mat-toolbar class="navigation">
+  <button mat-button (click)="return()">
+    <mat-icon>keyboard_arrow_left </mat-icon>
+    Volver
+  </button>
+  <span class="mat-body title" *ngIf="!!iOrigen && !!iDestino">Retrasos ocurridos entre <b>{{ iOrigen }}</b> y <b>{{ iDestino }}</b></span>
+</mat-toolbar>
+<section class="view columns is-desktop is-centered" *ngIf="!!iRetrasos">
+  <section class="list column is-half">
+    <mat-card>
+      <mat-card-content>
+        <evince-delays-list [iRetrasos]="iRetrasos"></evince-delays-list>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</section>

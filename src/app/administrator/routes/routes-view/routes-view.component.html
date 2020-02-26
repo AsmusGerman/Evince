@@ -1,0 +1,51 @@
+<mat-toolbar class="navigation">
+  <button mat-button (click)="return()">
+    <mat-icon>keyboard_arrow_left </mat-icon>
+    Volver
+  </button>
+  <span class="mat-body title" *ngIf="!!iOrigen && !!iDestino">Viajes de <b>{{ iOrigen }}</b> a <b>{{ iDestino }}</b></span>
+</mat-toolbar>
+<section class="view columns is-1 is-desktop" *ngIf="!!iRecorrido">
+  <section class="charts column">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-subtitle>
+          Porcentaje de ocurrencia de retrasos para cada viaje
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <evince-routes-chart-percent-delays
+          class="chart"
+          [recorridoAAnalizar]="iRecorrido"
+        >
+        </evince-routes-chart-percent-delays>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-subtitle>
+          Causas de retrasos por viaje
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <evince-routes-chart-causes
+          class="chart"
+          [recorridoAAnalizar]="iRecorrido"
+        >
+        </evince-routes-chart-causes>
+      </mat-card-content>
+    </mat-card>
+  </section>
+  <section class="list column is-two-thirds">
+    <mat-card>
+      <mat-card-content>
+        <evince-routes-list
+          [iRecorrido]="iRecorrido"
+          (onAnalysisRequested)="analyze($event)"
+        >
+        </evince-routes-list>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</section>

@@ -5,6 +5,7 @@
 @import "./header";
 @import "./driver";
 @import "./administrator";
+@import "./snackbar";
 
 html,
 body {
@@ -18,4 +19,12 @@ body {
 
 body {
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
+}
+
+.evince-ui {
+  .brand,
+  .title {
+    letter-spacing: 0.5rem;
+    opacity: 0.5;
+  }
 }

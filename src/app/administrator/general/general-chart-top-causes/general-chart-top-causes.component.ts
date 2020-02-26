@@ -4,7 +4,8 @@ import {
     ViewChild,
     ElementRef,
     AfterViewInit,
-    Input
+    Input,
+    HostListener
   } from "@angular/core";
   import * as echarts from "echarts";
   import template from "./general-chart-top-causes.template";
@@ -12,10 +13,14 @@ import {
   
   @Component({
     selector: "evince-general-chart-top-causes",
-    templateUrl: "./general-chart-top-causes.component.html",
-    styleUrls: ["./general-chart-top-causes.component.scss"]
+    templateUrl: "./general-chart-top-causes.component.html"
   })
   export class GeneralChartTopCausesComponent implements OnInit, AfterViewInit {
+    @HostListener("window:resize", ["$event"])
+    onResize() {
+      this.iChart.resize();
+    }
+    
     @ViewChild("chart", { static: true }) iChartContainer: ElementRef<
       HTMLDivElement
     >;
@@ -63,7 +68,7 @@ import {
     ngAfterViewInit() {
       this.iChart = echarts.init(this.iChartContainer.nativeElement);
       this.iChart.setOption(template, true);
-      this.iChart.resize({ width: 250, height: 250 });
+      this.iChart.resize();
     }
   }
   

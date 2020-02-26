@@ -9,7 +9,8 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: "./general-view.component.html"
 })
 export class GeneralViewComponent implements OnInit {
-  public iRecorridos: Array<any>;
+  public iRecorridos: Array<any> = [];
+  public iRecorridosFiltrados: Array<any> = [];
   public origenSeleccionado: number;
   public destinoSeleccionado: number;
 
@@ -32,7 +33,7 @@ export class GeneralViewComponent implements OnInit {
           )
         )
       )
-      .subscribe(recorridos => (this.iRecorridos = recorridos));
+      .subscribe(recorridos => (this.iRecorridosFiltrados = recorridos));
   }
 
   handleFilterChanges($event) {
@@ -52,7 +53,7 @@ export class GeneralViewComponent implements OnInit {
           )
         )
       )
-      .subscribe(recorridos => (this.iRecorridos = recorridos));
+      .subscribe(recorridos => (this.iRecorridosFiltrados = recorridos));
   }
 
   analyze(id: number) {

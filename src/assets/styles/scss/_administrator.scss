@@ -16,36 +16,22 @@
 
     .filters {
       grid-area: filters;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+
+      .title {
+        margin: 0;
+      }
     }
 
     .view {
       grid-area: view;
-      display: flex;
-      flex-direction: row;
-      .charts {
-        flex: 0.5;
-        display: flex;
-        flex-direction: column;
-      }
-      .list {
-        flex: 1;
-      }
     }
 
     evince-general-list {
-      flex: 1;
-      display: flex;
-      height: 100%;
-      .table-container {
-        flex: 1;
-        max-height: 600px;
-        overflow: hidden;
-        overflow-y: auto;
-      }
-      table {
-        width: 100%;
-      }
-
       .mat-column-code,
       .mat-column-last,
       .mat-column-state {
@@ -59,10 +45,13 @@
     }
 
     evince-general-filter {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-around;
+      flex: 1;
+      form {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+      }
     }
   }
 
@@ -75,23 +64,83 @@
       "navigation"
       "view";
     grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 2.5rem 1fr;
 
     .navigation {
       grid-area: navigation;
+      display: flex;
+      align-items: stretch;
+      height: auto;
+      padding: 0 1rem;
+
+      .title {
+        margin: auto;
+      }
     }
 
     .view {
       grid-area: view;
-      display: flex;
-      flex-direction: row;
-      .charts {
-        flex: 0.5;
+    }
+  }
+
+  evince-general-view,
+  evince-routes-view,
+  evince-travels-view,
+  evince-delays-view {
+    .mat-card {
+      margin: 0.5rem 1rem;
+      .chart {
         display: flex;
-        flex-direction: column;
+        .echart {
+          flex: 1;
+          min-height: 25vh;
+        }
       }
-      .list {
-        flex: 1;
+    }
+    .charts {
+      .mat-card:first-child {
+        margin-bottom: 2rem;
+      }
+    }
+
+    .list {
+      .mat-card {
+        padding: 0.5rem;
+        height: 70vh;
+        .mat-card-content {
+          height: 100%;
+        }
+      }
+    }
+  }
+
+  evince-general-list,
+  evince-routes-list,
+  evince-travels-list,
+  evince-delays-list {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    max-height: 70vh;
+    padding: 0 0.5rem;
+    overflow: hidden;
+    overflow-y: auto;
+    table {
+      width: 100%;
+    }
+  }
+
+  evince-travels-view {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .chart {
+      flex: 1;
+      display: flex;
+      form,
+      .mat-form-field {
+        width: 100%;
       }
     }
   }

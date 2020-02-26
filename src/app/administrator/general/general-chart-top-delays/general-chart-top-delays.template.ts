@@ -1,55 +1,55 @@
 export default {
-  tooltip : {
-    trigger: 'axis',
-    formatter: function(data){
-        var v = data[0];
-        var decimalTime = v.value;
-        decimalTime = decimalTime * 60 * 60;
-        var hours = Math.floor((decimalTime / (60 * 60)));
-        decimalTime = decimalTime - (hours * 60 * 60);
-        var minutes = Math.floor((decimalTime / 60));
-        return v.seriesName+': '+hours+' hs y '+minutes+' min';
-}
+  tooltip: {
+    trigger: "axis",
+    formatter: function(data) {
+      var v = data[0];
+      var decimalTime = v.value;
+      decimalTime = decimalTime * 60 * 60;
+      var hours = Math.floor(decimalTime / (60 * 60));
+      decimalTime = decimalTime - hours * 60 * 60;
+      var minutes = Math.floor(decimalTime / 60);
+      return v.seriesName + ": " + hours + " hs y " + minutes + " min";
+    }
   },
-  title : {
-    text: 'Recorridos con más tiempo perdido en retrasos',
-},
-grid: {
-x: 175
-},
-calculable : true,
-xAxis : [
+  grid: {
+    top: "0%",
+    bottom: "15%",
+    left: "25%",
+    right: "10%"
+  },
+  calculable: true,
+  xAxis: [
     {
-        type : 'value',
-        boundaryGap : [0, 0.01]
+      type: "value",
+      boundaryGap: [0, 0.01]
     }
-],
-yAxis : [
+  ],
+  yAxis: [
     {
-        type : 'category',
-        data : []
+      type: "category",
+      data: []
     }
-],
-series : [
+  ],
+  series: [
     {
-        name:'Total en retrasos',
-        type:'bar',
-        label : {
-            normal: {
-                show: true,
-                position: 'inside',
-                formatter: function(data){
-                    var decimalTime = data.value;
-                    decimalTime = decimalTime * 60 * 60;
-                    var hours = Math.floor((decimalTime / (60 * 60)));
-                    decimalTime = decimalTime - (hours * 60 * 60);
-                    var minutes = Math.floor((decimalTime / 60));
-            
-                    return hours+' hs y '+minutes+' min';
-                }
-            }
-        },
-        data:[]
+      name: "Total en retrasos",
+      type: "bar",
+      label: {
+        normal: {
+          show: true,
+          position: "inside",
+          formatter: function(data) {
+            var decimalTime = data.value;
+            decimalTime = decimalTime * 60 * 60;
+            var hours = Math.floor(decimalTime / (60 * 60));
+            decimalTime = decimalTime - hours * 60 * 60;
+            var minutes = Math.floor(decimalTime / 60);
+
+            return hours + " hs y " + minutes + " min";
+          }
+        }
+      },
+      data: []
     }
-]
+  ]
 };

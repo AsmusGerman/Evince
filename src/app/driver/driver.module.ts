@@ -5,7 +5,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { NgxsModule } from "@ngxs/store";
 
 import { MaterialModule } from "../shared/material/material.module";
-import { ResponsiveModule } from "../shared/responsive/responsive.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { DataService } from "../core/services/data.service";
 import { TravelListComponent } from "./components/travel/travel-list/travel-list.component";
@@ -71,7 +70,6 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     NgxsModule.forFeature([DriverState]),
     MaterialModule,
-    ResponsiveModule,
     HeaderModule
   ],
   providers: [DataService, CurrentTravelTimerService],

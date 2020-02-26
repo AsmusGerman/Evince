@@ -1,27 +1,31 @@
-<form [formGroup]="form">
-  <mat-form-field>
-    <mat-label>Origen</mat-label>
-    <mat-select formControlName="origen">
-      <mat-option *ngFor="let origen of origenes" [value]="origen">
-        {{ origen.description }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+<section class="container">
+  <form [formGroup]="form" class="columns is-2 is-desktop">
+    <mat-form-field class="column is-3">
+      <mat-label>Origen</mat-label>
+      <mat-select formControlName="origen">
+        <mat-option *ngFor="let origen of origenes" [value]="origen">
+          {{ origen.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Destino</mat-label>
-    <mat-select formControlName="destino">
-      <mat-option *ngFor="let destino of destinos" [value]="destino">
-        {{ destino.description }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+    <mat-form-field class="column is-3">
+      <mat-label>Destino</mat-label>
+      <mat-select formControlName="destino">
+        <mat-option *ngFor="let destino of destinos" [value]="destino">
+          {{ destino.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-slide-toggle
-    [checked]="true"
-    formControlName="suscripto"
-    color="primary"
-  >
-    Suscripciones
-  </mat-slide-toggle>
-</form>
+    <mat-slide-toggle
+      [checked]="true"
+      formControlName="suscripto"
+      color="primary"
+      class="column is-3"
+      [labelPosition]="'before'"
+    >
+      Mis suscripciones
+    </mat-slide-toggle>
+  </form>
+</section>

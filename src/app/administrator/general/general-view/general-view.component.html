@@ -1,32 +1,51 @@
 <section class="filters">
+  <span class="mat-h2 title">Panel general</span>
   <evince-general-filter
     [iRecorridos]="iRecorridos"
     (onFilterChanges)="handleFilterChanges($event)"
   ></evince-general-filter>
 </section>
-<section class="view" *ngIf="!!iRecorridos">
-  <section class="charts">
-    <mat-card>
-      <mat-card-content>
-        <evince-general-chart-top-causes
-          [iRecorridos]="iRecorridos"
-        ></evince-general-chart-top-causes>
-      </mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-content>
-        <evince-general-chart-top-delays
-          [iRecorridos]="iRecorridos"
-        ></evince-general-chart-top-delays>
-      </mat-card-content>
-    </mat-card>
-  </section>
-  <section class="list">
-    <evince-general-list
-      [iRecorridos]="iRecorridos"
-      (onSubscriptionChanges)="updateSubscription($event)"
-      (onAnalysisRequested)="analyze($event)"
-    >
-    </evince-general-list>
+<section class="view" *ngIf="!!iRecorridosFiltrados">
+  <section class="columns is-1 is-desktop">
+    <section class="charts column">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-subtitle class="title">
+            Retrasos más comunes
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <evince-general-chart-top-causes
+            class="chart"
+            [iRecorridos]="iRecorridosFiltrados"
+          ></evince-general-chart-top-causes>
+        </mat-card-content>
+      </mat-card>
+      <mat-card>
+        <mat-card-header>
+          <mat-card-subtitle class="title">
+            Recorridos más retrasados
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <evince-general-chart-top-delays
+            class="chart"
+            [iRecorridos]="iRecorridosFiltrados"
+          ></evince-general-chart-top-delays>
+        </mat-card-content>
+      </mat-card>
+    </section>
+    <section class="list column is-two-thirds">
+      <mat-card>
+        <mat-card-content>
+          <evince-general-list
+            [iRecorridos]="iRecorridosFiltrados"
+            (onSubscriptionChanges)="updateSubscription($event)"
+            (onAnalysisRequested)="analyze($event)"
+          >
+          </evince-general-list>
+        </mat-card-content>
+      </mat-card>
+    </section>
   </section>
 </section>
