@@ -32,17 +32,12 @@ export class GeneralViewComponent implements OnInit {
       .subscribe(resources => {
         this.iResources = resources;
       });
-
-    this.iAdministratorService.RoutesClient.get(false).subscribe(
-      recorridos => {
-        this.iRecorridos = Array.from(recorridos);
-        this.iRecorridosFiltrados = this.iRecorridos.filter(recorrido => recorrido.subscription);
-      }
-    );
-
+    
+    this.handleFilterReset();
+    
     this.iRunFilter$
       .pipe(
-        switchMap(filter =>
+        switchMap(filter => 
           this.iAdministratorService.RoutesClient.getByOrigenDestino(
             filter.origen.id,
             filter.destino.id,
@@ -55,6 +50,15 @@ export class GeneralViewComponent implements OnInit {
 
   handleFilterChanges($event) {
     this.iRunFilter$.next($event);
+  }
+  
+  handleFilterReset() {
+    this.iAdministratorService.RoutesClient.get(false).subscribe(recorridos => {
+      this.iRecorridos = Array.from(recorridos);
+      this.iRecorridosFiltrados = this.iRecorridos.filter(
+        recorrido => recorrido.subscription
+      );
+    });
   }
 
   updateSubscription($event) {

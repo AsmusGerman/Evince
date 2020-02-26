@@ -15,7 +15,8 @@ import template from "./routes-chart-percent-delays.template";
   selector: "evince-routes-chart-percent-delays",
   templateUrl: "./routes-chart-percent-delays.component.html"
 })
-export class RoutesChartPercentDelaysComponent implements OnInit, OnChanges {
+export class RoutesChartPercentDelaysComponent
+  implements OnChanges, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -31,11 +32,13 @@ export class RoutesChartPercentDelaysComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize();
-    this.updateCausasYCantidades();
+    if (this.recorridoAAnalizar) {
+      this.updateCausasYCantidades();
+    }
   }
 
   ngOnChanges() {

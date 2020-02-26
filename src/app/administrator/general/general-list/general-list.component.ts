@@ -9,8 +9,6 @@ export class GeneralListComponent implements OnInit {
     "code",
     "origen",
     "destino",
-    "last",
-    "state",
     "subscription",
     "analyze"
   ];

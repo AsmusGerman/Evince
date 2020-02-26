@@ -15,7 +15,7 @@ import template from "./general-chart-top-delays.template";
   selector: "evince-general-chart-top-delays",
   templateUrl: "./general-chart-top-delays.component.html"
 })
-export class GeneralChartTopDelaysComponent implements OnInit, OnChanges {
+export class GeneralChartTopDelaysComponent implements OnChanges, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -32,10 +32,14 @@ export class GeneralChartTopDelaysComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize();
+    if(this.iRecorridos) {
+      this.sort();
+      this.updateCodigosYCantRetrasos();
+    }
   }
 
   ngOnChanges() {

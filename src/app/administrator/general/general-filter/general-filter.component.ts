@@ -7,6 +7,7 @@ import {
   SimpleChanges
 } from "@angular/core";
 import { FormGroup, FormControl } from "@angular/forms";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "evince-general-filter",
@@ -15,6 +16,7 @@ import { FormGroup, FormControl } from "@angular/forms";
 export class GeneralFilterComponent implements OnInit {
   @Input() iRecorridos: Array<any>;
   @Output() onFilterChanges = new EventEmitter<any>();
+  @Output() onFilterReset = new EventEmitter<void>();
 
   public origenes: Array<any>;
   public destinos: Array<any>;
@@ -39,13 +41,21 @@ export class GeneralFilterComponent implements OnInit {
     }
   }
 
+  public clear() {
+    this.onFilterReset.emit();
+  }
+
   private updateOrigenes() {
     const _origenes = this.iRecorridos.map(recorrido => ({
       id: recorrido.origenId,
       description: recorrido.origen
     }));
 
-    this.origenes = [...new Set(_origenes)];
+    const _ids = [...new Set(_origenes.map(o => o.id))];
+    this.origenes = _ids.map(id => ({
+      id,
+      description: _origenes.find(o => o.id == id).description
+    }));
   }
 
   private updateDestinos() {
@@ -54,6 +64,10 @@ export class GeneralFilterComponent implements OnInit {
       description: recorrido.destino
     }));
 
-    this.destinos = [...new Set(_destinos)];
+    const _ids = [...new Set(_destinos.map(o => o.id))];
+    this.destinos = _ids.map(id => ({
+      id,
+      description: _destinos.find(o => o.id == id).description
+    }));
   }
 }

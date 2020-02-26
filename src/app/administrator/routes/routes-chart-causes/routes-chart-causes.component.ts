@@ -15,7 +15,7 @@ import template from "./routes-chart-causes.template";
   selector: "evince-routes-chart-causes",
   templateUrl: "./routes-chart-causes.component.html"
 })
-export class RoutesChartCausesComponent implements OnInit, OnChanges {
+export class RoutesChartCausesComponent implements OnChanges, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -31,11 +31,14 @@ export class RoutesChartCausesComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize();
     this.updateCausasYCantidades();
+    if(!!this.recorridoAAnalizar) {
+      this.updateCausasYCantidades();
+    }
   }
 
   ngOnChanges() {

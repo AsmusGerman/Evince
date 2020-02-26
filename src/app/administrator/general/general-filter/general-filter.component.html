@@ -1,31 +1,33 @@
-<section class="container">
-  <form [formGroup]="form" class="columns is-2 is-desktop">
-    <mat-form-field class="column is-3">
-      <mat-label>Origen</mat-label>
-      <mat-select formControlName="origen">
-        <mat-option *ngFor="let origen of origenes" [value]="origen">
-          {{ origen.description }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+<form [formGroup]="form" class="columns is-2 is-centered">
+  <mat-form-field class="column is-3">
+    <mat-label>Origen</mat-label>
+    <mat-select formControlName="origen">
+      <mat-option *ngFor="let origen of origenes" [value]="origen">
+        {{ origen.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field class="column is-3">
-      <mat-label>Destino</mat-label>
-      <mat-select formControlName="destino">
-        <mat-option *ngFor="let destino of destinos" [value]="destino">
-          {{ destino.description }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="column is-3">
+    <mat-label>Destino</mat-label>
+    <mat-select formControlName="destino">
+      <mat-option *ngFor="let destino of destinos" [value]="destino">
+        {{ destino.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-slide-toggle
-      [checked]="true"
-      formControlName="suscripto"
-      color="primary"
-      class="column is-3"
-      [labelPosition]="'before'"
-    >
-      Mis suscripciones
-    </mat-slide-toggle>
-  </form>
-</section>
+  <mat-slide-toggle
+    [checked]="true"
+    formControlName="suscripto"
+    color="primary"
+    class="column is-3"
+    [labelPosition]="'before'"
+  >
+    Mis suscripciones
+  </mat-slide-toggle>
+
+  <button mat-button type="button" color="accent" class="column is-3" (click)="clear()">
+    Limpiar filtros
+  </button>
+</form>

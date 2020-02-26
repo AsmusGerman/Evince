@@ -5,7 +5,8 @@ import {
   ElementRef,
   Input,
   HostListener,
-  OnChanges
+  OnChanges,
+  AfterViewInit
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./general-chart-top-causes.template";
@@ -15,7 +16,7 @@ import template from "./general-chart-top-causes.template";
   templateUrl: "./general-chart-top-causes.component.html"
 })
 export class GeneralChartTopCausesComponent
-  implements OnInit, OnChanges {
+  implements OnChanges, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -32,10 +33,13 @@ export class GeneralChartTopCausesComponent
 
   constructor() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize();
+    if (this.iRecorridos) {
+      this.updateCausasYCantidades();
+    }
   }
 
   ngOnChanges() {

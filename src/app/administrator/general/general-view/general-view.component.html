@@ -1,8 +1,10 @@
 <section class="filters">
   <span class="mat-h2 title">Panel general</span>
   <evince-general-filter
+    class="filter"
     [iRecorridos]="iRecorridos"
     (onFilterChanges)="handleFilterChanges($event)"
+    (onFilterReset)="handleFilterReset()"
   ></evince-general-filter>
 </section>
 <section class="view" *ngIf="!!iRecorridosFiltrados">

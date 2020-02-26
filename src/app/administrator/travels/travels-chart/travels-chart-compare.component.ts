@@ -17,7 +17,7 @@ import * as moment from "moment";
   selector: "evince-travels-chart-compare",
   templateUrl: "./travels-chart-compare.component.html"
 })
-export class TravelsChartCompareComponent implements OnInit, OnChanges {
+export class TravelsChartCompareComponent implements OnChanges, AfterViewInit {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -41,11 +41,13 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
 
   public frecuencias: Array<string> = new Array<string>("Mensual", "Anual");
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.iChart = echarts.init(this.iChartContainer.nativeElement);
     this.iChart.setOption(template, true);
     this.iChart.resize();
-    this.changeFrecuencia("Mensual");
+    if (this.viajesAAnalizar) {
+      this.changeFrecuencia("Mensual");
+    }
   }
 
   ngOnChanges() {
@@ -65,7 +67,9 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
     var periodos = [];
     var arraysPorcentajes = [];
     this.viajesAAnalizar.forEach(viaje => {
-      var porcentaje = Number(((viaje.cantPasajeros * 100) / viaje.cantButacasColectivo).toFixed(2));
+      var porcentaje = Number(
+        ((viaje.cantPasajeros * 100) / viaje.cantButacasColectivo).toFixed(2)
+      );
       var fecha = moment(viaje.fechaHoraSalidaEstipuladas, "YYYY/MM/DD");
       var periodo;
       if (frecuencia == "Mensual") {
@@ -77,15 +81,12 @@ export class TravelsChartCompareComponent implements OnInit, OnChanges {
       if (!periodos.includes(periodo)) {
         periodos.push(periodo);
         arraysPorcentajes.push([porcentaje]);
-
       } else {
         var indexPeriodos = periodos.findIndex(peri => peri == periodo);
         //var array=[];
         //array.push(porcentaje);
         //console.log("voy a insertar en el array ",array);
-        arraysPorcentajes[indexPeriodos].push(
-          (porcentaje)
-          );
+        arraysPorcentajes[indexPeriodos].push(porcentaje);
       }
     });
 
