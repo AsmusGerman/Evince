@@ -3,31 +3,38 @@
     <mat-icon>keyboard_arrow_left </mat-icon>
     Volver
   </button>
-  <span class="mat-body title" *ngIf="!!iOrigen && !!iDestino">Viajes directos de <b>{{ iOrigen }}</b> a <b>{{ iDestino }}</b></span>
+  <span class="mat-body title" *ngIf="!!iOrigen && !!iDestino"
+    >Viajes directos de <b>{{ iOrigen }}</b> a <b>{{ iDestino }}</b></span
+  >
 </mat-toolbar>
-<section class="view columns is-1 is-desktop" *ngIf="!!iViajes">
-  <section class="charts column">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-subtitle class="title">
-          Porcentaje de ocupación de colectivos
-        </mat-card-subtitle>
-      </mat-card-header>
-      <mat-card-content>
-        <evince-travels-chart-compare class="chart" [viajesAAnalizar]="iViajes">
-        </evince-travels-chart-compare>
-      </mat-card-content>
-    </mat-card>
-  </section>
-  <section class="list column is-two-thirds">
-    <mat-card>
-      <mat-card-content>
-        <evince-travels-list
-          [iViajes]="iViajes"
-          (onAnalysisRequested)="analyze($event)"
-        >
-        </evince-travels-list>
-      </mat-card-content>
-    </mat-card>
+<section class="view" *ngIf="!!iViajes">
+  <section class="columns is-1 is-desktop">
+    <section class="charts column is-4 has-one-chart">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-subtitle class="title">
+            Porcentaje de ocupación de colectivos
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <evince-travels-chart-compare
+            class="chart is-one"
+            [viajesAAnalizar]="iViajes"
+          >
+          </evince-travels-chart-compare>
+        </mat-card-content>
+      </mat-card>
+    </section>
+    <section class="list column">
+      <mat-card>
+        <mat-card-content>
+          <evince-travels-list
+            [iViajes]="iViajes"
+            (onAnalysisRequested)="analyze($event)"
+          >
+          </evince-travels-list>
+        </mat-card-content>
+      </mat-card>
+    </section>
   </section>
 </section>

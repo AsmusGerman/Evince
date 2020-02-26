@@ -12,10 +12,11 @@ export default {
         text:"Porcentaje de ocupación de colectivos"
     }, */
   grid: {
-    left: "5%",
-    right: "5%",
-    top: 0,
-    bottom: 0
+    top: "5%",
+    bottom: "5%",
+    left: 0,
+    right: "15%",
+    containLabel: true
   },
   xAxis: {
     max: maxData,
@@ -36,9 +37,9 @@ export default {
     axisTick: { show: false },
     axisLine: { show: false },
     axisLabel: {
-      margin: 10,
+      margin: 8,
       color: "#999",
-      fontSize: 16
+      fontSize: 8
     }
   },
   series: [
@@ -49,14 +50,15 @@ export default {
       symbolRepeat: "fixed",
       symbolMargin: "5%",
       symbolClip: true,
-      symbolSize: 30,
+      symbolSize: 20,
       symbolBoundingData: maxData,
       data: [],
       markLine: {
         symbol: "none",
         label: {
           formatter: "max: {c} %",
-          position: "start"
+          position: "start",
+          fontSize: 8
         },
         lineStyle: {
           color: "green",
@@ -88,13 +90,13 @@ export default {
         position: "right",
         offset: [10, 0],
         color: "green",
-        fontSize: 18
+        fontSize: 10
       },
       animationDuration: 0,
       symbolRepeat: "fixed",
       symbolMargin: "5%",
       symbol: spirit,
-      symbolSize: 30,
+      symbolSize: 20,
       symbolBoundingData: maxData,
       data: [],
       z: 5

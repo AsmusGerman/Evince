@@ -1,29 +1,27 @@
-.evince-ui {
-  evince-signup,
-  evince-signin {
-    height: 100%;
+evince-signup,
+evince-signin {
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    text-align: center;
+  }
+
+  .form {
     display: flex;
-    flex-direction: row;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     justify-content: center;
 
-    .title {
-      text-align: center;
-    }
-
-    .form {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      justify-content: center;
-
-      section {
-        &:last-child {
-          padding: 1.5rem 0;
-        }
-        > * {
-          width: 100%;
-        }
+    section {
+      &:last-child {
+        padding: 1.5rem 0;
+      }
+      > * {
+        width: 100%;
       }
     }
   }

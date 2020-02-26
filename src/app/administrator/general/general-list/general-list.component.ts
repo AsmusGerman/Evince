@@ -16,15 +16,15 @@ export class GeneralListComponent implements OnInit {
   ];
 
   @Input() iRecorridos: Array<any>;
-  @Output() onSubscriptionChanges = new EventEmitter<number>();
+  @Output() onSubscriptionChanges = new EventEmitter<any>();
   @Output() onAnalysisRequested = new EventEmitter<number>();
 
   constructor() {}
 
   ngOnInit() {}
   
-  changeSubscription($event) {
-    this.onSubscriptionChanges.emit($event);
+  changeSubscription(id: number, subscription: boolean) {
+    this.onSubscriptionChanges.emit({id, subscription});
   }
 
   analyze($event) {

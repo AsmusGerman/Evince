@@ -38,14 +38,14 @@ export class SigninComponent implements OnInit {
 
       const { username, role } = this.iStore.selectSnapshot(AuthState);
       this.iRouter.navigate([routes[role] || "signin"]);
-
+/* 
       const data = {
         title: "",
         message: `Bienvenido ${username}`,
         icon: ""
       };
 
-      this.iNotificationService.success(data);
+      this.iNotificationService.success(data); */
     });
   }
 

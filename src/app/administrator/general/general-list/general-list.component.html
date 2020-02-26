@@ -30,7 +30,7 @@
       <mat-slide-toggle
         color="primary"
         [checked]="element.subscription"
-        (change)="changeSubscription(element.id, element.subscription)"
+        (change)="changeSubscription(element.id, !element.subscription)"
       >
       </mat-slide-toggle>
     </td>

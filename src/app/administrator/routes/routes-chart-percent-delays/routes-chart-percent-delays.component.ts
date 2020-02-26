@@ -5,7 +5,8 @@ import {
   ElementRef,
   AfterViewInit,
   Input,
-  HostListener
+  HostListener,
+  OnChanges
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./routes-chart-percent-delays.template";
@@ -14,8 +15,7 @@ import template from "./routes-chart-percent-delays.template";
   selector: "evince-routes-chart-percent-delays",
   templateUrl: "./routes-chart-percent-delays.component.html"
 })
-export class RoutesChartPercentDelaysComponent
-  implements OnInit, AfterViewInit {
+export class RoutesChartPercentDelaysComponent implements OnInit, OnChanges {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -30,6 +30,19 @@ export class RoutesChartPercentDelaysComponent
   private iChart: any;
 
   constructor() {}
+
+  ngOnInit() {
+    this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    this.iChart.setOption(template, true);
+    this.iChart.resize();
+    this.updateCausasYCantidades();
+  }
+
+  ngOnChanges() {
+    if (!!this.iChart) {
+      this.updateCausasYCantidades();
+    }
+  }
 
   updateCausasYCantidades() {
     var gruposViaje = [];
@@ -82,17 +95,5 @@ export class RoutesChartPercentDelaysComponent
     template.series[1].data = dataCantViajes;
     template.yAxis.data = dataNombreViajes;
     this.iChart.setOption(template, true);
-  }
-
-  ngOnInit() {}
-
-  ngOnChanges() {
-    this.updateCausasYCantidades();
-  }
-
-  ngAfterViewInit() {
-    this.iChart = echarts.init(this.iChartContainer.nativeElement);
-    this.iChart.setOption(template, true);
-    this.iChart.resize();
   }
 }

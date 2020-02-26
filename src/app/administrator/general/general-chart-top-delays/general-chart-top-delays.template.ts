@@ -13,9 +13,9 @@ export default {
   },
   grid: {
     top: "0%",
-    bottom: "15%",
-    left: "25%",
-    right: "10%"
+    bottom: "10%",
+    left: "15%",
+    right: "5%"
   },
   calculable: true,
   xAxis: [

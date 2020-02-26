@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { AdministratorService } from "src/app/core/services/administrator.service";
 import { switchMap, repeatWhen, filter } from "rxjs/operators";
 import { Subject, BehaviorSubject, empty, ReplaySubject } from "rxjs";
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "evince-general-view",
@@ -16,11 +16,20 @@ export class GeneralViewComponent implements OnInit {
 
   private iRunFilter$ = new ReplaySubject<any>(1);
 
-  constructor(private iAdministratorService: AdministratorService, private iRouter: Router, private iActivatedRoute: ActivatedRoute) {}
+  constructor(
+    private iAdministratorService: AdministratorService,
+    private iRouter: Router,
+    private iActivatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    this.iAdministratorService.RoutesClient.get(true).subscribe(
+    
+    this.iAdministratorService.RoutesClient.get(false).subscribe(
       recorridos => (this.iRecorridos = recorridos)
+    );
+
+    this.iAdministratorService.RoutesClient.get(true).subscribe(
+      recorridos => (this.iRecorridosFiltrados = recorridos)
     );
 
     this.iRunFilter$
@@ -40,8 +49,9 @@ export class GeneralViewComponent implements OnInit {
     this.iRunFilter$.next($event);
   }
 
-  updateSubscription(id: number) {
-    const recorrido = this.iRecorridos.find(r => r.id == id);
+  updateSubscription($event) {
+    const recorrido = this.iRecorridosFiltrados.find(r => r.id == $event.id);
+    recorrido.subscription = $event.subscription;
     this.iAdministratorService.RoutesClient.subscription(recorrido)
       .pipe(
         switchMap(() => this.iRunFilter$),
@@ -57,6 +67,8 @@ export class GeneralViewComponent implements OnInit {
   }
 
   analyze(id: number) {
-    this.iRouter.navigate(["../routes", id], {relativeTo: this.iActivatedRoute});
+    this.iRouter.navigate(["../routes", id], {
+      relativeTo: this.iActivatedRoute
+    });
   }
 }

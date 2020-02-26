@@ -3,10 +3,12 @@
     EVINCE
   </span>
   <span fxFlex="auto"></span>
+  <section>
+    <ng-content></ng-content>
+  </section>
   <span fxLayout="row" fxLayoutAlign="flex-end center">
     <button mat-mini-fab [matMenuTriggerFor]="menu" color="accent">
       {{Avatar}}
-      <!-- <img [src]="Avatar" alt="initials" /> -->
     </button>
   </span>
 </mat-toolbar>

@@ -5,17 +5,17 @@ import {
   ElementRef,
   AfterViewInit,
   Input,
-  HostListener
+  HostListener,
+  OnChanges
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./general-chart-top-delays.template";
-import { FilterService } from "src/app/core/services/filter.service";
 
 @Component({
   selector: "evince-general-chart-top-delays",
   templateUrl: "./general-chart-top-delays.component.html"
 })
-export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
+export class GeneralChartTopDelaysComponent implements OnInit, OnChanges {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -25,14 +25,25 @@ export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
     HTMLDivElement
   >;
 
-  //public iDataSource = Array<any>();
-  //@Input('ELEMENT_DATA') iDataSource: Array<any>;
   @Input() iRecorridos: Array<any>;
   public codigos = Array<string>();
   public cantRetrasosPorCodigo = Array<number>();
   private iChart: any;
 
-  constructor(private filterService: FilterService) {}
+  constructor() {}
+
+  ngOnInit() {
+    this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    this.iChart.setOption(template, true);
+    this.iChart.resize();
+  }
+
+  ngOnChanges() {
+    if (!!this.iChart) {
+      this.sort();
+      this.updateCodigosYCantRetrasos();
+    }
+  }
 
   sort() {
     this.iRecorridos.sort((rec1, rec2) => {
@@ -75,18 +86,5 @@ export class GeneralChartTopDelaysComponent implements OnInit, AfterViewInit {
     template.yAxis[0].data = codigos;
     template.series[0].data = cantRetrasos;
     this.iChart.setOption(template, true);
-  }
-
-  ngOnInit() {}
-
-  ngOnChanges() {
-    this.sort();
-    this.updateCodigosYCantRetrasos();
-  }
-
-  ngAfterViewInit() {
-    this.iChart = echarts.init(this.iChartContainer.nativeElement);
-    this.iChart.setOption(template, true);
-    this.iChart.resize();
   }
 }

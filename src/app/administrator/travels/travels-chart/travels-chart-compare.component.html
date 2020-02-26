@@ -5,7 +5,7 @@
       [(ngModel)]="frecuenciaSeleccionada"
       name="frecuenciaSeleccionada"
       formControlName="frecuenciaControl"
-      (selectionChange)="ngOnChanges(frecuenciaSeleccionada)"
+      (selectionChange)="changeFrecuencia(frecuenciaSeleccionada)"
     >
       <mat-option
         *ngFor="let frecuenciaSeleccionada of frecuencias"

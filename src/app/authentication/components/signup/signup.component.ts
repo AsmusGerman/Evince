@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { Component, OnInit, Inject } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Store } from "@ngxs/store";
 import { Register } from "../../store/authentication.model";
 import { Router } from "@angular/router";
 import { switchMap } from "rxjs/operators";
+import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 
 @Component({
   selector: "evince-signup",
@@ -12,7 +13,7 @@ import { switchMap } from "rxjs/operators";
 export class SignupComponent implements OnInit {
   public form: FormGroup;
 
-  roles: any[] = [
+  public roles: any[] = [
     {
       id: 1,
       name: "administrator"
@@ -23,44 +24,43 @@ export class SignupComponent implements OnInit {
     }
   ];
 
-  constructor(private store: Store, private router: Router) {}
+  constructor(
+    private store: Store,
+    private router: Router,
+    public iDialogReg: MatDialogRef<SignupComponent>
+  ) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      username: new FormControl(""),
-      password: new FormControl(""),
-      name: new FormControl(""),
-      lastname: new FormControl(""),
-      role: new FormControl("")
+      username: new FormControl("", [Validators.required]),
+      password: new FormControl("", [Validators.required]),
+      name: new FormControl("", [Validators.required]),
+      lastname: new FormControl("", [Validators.required]),
+      role: new FormControl("", [Validators.required])
     });
   }
 
   public submit() {
     if (this.form.valid) {
+      const { username, password, name, lastname, role } = this.form.value;
       this.store
-        .dispatch(new Register(this.form.value))
+        .dispatch(
+          new Register({ username, password, name, lastname, role: role.id })
+        )
         .pipe(
           // return the response
           switchMap(() =>
             this.store.select(store => store.authentication.registered)
           )
         )
-        .subscribe((registered: boolean) => {
-          alert(registered ? "user registered" : "failed");
-          /* if(profile == "driver") {
-            this.loginAsDriver();
-          } else {
-            this.loginAsAdministrator();
-          } */
+        .subscribe(registered => {
+          console.log(`usuario ${!!registered ? "" : "no"} registrado`);
+          this.close();
         });
     }
   }
 
-  private loginAsAdministrator() {
-    this.router.navigate(["/administrator"], { replaceUrl: true });
-  }
-
-  private loginAsDriver() {
-    this.router.navigate(["/driver"], { replaceUrl: true });
+  public close() {
+    this.iDialogReg.close();
   }
 }

@@ -28,9 +28,8 @@ export class GeneralFilterComponent implements OnInit {
       destino: new FormControl(""),
       suscripto: new FormControl("")
     });
-    
-    this.form.valueChanges.subscribe(data => this.onFilterChanges.emit(data));
     this.form.controls.suscripto.setValue(true);
+    this.form.valueChanges.subscribe(data => this.onFilterChanges.emit(data));
   }
 
   ngOnChanges(changes: SimpleChanges) {

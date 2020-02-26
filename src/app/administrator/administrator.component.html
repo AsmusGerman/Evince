@@ -1,2 +1,14 @@
-<evince-header></evince-header>
-<router-outlet></router-outlet>
+<evince-header>
+  <button
+    mat-flat-button
+    color="primary"
+    style="margin: 0 0.5rem"
+    (click)="signup()"
+  >
+    Nuevo usuario
+    <mat-icon style="margin: 0 0.5rem">group_add</mat-icon>
+  </button>
+</evince-header>
+<cdk-virtual-scroll-viewport itemSize="1">
+  <router-outlet></router-outlet>
+</cdk-virtual-scroll-viewport>

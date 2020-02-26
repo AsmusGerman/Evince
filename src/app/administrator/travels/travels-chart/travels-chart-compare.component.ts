@@ -5,7 +5,8 @@ import {
   ElementRef,
   AfterViewInit,
   Input,
-  HostListener
+  HostListener,
+  OnChanges
 } from "@angular/core";
 import * as echarts from "echarts";
 import template from "./travels-chart-compare.template";
@@ -16,7 +17,7 @@ import * as moment from "moment";
   selector: "evince-travels-chart-compare",
   templateUrl: "./travels-chart-compare.component.html"
 })
-export class TravelsChartCompareComponent implements OnInit, AfterViewInit {
+export class TravelsChartCompareComponent implements OnInit, OnChanges {
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.iChart.resize();
@@ -40,11 +41,20 @@ export class TravelsChartCompareComponent implements OnInit, AfterViewInit {
 
   public frecuencias: Array<string> = new Array<string>("Mensual", "Anual");
 
-  changeFrecuencia(frecuencia) {}
+  ngOnInit() {
+    this.iChart = echarts.init(this.iChartContainer.nativeElement);
+    this.iChart.setOption(template, true);
+    this.iChart.resize();
+    this.changeFrecuencia("Mensual");
+  }
 
-  ngOnInit() {}
+  ngOnChanges() {
+    if (!!this.iChart) {
+      this.changeFrecuencia("Mensual");
+    }
+  }
 
-  ngOnChanges(frecuencia) {
+  changeFrecuencia(frecuencia) {
     this.frecuenciaSeleccionada = frecuencia;
     this.viajesAAnalizar.sort(function(left, right) {
       left = moment(left.fechaHoraSalidaEstipuladas, "YYYY/MM/DD");
@@ -88,12 +98,5 @@ export class TravelsChartCompareComponent implements OnInit, AfterViewInit {
     template.yAxis.data = periodos;
 
     this.iChart.setOption(template, true);
-  }
-
-  ngAfterViewInit() {
-    this.iChart = echarts.init(this.iChartContainer.nativeElement);
-    this.iChart.setOption(template, true);
-    this.iChart.resize();
-    this.ngOnChanges("Mensual");
   }
 }

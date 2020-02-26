@@ -1,40 +1,58 @@
 <section class="container">
-  <div class="column is-4 is-offset-4">
-    <h1 class="title mat-h1">
-      Completá el formulario con los datos del nuevo usuario
-    </h1>
-    <form [formGroup]="form" (ngSubmit)="submit()" class="form">
-      <section>
-        <mat-form-field>
-          <mat-label>Role</mat-label>
-          <mat-select>
-            <mat-option *ngFor="let role of roles" [value]="role.id">
-              {{ role.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </section>
-      <section>
-        <mat-form-field>
-          <mat-label for="username">Nombre de usuario</mat-label>
-          <input
-            type="text"
-            matInput
-            formControlName="username"
-          />
-        </mat-form-field>
-      </section>
-      <section>
-        <mat-form-field>
-          <mat-label for="username">Contraseña</mat-label>
-          <input type="password" matInput formControlName="password" />
-        </mat-form-field>
-      </section>
-      <section>
-        <button type="submit" mat-raised-button color="primary">
-          Continuar
-        </button>
-      </section>
-    </form>
-  </div>
+  <section class="columns is-centered">
+    <section class="column">
+      <span class="title mat-h3">
+        Completá el formulario con los datos del nuevo usuario
+      </span>
+      <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+        <section>
+          <mat-form-field>
+            <mat-label for="name">Nombre</mat-label>
+            <input type="text" matInput formControlName="name" value="" />
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field>
+            <mat-label for="lastname">Apellido</mat-label>
+            <input type="text" matInput formControlName="lastname" value="" />
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field>
+            <mat-label>Role</mat-label>
+            <mat-select formControlName="role">
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{ role.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field>
+            <mat-label for="username">Nombre de usuario</mat-label>
+            <input type="text" matInput formControlName="username" value="" />
+          </mat-form-field>
+        </section>
+        <section>
+          <mat-form-field>
+            <mat-label for="username">Contraseña</mat-label>
+            <input
+              type="password"
+              matInput
+              formControlName="password"
+              value=""
+            />
+          </mat-form-field>
+        </section>
+        <section fxLayout="row" fxLayoutAlign="space-between center">
+          <button type="button" mat-button color="accent" (click)="close()">
+            Cancelar
+          </button>
+          <button type="submit" mat-raised-button color="primary">
+            Continuar
+          </button>
+        </section>
+      </form>
+    </section>
+  </section>
 </section>

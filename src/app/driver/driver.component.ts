@@ -7,6 +7,7 @@ import { Recorrido } from "../core/model/recorrido";
 import { NextTravel } from "./store/driver.model";
 import { pipe } from "rxjs";
 import { filter } from "rxjs/operators";
+import * as moment from 'moment';
 
 @Component({
   selector: "evince-driver",
@@ -54,6 +55,7 @@ export class DriverComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    moment.locale("es");
     this.iStore.dispatch(new NextTravel());
     this.iRouter.events
       .pipe(filter(event => event instanceof NavigationEnd))

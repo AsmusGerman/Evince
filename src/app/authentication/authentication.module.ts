@@ -1,4 +1,4 @@
-import { NgModule, ModuleWithProviders, APP_INITIALIZER } from "@angular/core";
+import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { SigninComponent } from "./components/signin/signin.component";
 import { MaterialModule } from "../shared/material/material.module";
